@@ -9,6 +9,7 @@ Chess piece sprites - http://www.wpclipart.com/recreation/games/chess/chess_set_
 
 
 CHANGELOG
+--------------
 2014-05-01
 - Started the project!
 - Started working on normal chess functions.
