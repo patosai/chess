@@ -1,4 +1,4 @@
-public class Pawn {
+public class Pawn extends Pawn {
 	public Pawn() {
 	
 	}
