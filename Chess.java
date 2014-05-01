@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class Chess {
+public class Chess extends JFrame{
 	ArrayList<ArrayList<Object>> board = new ArrayList<ArrayList<Object>>();
 	
 	public Chess() {
@@ -9,5 +9,15 @@ public class Chess {
 			ArrayList<Object> column = new ArrayList<Object>();
 			board.add(column);
 		}
+		
+		setTitle("Chess");
+		setSize(600, 600);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		setFocusTraversalKeysEnabled(false);
+		setFocusable(true);
+		setResizable(false);
+		requestFocusInWindow();
 	}
 }
