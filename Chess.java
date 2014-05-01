@@ -6,7 +6,7 @@ import javax.swing.*;
 import pieces.*;
 
 public class Chess extends JFrame{
-	ArrayList<ArrayList<Object>> board = new ArrayList<ArrayList<Object>>();
+	ChessPiece[][] board = new ChessPiece[8][8];
 	
 	Image whiteKing;
 	Image whiteQueen;
@@ -40,10 +40,6 @@ public class Chess extends JFrame{
 		blackPawn   = tkit.getImage(Chess.class.getResource("pieces/blackPawn.png"));
 		
 		// initialize an empty board
-		for (int i = 0; i < 8; i++) {
-			ArrayList<Object> column = new ArrayList<Object>();
-			board.add(column);
-		}
 		
 		// do initial GUI fancy stuff
 		setTitle("Chess");

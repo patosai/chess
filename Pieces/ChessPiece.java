@@ -3,6 +3,6 @@ public class ChessPiece {
 	private String col;
 	
 	public String toString() {
-		return  col + Integer.toString(row);
+		return col + Integer.toString(row);
 	}
 }
