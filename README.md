@@ -5,8 +5,9 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 Credits
 --------------
-Chess piece sprites - http://www.wpclipart.com/recreation/games/chess/chess_set_1/
-
+- Chess piece sprites: http://www.wpclipart.com/recreation/games/chess/chess_set_1/
+- My childhood teachers Ted and Paul
+- Mom for setting up her library's chess program
 
 CHANGELOG
 --------------
