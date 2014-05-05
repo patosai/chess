@@ -1,3 +1,5 @@
+package Pieces;
+
 public class ChessPiece {
 	private int row;
 	private String col;

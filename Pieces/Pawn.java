@@ -1,4 +1,6 @@
-public class Pawn extends Pawn {
+package Pieces;
+
+public class Pawn extends ChessPiece {
 	public Pawn() {
 	
 	}
