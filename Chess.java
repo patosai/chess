@@ -8,7 +8,7 @@ import javax.swing.*;
 import Pieces.*;
 
 public class Chess extends JFrame{
-	ChessPiece[][] board = new ChessPiece[8][8];
+	ChessBoard board = new ChessBoard();
 	
 	Image whiteKing;
 	Image whiteQueen;
