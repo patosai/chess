@@ -11,10 +11,10 @@ Credits
 
 CHANGELOG
 --------------
-2014-05-05
+`2014-05-05`
 - Figured out how to get Java to see .java's in other directories!
 
-2014-05-01
+`2014-05-01`
 - Started the project!
 - Started working on normal chess functions.
 - Created basic pieces
