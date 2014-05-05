@@ -10,6 +10,7 @@ import Pieces.*;
 public class Chess extends JFrame{
 	ChessBoard board;
 	
+	//  chess piece Image files  //
 	Image whiteKing;
 	Image whiteQueen;
 	Image whiteRook;
@@ -22,6 +23,7 @@ public class Chess extends JFrame{
 	Image blackBishop;
 	Image blackKnight;
 	Image blackPawn;
+	//  //  //  //   //  //  //  //
 	
 	JPanel drawing;
 	
@@ -58,6 +60,9 @@ public class Chess extends JFrame{
 		// for painting class
 		drawing = new Painting();
 		add(drawing);
+		
+		// for MouseListener
+		addMouseListener(new MouseListener());
 	}
 	
 	//~~~~~~~~~~~~~~~~ PAINTING CLASS ~~~~~~~~~~~~~~~~//
@@ -67,4 +72,10 @@ public class Chess extends JFrame{
 		}
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//
+	
+	public class MouseListener extends MouseAdapter {
+		public void mouseClicked(MouseEvent e) {
+			
+		}
+	}
 }

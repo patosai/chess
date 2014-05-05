@@ -14,6 +14,7 @@ CHANGELOG
 `2014-05-05`
 - Figured out how to get Java to see .java's in other directories!
 - Reworking chess board setup and logic
+- Added MouseListener
 
 `2014-05-01`
 - Started the project!
