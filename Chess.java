@@ -8,7 +8,7 @@ import javax.swing.*;
 import Pieces.*;
 
 public class Chess extends JFrame{
-	ChessBoard board = new ChessBoard();
+	ChessBoard board;
 	
 	Image whiteKing;
 	Image whiteQueen;
@@ -42,6 +42,7 @@ public class Chess extends JFrame{
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
 		
 		// initialize an empty board
+		board = new ChessBoard();
 		
 		// do initial GUI fancy stuff
 		setTitle("Chess");

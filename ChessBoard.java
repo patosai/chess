@@ -18,4 +18,10 @@ public class ChessBoard {
 	public void setPiece(ChessPiece piece, int row, int col) {
 		board[row][col] = piece;
 	}
+	
+	public void movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
+		ChessPiece aPiece = board[initialRow][initialCol];
+		board[initialRow][initialCol] = null;
+		board[finalRow][finalCol] = aPiece;
+	}
 }
