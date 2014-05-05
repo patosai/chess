@@ -29,6 +29,34 @@ public class Chess extends JFrame{
 	
 	public Chess() {
 		// get sprites
+		loadSprites();
+		
+		// initialize an empty board
+		board = new ChessBoard();
+		
+		// do initial GUI fancy stuff
+		initializeGUI();
+		
+		// for painting class
+		add(new Painting());
+		
+		// for MouseListener
+		addMouseListener(new MouseListener());
+	}
+	
+	public final void initializeGUI() {
+		setTitle("Chess");
+		setSize(700, 700);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		setFocusTraversalKeysEnabled(false);
+		setFocusable(true);
+		setResizable(false);
+		requestFocusInWindow();
+	}
+	
+	public final void loadSprites() {
 		Toolkit tkit = Toolkit.getDefaultToolkit();
 		whiteKing   = tkit.getImage(Chess.class.getResource("Sprites/whiteKing.png"));
 		whiteQueen  = tkit.getImage(Chess.class.getResource("Sprites/whiteQueen.png"));
@@ -42,27 +70,6 @@ public class Chess extends JFrame{
 		blackBishop = tkit.getImage(Chess.class.getResource("Sprites/blackBishop.png"));
 		blackKnight = tkit.getImage(Chess.class.getResource("Sprites/blackKnight.png"));
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
-		
-		// initialize an empty board
-		board = new ChessBoard();
-		
-		// do initial GUI fancy stuff
-		setTitle("Chess");
-		setSize(700, 700);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		setFocusTraversalKeysEnabled(false);
-		setFocusable(true);
-		setResizable(false);
-		requestFocusInWindow();
-		
-		// for painting class
-		drawing = new Painting();
-		add(drawing);
-		
-		// for MouseListener
-		addMouseListener(new MouseListener());
 	}
 	
 	//~~~~~~~~~~~~~~~~ PAINTING CLASS ~~~~~~~~~~~~~~~~//
@@ -73,9 +80,11 @@ public class Chess extends JFrame{
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//
 	
+	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			
 		}
 	}
+	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
 }
