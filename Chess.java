@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.event.*;
 import java.net.*;
 import java.util.*;
@@ -8,7 +9,10 @@ import javax.swing.*;
 import Pieces.*;
 
 public class Chess extends JFrame{
-	ChessBoard board;
+	private ChessBoard board;
+	
+	private int selectedRow;
+	private int selectedCol;
 	
 	//  chess piece Image files  //
 	Image whiteKing;
@@ -25,6 +29,7 @@ public class Chess extends JFrame{
 	Image blackPawn;
 	//  //  //  //   //  //  //  //
 	
+	
 	JPanel drawing;
 	
 	public Chess() {
@@ -37,7 +42,7 @@ public class Chess extends JFrame{
 	
 	public final void initializeGUI() {
 		setTitle("Chess");
-		setSize(700, 700);
+		setSize(550, 475); //width, height
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -63,10 +68,32 @@ public class Chess extends JFrame{
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
 	}
 	
+	public static void main(String[] args) {
+		Chess c = new Chess();
+	}
+	
 	//~~~~~~~~~~~~~~~~ PAINTING CLASS ~~~~~~~~~~~~~~~~//
 	public class Painting extends JPanel {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			Graphics2D g2 = (Graphics2D) g;
+			int gridSize = 50;
+			int initialX = 0;
+			int initialY = 50;
+			for (int j = 0; j < 8; j++) {
+				initialX = 0;
+				for (int i = 0; i < 8; i++) {
+					if ((i + j) % 2 == 0) {
+						g2.setPaint(Color.BLACK);
+					}
+					else {
+						g2.setPaint(Color.WHITE);
+					}
+					g2.fill(new Rectangle2D.Double(initialX, initialY, gridSize, gridSize));
+					initialX += gridSize;
+				}
+				initialY += gridSize;
+			}
 		}
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//

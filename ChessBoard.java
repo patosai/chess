@@ -25,6 +25,8 @@ public class ChessBoard {
 		board[finalRow][finalCol] = aPiece;
 	}
 	
+	
+	
 	// default setup
 	public void setupDefault() {
 		for (int i = 0; i < 8; i++) {
@@ -39,13 +41,13 @@ public class ChessBoard {
 		board[0][5] = new whiteBishop();
 		board[0][6] = new whiteKnight();
 		board[0][7] = new whiteRook();
-		board[7][0] = new whiteRook();
-		board[7][1] = new whiteKnight();
-		board[7][2] = new whiteBishop();
-		board[7][3] = new whiteKing();
-		board[7][4] = new whiteQueen();
-		board[7][5] = new whiteBishop();
-		board[7][6] = new whiteKnight();
-		board[7][7] = new whiteRook();
+		board[7][0] = new blackRook();
+		board[7][1] = new blackKnight();
+		board[7][2] = new blackBishop();
+		board[7][3] = new blackKing();
+		board[7][4] = new blackQueen();
+		board[7][5] = new blackBishop();
+		board[7][6] = new blackKnight();
+		board[7][7] = new blackRook();
 	}
 }

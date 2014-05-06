@@ -11,6 +11,10 @@ Credits
 
 CHANGELOG
 --------------
+`2014-05-06`
+- Introduced white and black pieces
+- Successfully painted the checker board!
+
 `2014-05-05`
 - Figured out how to get Java to see .java's in other directories! (through packages)
 - Reworking chess board setup and logic
