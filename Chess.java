@@ -75,7 +75,7 @@ public class Chess extends JFrame{
 		while (true) {
 			c.repaint();
 			try {
-				Thread.sleep(200);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {}
 		}
 	}
