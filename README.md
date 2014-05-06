@@ -11,7 +11,6 @@ Credits
 
 CHANGELOG
 --------------
-<spoiler>
 `2014-05-06`
 - Introduced white and black pieces
 - Successfully painted the checker board!
@@ -26,4 +25,3 @@ CHANGELOG
 - Started working on normal chess functions.
 - Created basic pieces
 - Added piece sprites
-</spoiler>
