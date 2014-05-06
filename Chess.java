@@ -86,6 +86,8 @@ public class Chess extends JFrame{
 			int gridSize = 50;
 			int initialX = 0;
 			int initialY = 50;
+			
+			// initial checker board setup
 			for (int j = 0; j < 8; j++) {
 				initialX = 0;
 				for (int i = 0; i < 8; i++) {
@@ -100,12 +102,21 @@ public class Chess extends JFrame{
 				}
 				initialY += gridSize;
 			}
-			if (selectedRow != null) {
+			
+			// selected tile highlighting
+			if (selectedRow != null && selectedRow <= 7 && selectedCol <= 7) {
 				if ((selectedRow + selectedCol) % 2 == 0) {
 					g2.setPaint(new Color(250, 167, 77));
 				}
 				else g2.setPaint(new Color(199, 189, 179));
 				g2.fill(new Rectangle2D.Double( selectedCol * 50, selectedRow * 50 + 50, 50, 50));
+			}
+			
+			// chess piece position painting
+			for (int j = 0; j < 0; j++) {
+				for (int i = 0; i < 8; i++) {
+					
+				}
 			}
 		}
 	}
