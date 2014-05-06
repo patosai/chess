@@ -11,6 +11,8 @@ import Pieces.*;
 public class Chess extends JFrame{
 	private ChessBoard board;
 	
+	private int rawX;
+	private int rawY;
 	private Integer selectedRow;
 	private Integer selectedCol;
 	
@@ -104,7 +106,7 @@ public class Chess extends JFrame{
 			}
 			
 			// selected tile highlighting
-			if (selectedRow != null && selectedRow <= 7 && selectedCol <= 7) {
+			if (selectedRow != null && rawX < 400 && rawY > 75) {
 				if ((selectedRow + selectedCol) % 2 == 0) {
 					g2.setPaint(new Color(250, 167, 77));
 				}
@@ -129,6 +131,8 @@ public class Chess extends JFrame{
 			selectedRow = e.getY() - 75;
 			selectedRow /= 50;
 			selectedCol /= 50;
+			rawX = e.getX();
+			rawY = e.getY();
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
