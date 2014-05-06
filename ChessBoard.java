@@ -29,6 +29,7 @@ public class ChessBoard {
 	public void setupDefault() {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(i);
+			board[6][i] = new Pawn(i);
 		}
 	}
 }
