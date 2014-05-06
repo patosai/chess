@@ -28,8 +28,8 @@ public class ChessBoard {
 	// default setup
 	public void setupDefault() {
 		for (int i = 0; i < 8; i++) {
-			board[1][i] = new Pawn(i);
-			board[6][i] = new Pawn(i);
+			board[1][i] = new whitePawn(1, i);
+			board[6][i] = new blackPawn(6, i);
 		}
 	}
 }

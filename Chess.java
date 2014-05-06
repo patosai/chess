@@ -28,20 +28,11 @@ public class Chess extends JFrame{
 	JPanel drawing;
 	
 	public Chess() {
-		// get sprites
-		loadSprites();
-		
-		// initialize an empty board
-		board = new ChessBoard();
-		
-		// do initial GUI fancy stuff
-		initializeGUI();
-		
-		// for painting class
-		add(new Painting());
-		
-		// for MouseListener
-		addMouseListener(new MouseListener());
+		initializeGUI();						// do initial GUI fancy stuff
+		loadSprites();							// get sprites
+		board = new ChessBoard();				// initialize an empty board
+		add(new Painting());					// for painting class
+		addMouseListener(new MouseListener());	// for MouseListener
 	}
 	
 	public final void initializeGUI() {
