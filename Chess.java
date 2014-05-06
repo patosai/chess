@@ -11,8 +11,8 @@ import Pieces.*;
 public class Chess extends JFrame{
 	private ChessBoard board;
 	
-	private int selectedRow;
-	private int selectedCol;
+	private Integer selectedRow;
+	private Integer selectedCol;
 	
 	//  chess piece Image files  //
 	Image whiteKing;
@@ -70,6 +70,12 @@ public class Chess extends JFrame{
 	
 	public static void main(String[] args) {
 		Chess c = new Chess();
+		while (true) {
+			c.repaint();
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {}
+		}
 	}
 	
 	//~~~~~~~~~~~~~~~~ PAINTING CLASS ~~~~~~~~~~~~~~~~//
@@ -84,7 +90,7 @@ public class Chess extends JFrame{
 				initialX = 0;
 				for (int i = 0; i < 8; i++) {
 					if ((i + j) % 2 == 0) {
-						g2.setPaint(Color.BLACK);
+						g2.setPaint(new Color(179, 86, 5));
 					}
 					else {
 						g2.setPaint(Color.WHITE);
@@ -94,6 +100,13 @@ public class Chess extends JFrame{
 				}
 				initialY += gridSize;
 			}
+			if (selectedRow != null) {
+				if ((selectedRow + selectedCol) % 2 == 0) {
+					g2.setPaint(new Color(250, 167, 77));
+				}
+				else g2.setPaint(new Color(199, 189, 179));
+				g2.fill(new Rectangle2D.Double( selectedCol * 50, selectedRow * 50 + 50, 50, 50));
+			}
 		}
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//
@@ -101,7 +114,10 @@ public class Chess extends JFrame{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-			
+			selectedCol = e.getX() - 2;
+			selectedRow = e.getY() - 75;
+			selectedRow /= 50;
+			selectedCol /= 50;
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
