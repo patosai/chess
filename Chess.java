@@ -16,6 +16,10 @@ public class Chess extends JFrame{
 	private Integer selectedRow;
 	private Integer selectedCol;
 	
+	// establish chess piece image sizes; default = 50
+	private final int pieceX = 50;
+	private final int pieceY = 50;
+	
 	//  chess piece Image files  //
 	Image whiteKing;
 	Image whiteQueen;
@@ -115,11 +119,54 @@ public class Chess extends JFrame{
 			}
 			
 			// chess piece position painting
-			for (int j = 0; j < 0; j++) {
-				for (int i = 0; i < 8; i++) {
-					
+			for (int r = 0; r < 8; r++) {
+				for (int c = 0; c < 8; c++) {
+					if (board.getPiece(r, c) == null) continue;
+					String pieceName = board.getPiece(r, c).getClass().getName();
+					int x = 350 - (c * 50);
+					int y = 400 - (r * 50);
+					switch (pieceName) {
+						case "Pieces.whitePawn":
+							g.drawImage(whitePawn, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.whiteKnight":
+							g.drawImage(whiteKnight, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.whiteBishop":
+							g.drawImage(whiteBishop, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.whiteRook":
+							g.drawImage(whiteRook, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.whiteQueen":
+							g.drawImage(whiteQueen, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.whiteKing":
+							g.drawImage(whiteKing, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.blackPawn":
+							g.drawImage(blackPawn, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.blackKnight":
+							g.drawImage(blackKnight, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.blackBishop":
+							g.drawImage(blackBishop, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.blackRook":
+							g.drawImage(blackRook, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.blackQueen":
+							g.drawImage(blackQueen, x, y, pieceX, pieceY, this);
+							break;
+						case "Pieces.blackKing":
+							g.drawImage(blackKing, x, y, pieceX, pieceY, this);
+							break;
+						default:
+							break;
+					}
 				}
-			}
+			} // end of chess piece position painting
 		}
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//

@@ -5,10 +5,12 @@ public class ChessBoard {
 	
 	public ChessBoard() {
 		board = new ChessPiece[8][8];
+		setupDefault();
 	}
 	
 	public ChessBoard(int row, int col) {
 		board = new ChessPiece[row][col];
+		setupDefault();
 	}
 	
 	public ChessPiece getPiece(int row, int col) {
