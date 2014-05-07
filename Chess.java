@@ -122,44 +122,44 @@ public class Chess extends JFrame{
 			for (int r = 0; r < 8; r++) {
 				for (int c = 0; c < 8; c++) {
 					if (board.getPiece(r, c) == null) continue;
-					String pieceName = board.getPiece(r, c).getClass().getName();
+					String pieceName = board.getPiece(r, c).getClass().getName().substring(7);
 					int x = 350 - (c * 50);
 					int y = 400 - (r * 50);
 					switch (pieceName) {
-						case "Pieces.whitePawn":
+						case "whitePawn":
 							g.drawImage(whitePawn, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.whiteKnight":
+						case "whiteKnight":
 							g.drawImage(whiteKnight, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.whiteBishop":
+						case "whiteBishop":
 							g.drawImage(whiteBishop, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.whiteRook":
+						case "whiteRook":
 							g.drawImage(whiteRook, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.whiteQueen":
+						case "whiteQueen":
 							g.drawImage(whiteQueen, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.whiteKing":
+						case "whiteKing":
 							g.drawImage(whiteKing, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.blackPawn":
+						case "blackPawn":
 							g.drawImage(blackPawn, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.blackKnight":
+						case "blackKnight":
 							g.drawImage(blackKnight, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.blackBishop":
+						case "blackBishop":
 							g.drawImage(blackBishop, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.blackRook":
+						case "blackRook":
 							g.drawImage(blackRook, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.blackQueen":
+						case "blackQueen":
 							g.drawImage(blackQueen, x, y, pieceX, pieceY, this);
 							break;
-						case "Pieces.blackKing":
+						case "blackKing":
 							g.drawImage(blackKing, x, y, pieceX, pieceY, this);
 							break;
 						default:
