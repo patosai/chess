@@ -5,6 +5,9 @@ public class ChessPiece {
 	protected int col;
 	protected char letter;
 	
+	protected int prevRow;
+	protected int prevCol;
+	
 	public int getRow() {return row;}
 	public int getCol() {return col;}
 	

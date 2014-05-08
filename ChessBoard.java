@@ -35,7 +35,9 @@ public class ChessBoard {
 		int colFinal = Integer.parseInt(piecePosition.substring(1));
 	}
 	
-	
+	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
+		return true;
+	}
 	
 	// default setup
 	public void setupDefault() {

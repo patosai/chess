@@ -49,11 +49,12 @@ public class Chess extends JFrame{
 	
 	public Chess() {
 		initializeGUI();						// do initial GUI fancy stuff
+		initializeToolbar();					// create the toolbar
 		loadSprites();							// get sprites
 		board = new ChessBoard();				// initialize an empty board
 		add(new Painting());					// for painting class
 		addMouseListener(new MouseListener());	// for MouseListener
-		reverseDrawing = true;					// white/black side change. false = white
+		reverseDrawing = false;					// white/black side change. false = white
 		tileSelected = false;
 	}
 	
@@ -67,6 +68,26 @@ public class Chess extends JFrame{
 		setFocusable(true);
 		setResizable(false);
 		requestFocusInWindow();
+	}
+	
+	public final void initializeToolbar() {
+		// make the toolbar
+		//JMenuBar menuBar;
+		//JMenu menu, submenu,
+		//JMenuItem menuItem;
+		
+		// create the menu bar
+		JMenuBar menuBar = new JMenuBar();
+		
+		// create the file menu
+		JMenu menu = new JMenu("File");
+		menu.getAccessibleContext().setAccessibleDescription(
+        "Core program operations");
+		menuBar.add(menu);
+			
+			// create the New button
+		JMenuItem menuItem = new JMenuItem("New");
+		menu.add(menuItem);
 	}
 	
 	public final void loadSprites() {
