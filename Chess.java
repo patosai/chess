@@ -16,6 +16,12 @@ public class Chess extends JFrame{
 	private Integer selectedRow;
 	private Integer selectedCol;
 	
+	// drawing/mouse variables
+	private boolean reverseDrawing;
+	private final int gridSize = 50;
+	private final int initialX = 25;
+	private final int initialY = 50;
+	
 	// establish chess piece image sizes; default = 50
 	private final int pieceX = 50;
 	private final int pieceY = 50;
@@ -44,11 +50,12 @@ public class Chess extends JFrame{
 		board = new ChessBoard();				// initialize an empty board
 		add(new Painting());					// for painting class
 		addMouseListener(new MouseListener());	// for MouseListener
+		reverseDrawing = false;					// white/black side change. false = white
 	}
 	
 	public final void initializeGUI() {
 		setTitle("Chess");
-		setSize(550, 475); //width, height
+		setSize(575, 500); //width, height
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -86,36 +93,49 @@ public class Chess extends JFrame{
 	
 	//~~~~~~~~~~~~~~~~ PAINTING CLASS ~~~~~~~~~~~~~~~~//
 	public class Painting extends JPanel {
+		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-			int gridSize = 50;
-			int initialX = 0;
-			int initialY = 50;
 			
 			// initial checker board setup
+			int tempX = initialX;
+			int tempY = initialY;
 			for (int j = 0; j < 8; j++) {
-				initialX = 0;
+				tempX = initialX;
 				for (int i = 0; i < 8; i++) {
-					if ((i + j) % 2 == 0) {
+					if (!reverseDrawing && (i + j) % 2 == 1) {
+						g2.setPaint(new Color(179, 86, 5));
+					}
+					else if (reverseDrawing && (i + j) % 2 == 0) {
 						g2.setPaint(new Color(179, 86, 5));
 					}
 					else {
 						g2.setPaint(Color.WHITE);
 					}
-					g2.fill(new Rectangle2D.Double(initialX, initialY, gridSize, gridSize));
-					initialX += gridSize;
+					g2.fill(new Rectangle2D.Double(tempX, tempY, gridSize, gridSize));
+					tempX += gridSize;
 				}
-				initialY += gridSize;
+				tempY += gridSize;
 			}
 			
 			// selected tile highlighting
 			if (selectedRow != null && rawX < 400 && rawY > 75) {
-				if ((selectedRow + selectedCol) % 2 == 0) {
-					g2.setPaint(new Color(250, 167, 77));
+				if (reverseDrawing)
+				{
+					if ((selectedRow + selectedCol) % 2 == 0) {
+						g2.setPaint(new Color(250, 167, 77));
+					}
+					else g2.setPaint(new Color(199, 189, 179));
+					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
 				}
-				else g2.setPaint(new Color(199, 189, 179));
-				g2.fill(new Rectangle2D.Double( selectedCol * 50, selectedRow * 50 + 50, 50, 50));
+				else {
+					if ((selectedRow + selectedCol) % 2 == 1) {
+						g2.setPaint(new Color(250, 167, 77));
+					}
+					else g2.setPaint(new Color(199, 189, 179));
+					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
+				}
 			}
 			
 			// chess piece position painting
@@ -125,8 +145,16 @@ public class Chess extends JFrame{
 					
 					// substring(7) removes the "Pieces." header in the getName() function
 					String pieceName = board.getPiece(r, c).getClass().getName().substring(7);
-					int x = 350 - (c * 50);
-					int y = 400 - (r * 50);
+					int x = 0;
+					int y = 0;
+					if (reverseDrawing) {
+						x = c * 50 + initialX;
+						y = r * 50 + initialY;
+					}
+					else {
+						x = 350 - (c * 50) + initialX;
+						y = 350 - (r * 50) + initialY;
+					}
 					switch (pieceName) {
 						case "whitePawn":
 							g.drawImage(whitePawn, x, y, pieceX, pieceY, this);
@@ -176,8 +204,8 @@ public class Chess extends JFrame{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-			selectedCol = e.getX() - 2;
-			selectedRow = e.getY() - 75;
+			selectedCol = e.getX() - 2 - initialX;
+			selectedRow = e.getY() - 25 - initialY;
 			selectedRow /= 50;
 			selectedCol /= 50;
 			rawX = e.getX();
