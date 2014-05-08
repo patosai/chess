@@ -27,6 +27,14 @@ public class ChessBoard {
 		board[finalRow][finalCol] = aPiece;
 	}
 	
+	public void movePiece(String piecePosition, String finalPosition) {
+		int row = (int)(piecePosition.charAt(0)) - 65;
+		int col = Integer.parseInt(piecePosition.substring(1));
+		
+		int rowFinal = (int)(finalPosition.charAt(0)) - 65;
+		int colFinal = Integer.parseInt(piecePosition.substring(1));
+	}
+	
 	
 	
 	// default setup
