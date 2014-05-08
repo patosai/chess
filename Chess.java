@@ -121,7 +121,7 @@ public class Chess extends JFrame{
 			
 			// paint row/col labels
 			tempX = initialX - 15;
-			tempY = initialY + 25;
+			tempY = initialY + 28;
 				// draw rows
 			for (int i = 0; i < 8; i++) {
 				if (reverseDrawing) {
