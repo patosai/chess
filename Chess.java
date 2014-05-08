@@ -88,6 +88,7 @@ public class Chess extends JFrame{
 			// create the New button
 		JMenuItem menuItem = new JMenuItem("New");
 		menu.add(menuItem);
+		setJMenuBar(menuBar);
 	}
 	
 	public final void loadSprites() {
