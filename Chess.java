@@ -11,18 +11,21 @@ import Pieces.*;
 public class Chess extends JFrame{
 	private ChessBoard board;
 	
-	private int rawX;
-	private int rawY;
-	private Integer selectedRow;
-	private Integer selectedCol;
 	
-	// drawing/mouse variables
+	// is a tile selected and highlighted?
+	private boolean tileSelected;
+	
+	// drawing variables
 	private boolean reverseDrawing;
 	private final int gridSize = 50;
 	private final int initialX = 25;
 	private final int initialY = 50;
-	
-	// establish chess piece image sizes; default = 50
+	// mouse variables
+	private int rawX;
+	private int rawY;
+	private Integer selectedRow;
+	private Integer selectedCol;
+		// establish chess piece image sizes; default = 50
 	private final int pieceX = 50;
 	private final int pieceY = 50;
 	
@@ -51,6 +54,7 @@ public class Chess extends JFrame{
 		add(new Painting());					// for painting class
 		addMouseListener(new MouseListener());	// for MouseListener
 		reverseDrawing = false;					// white/black side change. false = white
+		tileSelected = false;
 	}
 	
 	public final void initializeGUI() {
@@ -120,7 +124,9 @@ public class Chess extends JFrame{
 			}
 			
 			// selected tile highlighting
-			if (selectedRow != null && rawX < 400 && rawY > 75) {
+			if (selectedRow != null && rawX < (400 + initialX) && rawY > (initialY)
+				&& rawX > initialX && rawY < (425 + initialY)) {
+				tileSelected = true;
 				if (reverseDrawing)
 				{
 					if ((selectedRow + selectedCol) % 2 == 0) {
@@ -137,6 +143,8 @@ public class Chess extends JFrame{
 					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
 				}
 			}
+			else tileSelected = false;
+			System.out.println(tileSelected);
 			
 			// chess piece position painting
 			for (int r = 0; r < 8; r++) {
@@ -157,40 +165,40 @@ public class Chess extends JFrame{
 					}
 					switch (pieceName) {
 						case "whitePawn":
-							g.drawImage(whitePawn, x, y, pieceX, pieceY, this);
+							g2.drawImage(whitePawn, x, y, pieceX, pieceY, this);
 							break;
 						case "whiteKnight":
-							g.drawImage(whiteKnight, x, y, pieceX, pieceY, this);
+							g2.drawImage(whiteKnight, x, y, pieceX, pieceY, this);
 							break;
 						case "whiteBishop":
-							g.drawImage(whiteBishop, x, y, pieceX, pieceY, this);
+							g2.drawImage(whiteBishop, x, y, pieceX, pieceY, this);
 							break;
 						case "whiteRook":
-							g.drawImage(whiteRook, x, y, pieceX, pieceY, this);
+							g2.drawImage(whiteRook, x, y, pieceX, pieceY, this);
 							break;
 						case "whiteQueen":
-							g.drawImage(whiteQueen, x, y, pieceX, pieceY, this);
+							g2.drawImage(whiteQueen, x, y, pieceX, pieceY, this);
 							break;
 						case "whiteKing":
-							g.drawImage(whiteKing, x, y, pieceX, pieceY, this);
+							g2.drawImage(whiteKing, x, y, pieceX, pieceY, this);
 							break;
 						case "blackPawn":
-							g.drawImage(blackPawn, x, y, pieceX, pieceY, this);
+							g2.drawImage(blackPawn, x, y, pieceX, pieceY, this);
 							break;
 						case "blackKnight":
-							g.drawImage(blackKnight, x, y, pieceX, pieceY, this);
+							g2.drawImage(blackKnight, x, y, pieceX, pieceY, this);
 							break;
 						case "blackBishop":
-							g.drawImage(blackBishop, x, y, pieceX, pieceY, this);
+							g2.drawImage(blackBishop, x, y, pieceX, pieceY, this);
 							break;
 						case "blackRook":
-							g.drawImage(blackRook, x, y, pieceX, pieceY, this);
+							g2.drawImage(blackRook, x, y, pieceX, pieceY, this);
 							break;
 						case "blackQueen":
-							g.drawImage(blackQueen, x, y, pieceX, pieceY, this);
+							g2.drawImage(blackQueen, x, y, pieceX, pieceY, this);
 							break;
 						case "blackKing":
-							g.drawImage(blackKing, x, y, pieceX, pieceY, this);
+							g2.drawImage(blackKing, x, y, pieceX, pieceY, this);
 							break;
 						default:
 							break;
@@ -204,7 +212,7 @@ public class Chess extends JFrame{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-			selectedCol = e.getX() - 2 - initialX;
+			selectedCol = e.getX() - initialX;
 			selectedRow = e.getY() - 25 - initialY;
 			selectedRow /= 50;
 			selectedCol /= 50;
