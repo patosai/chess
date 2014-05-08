@@ -108,13 +108,7 @@ public class Chess extends JFrame{
 			for (int j = 0; j < 8; j++) {
 				tempX = initialX;
 				for (int i = 0; i < 8; i++) {
-					if (reverseDrawing) {
-						if ((i + j) % 2 == 0) {
-							g2.setPaint(new Color(179, 86, 5));
-						}
-						else g2.setPaint(Color.WHITE);
-					}
-					else if ((i + j) % 2 == 1) {
+					if ((i + j) % 2 == 1) {
 						g2.setPaint(new Color(179, 86, 5));
 					}
 					else g2.setPaint(Color.WHITE);
@@ -130,14 +124,14 @@ public class Chess extends JFrame{
 				tileSelected = true;
 				if (reverseDrawing)
 				{
-					if ((selectedRow + selectedCol) % 2 == 0) {
+					if ((selectedRow + selectedCol) % 2 == 1) {
 						g2.setPaint(new Color(250, 167, 77));
 					}
 					else g2.setPaint(new Color(199, 189, 179));
 					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
 				}
 				else {
-					if ((selectedRow + selectedCol) % 2 == 1) {
+					if ((selectedRow + selectedCol) % 2 == 0) {
 						g2.setPaint(new Color(250, 167, 77));
 					}
 					else g2.setPaint(new Color(199, 189, 179));
@@ -151,18 +145,15 @@ public class Chess extends JFrame{
 				for (int c = 0; c < 8; c++) {
 					if (board.getPiece(r, c) == null) continue;
 					
+					String pieceName;
 					// substring(7) removes the "Pieces." header in the getName() function
-					String pieceName = board.getPiece(r, c).getClass().getName().substring(7);
-					int x = 0;
-					int y = 0;
 					if (reverseDrawing) {
-						x = c * 50 + initialX;
-						y = r * 50 + initialY;
+						pieceName = board.getPiece(7 - r, 7 - c).getClass().getName().substring(7);
 					}
-					else {
-						x = 350 - (c * 50) + initialX;
-						y = 350 - (r * 50) + initialY;
-					}
+					else pieceName = board.getPiece(r, c).getClass().getName().substring(7);
+
+					int x = (c * 50) + initialX;
+					int y = 350 - (r * 50) + initialY;
 					switch (pieceName) {
 						case "whitePawn":
 							g2.drawImage(whitePawn, x, y, pieceX, pieceY, this);
