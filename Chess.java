@@ -53,7 +53,7 @@ public class Chess extends JFrame{
 		board = new ChessBoard();				// initialize an empty board
 		add(new Painting());					// for painting class
 		addMouseListener(new MouseListener());	// for MouseListener
-		reverseDrawing = false;					// white/black side change. false = white
+		reverseDrawing = true;					// white/black side change. false = white
 		tileSelected = false;
 	}
 	
@@ -101,6 +101,7 @@ public class Chess extends JFrame{
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
+			setBackground(Color.BLACK);
 			
 			// initial checker board setup
 			int tempX = initialX;
@@ -118,25 +119,41 @@ public class Chess extends JFrame{
 				tempY += gridSize;
 			}
 			
+			// paint row/col labels
+			tempX = initialX - 15;
+			tempY = initialY + 25;
+				// draw rows
+			for (int i = 0; i < 8; i++) {
+				if (reverseDrawing) {
+					g2.drawString((char)(65 + i) + "", tempX, tempY);
+				}
+				else {
+					g2.drawString((char)(65 + (7 - i)) + "", tempX, tempY);
+				}
+				tempY += gridSize;
+			}
+				// draw cols
+			tempX = initialX + 22;
+			tempY = initialY + 415;
+			for (int i = 0; i < 8; i++) {
+				if (reverseDrawing) {
+					g2.drawString(8 - i + "", tempX, tempY);
+				}
+				else {
+					g2.drawString(i + "", tempX, tempY);
+				}
+				tempX += gridSize;
+			}
+			
 			// selected tile highlighting
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(selectedRow, selectedCol) != null) {
 				tileSelected = true;
-				if (reverseDrawing)
-				{
-					if ((selectedRow + selectedCol) % 2 == 1) {
-						g2.setPaint(new Color(250, 167, 77));
-					}
-					else g2.setPaint(new Color(199, 189, 179));
-					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
+				if ((selectedRow + selectedCol) % 2 == 1) {
+					g2.setPaint(new Color(250, 167, 77));
 				}
-				else {
-					if ((selectedRow + selectedCol) % 2 == 0) {
-						g2.setPaint(new Color(250, 167, 77));
-					}
-					else g2.setPaint(new Color(199, 189, 179));
-					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
-				}
+				else g2.setPaint(new Color(199, 189, 179));
+				g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
 			}
 			else tileSelected = false;
 			

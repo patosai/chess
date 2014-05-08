@@ -3,7 +3,7 @@ package Pieces;
 public class ChessPiece {
 	protected int row;
 	protected int col;
-	protected String letter;
+	protected char letter;
 	
 	public int getRow() {return row;}
 	public int getCol() {return col;}
@@ -16,7 +16,7 @@ public class ChessPiece {
 	}
 	
 	public String toString() {
-		return letter + colToLetter() + row;
+		return letter + colToLetter() + (row + 1);
 	}
 	
 	public String getPosition() {
