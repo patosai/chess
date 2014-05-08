@@ -108,15 +108,16 @@ public class Chess extends JFrame{
 			for (int j = 0; j < 8; j++) {
 				tempX = initialX;
 				for (int i = 0; i < 8; i++) {
-					if (!reverseDrawing && (i + j) % 2 == 1) {
+					if (reverseDrawing) {
+						if ((i + j) % 2 == 0) {
+							g2.setPaint(new Color(179, 86, 5));
+						}
+						else g2.setPaint(Color.WHITE);
+					}
+					else if ((i + j) % 2 == 1) {
 						g2.setPaint(new Color(179, 86, 5));
 					}
-					else if (reverseDrawing && (i + j) % 2 == 0) {
-						g2.setPaint(new Color(179, 86, 5));
-					}
-					else {
-						g2.setPaint(Color.WHITE);
-					}
+					else g2.setPaint(Color.WHITE);
 					g2.fill(new Rectangle2D.Double(tempX, tempY, gridSize, gridSize));
 					tempX += gridSize;
 				}
