@@ -18,8 +18,8 @@ public class Chess extends JFrame{
 	// drawing variables
 	private boolean reverseDrawing;
 	private final int gridSize = 50;
-	private final int initialX = 25;
-	private final int initialY = 50;
+	private final int initialX = 25; // default 25
+	private final int initialY = 50; // default 50
 	// mouse variables
 	private int rawX;
 	private int rawY;
@@ -124,7 +124,7 @@ public class Chess extends JFrame{
 			}
 			
 			// selected tile highlighting
-			if (selectedRow != null && rawX < (400 + initialX) && rawY > (initialY)
+			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY)) {
 				tileSelected = true;
 				if (reverseDrawing)
@@ -144,7 +144,6 @@ public class Chess extends JFrame{
 				}
 			}
 			else tileSelected = false;
-			System.out.println(tileSelected);
 			
 			// chess piece position painting
 			for (int r = 0; r < 8; r++) {
