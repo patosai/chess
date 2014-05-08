@@ -122,6 +122,8 @@ public class Chess extends JFrame{
 			for (int r = 0; r < 8; r++) {
 				for (int c = 0; c < 8; c++) {
 					if (board.getPiece(r, c) == null) continue;
+					
+					// substring(7) removes the "Pieces." header in the getName() function
 					String pieceName = board.getPiece(r, c).getClass().getName().substring(7);
 					int x = 350 - (c * 50);
 					int y = 400 - (r * 50);
