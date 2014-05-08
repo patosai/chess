@@ -120,7 +120,7 @@ public class Chess extends JFrame{
 			
 			// selected tile highlighting
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
-				&& rawX > initialX && rawY < (425 + initialY)) {
+				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(selectedRow, selectedCol) != null) {
 				tileSelected = true;
 				if (reverseDrawing)
 				{
