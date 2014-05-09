@@ -169,8 +169,9 @@ public class Chess extends JFrame{
 			// selected tile highlighting 
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(7 - selectedRow, selectedCol) != null) {
-				System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName());
-				System.out.println((8 - selectedRow) + "   " + (selectedCol + 1));
+				//System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName());
+				//System.out.println((8 - selectedRow) + "   " + (selectedCol + 1));
+				//System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName().charAt(8));
 				tileSelected = true;
 				if ((selectedRow + selectedCol) % 2 == 1) {
 					g2.setPaint(new Color(250, 167, 77));

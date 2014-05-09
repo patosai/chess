@@ -41,6 +41,13 @@ public class ChessBoard {
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
+		// here we go
+			//same color test
+		if (board[finalRow][finalCol] != null && 
+			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
+			board[finalRow][finalCol].getClass().getName().charAt(7)) 
+			) return false;
+		
 		return true;
 	}
 	
