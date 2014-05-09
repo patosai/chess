@@ -11,7 +11,7 @@ Credits
 --------------
 - My childhood chess mentors Ted and Paul
 - Mom for setting up her library's chess program and bringing home a chess set
-- My chess team friends in middle school. Thanks Augustus Fei, Ryan Walsh, Scott Ma, Suriya Baskar, and all those I've forgotten for some great experiences!
+- Mr. Boyt and my middle school chess team friends
 - <a href="http://www.wpclipart.com/recreation/games/chess/chess_set_1/">Chess piece sprites</a>
 
 CHANGELOG
