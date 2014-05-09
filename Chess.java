@@ -168,7 +168,9 @@ public class Chess extends JFrame{
 			
 			// selected tile highlighting 
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
-				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(selectedRow, selectedCol) != null) {
+				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(7 - selectedRow, selectedCol) != null) {
+				System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName());
+				System.out.println((8 - selectedRow) + "   " + (selectedCol + 1));
 				tileSelected = true;
 				if ((selectedRow + selectedCol) % 2 == 1) {
 					g2.setPaint(new Color(250, 167, 77));
@@ -242,21 +244,27 @@ public class Chess extends JFrame{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
+		
 			// move the pieces
-			if (tileSelected) {
-				int newSelectedCol = (e.getX() - initialX) / 50;
-				int newSelectedRow = (e.getY() - 25 - initialY) / 50;
-				if (board.isMoveValid(selectedRow, selectedCol, newSelectedRow, newSelectedCol)) {
-					board.movePiece(selectedRow, selectedCol, newSelectedRow, newSelectedCol);
-				}
-			}
-			else tileSelected = false;
-			selectedCol = e.getX() - initialX;
-			selectedRow = e.getY() - 25 - initialY;
-			selectedRow /= 50;
-			selectedCol /= 50;
 			rawX = e.getX();
 			rawY = e.getY();
+			int newSelectedCol = (rawX - initialX) / 50;
+			int newSelectedRow = (rawY - 25 - initialY) / 50;
+			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
+				&& rawX > initialX && rawY < (425 + initialY)) {
+				if (board.isMoveValid(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol)) {
+					board.movePiece(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol);
+				}
+				tileSelected = false;
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException ex) {};
+			}
+			else tileSelected = false;
+			selectedCol = rawX - initialX;
+			selectedRow = rawY - 25 - initialY;
+			selectedRow /= 50;
+			selectedCol /= 50;
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//

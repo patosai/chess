@@ -18,6 +18,7 @@ CHANGELOG
 --------------
 `2014-05-09`
 - Incorporated valid move checking skeleton
+- Pieces can now move! No valid move checking though
 
 `2014-05-08`
 - Added reversible chess board to view from white or black side
