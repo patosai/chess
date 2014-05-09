@@ -16,6 +16,9 @@ Credits
 
 CHANGELOG
 --------------
+`2014-05-09`
+- Incorporated valid move checking skeleton
+
 `2014-05-08`
 - Added reversible chess board to view from white or black side
 - Fixed position painting based on variable board position
