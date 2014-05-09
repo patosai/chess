@@ -21,18 +21,23 @@ public class ChessBoard {
 		board[row][col] = piece;
 	}
 	
-	public void movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
-		ChessPiece aPiece = board[initialRow][initialCol];
-		board[initialRow][initialCol] = null;
-		board[finalRow][finalCol] = aPiece;
+	public boolean movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
+		if (isMoveValid(initialRow, initialCol, finalRow, finalCol)) {
+			ChessPiece aPiece = board[initialRow][initialCol];
+			board[initialRow][initialCol] = null;
+			board[finalRow][finalCol] = aPiece;
+			return true;
+		}
+		else return false;
 	}
 	
-	public void movePiece(String piecePosition, String finalPosition) {
+	public boolean movePiece(String piecePosition, String finalPosition) {
 		int row = (int)(piecePosition.charAt(0)) - 65;
 		int col = Integer.parseInt(piecePosition.substring(1));
 		
 		int rowFinal = (int)(finalPosition.charAt(0)) - 65;
 		int colFinal = Integer.parseInt(piecePosition.substring(1));
+		return (movePiece(row, col, rowFinal, colFinal));
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {

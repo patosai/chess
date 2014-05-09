@@ -11,7 +11,6 @@ import Pieces.*;
 public class Chess extends JFrame{
 	private ChessBoard board;
 	
-	
 	// is a tile selected and highlighted?
 	private boolean tileSelected;
 	
@@ -235,6 +234,9 @@ public class Chess extends JFrame{
 					}
 				}
 			} // end of chess piece position painting
+			
+			// move the pieces
+			
 		}
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//
