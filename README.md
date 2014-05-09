@@ -5,6 +5,7 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 To Do
 --------------
 - Start moving pieces with mouse clicks
+- Check that moves are valid
 
 Credits
 --------------

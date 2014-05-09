@@ -48,7 +48,7 @@ public class Chess extends JFrame{
 	
 	public Chess() {
 		initializeGUI();						// do initial GUI fancy stuff
-		initializeToolbar();					// create the toolbar
+		//initializeToolbar();					// create the toolbar
 		loadSprites();							// get sprites
 		board = new ChessBoard();				// initialize an empty board
 		add(new Painting());					// for painting class
@@ -166,7 +166,7 @@ public class Chess extends JFrame{
 				tempX += gridSize;
 			}
 			
-			// selected tile highlighting
+			// selected tile highlighting 
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(selectedRow, selectedCol) != null) {
 				tileSelected = true;
@@ -235,8 +235,6 @@ public class Chess extends JFrame{
 				}
 			} // end of chess piece position painting
 			
-			// move the pieces
-			
 		}
 	}
 	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//
@@ -244,6 +242,15 @@ public class Chess extends JFrame{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
+			// move the pieces
+			if (tileSelected) {
+				int newSelectedCol = (e.getX() - initialX) / 50;
+				int newSelectedRow = (e.getY() - 25 - initialY) / 50;
+				if (board.isMoveValid(selectedRow, selectedCol, newSelectedRow, newSelectedCol)) {
+					board.movePiece(selectedRow, selectedCol, newSelectedRow, newSelectedCol);
+				}
+			}
+			else tileSelected = false;
 			selectedCol = e.getX() - initialX;
 			selectedRow = e.getY() - 25 - initialY;
 			selectedRow /= 50;
