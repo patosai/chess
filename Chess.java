@@ -12,6 +12,7 @@ public class Chess extends JFrame{
 	private ChessBoard board;
 	
 	// is a tile selected and highlighted?
+		// true if a piece is on tile and tile has been clicked on
 	private boolean tileSelected;
 	
 	// drawing variables
@@ -245,27 +246,32 @@ public class Chess extends JFrame{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-		
-			// move the pieces
 			rawX = e.getX();
 			rawY = e.getY();
+			
 			int newSelectedCol = (rawX - initialX) / 50;
 			int newSelectedRow = (rawY - 25 - initialY) / 50;
+			
+			// check if new X/Y is in board bounds
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY)) {
 				if (board.isMoveValid(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol)) {
 					board.movePiece(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol);
+					tileSelected = false;
+					selectedRow = null;
+					return;
 				}
-				tileSelected = false;
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException ex) {};
 			}
-			else tileSelected = false;
+			else {
+				selectedRow = null;
+			}
 			selectedCol = rawX - initialX;
 			selectedRow = rawY - 25 - initialY;
 			selectedRow /= 50;
-			selectedCol /= 50;
+			selectedCol /= 50;	
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
