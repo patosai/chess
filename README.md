@@ -5,6 +5,7 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 To Do
 --------------
 - Valid move checking for...
+<table>
 |               | White         | Black |
 | :-----------: |:-------------:|:-----:|
 | **Pawn**      |               |       |
@@ -13,7 +14,7 @@ To Do
 | **Rook**      |               |       |
 | **Queen**     |               |       |
 | **King**      |               |       |
-
+</table>
 Credits
 --------------
 - My childhood chess mentors Ted and Paul
