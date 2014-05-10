@@ -25,4 +25,8 @@ public class ChessPiece {
 	public String getPosition() {
 		return colToLetter() + row;
 	}
+	
+	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
+		return true;
+	}
 }

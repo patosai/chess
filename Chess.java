@@ -256,6 +256,8 @@ public class Chess extends JFrame{
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY)) {
 				if (board.isMoveValid(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol)) {
+					board.getPiece(7 - selectedRow, selectedCol).setRow(7 - newSelectedRow);
+					board.getPiece(7 - selectedRow, selectedCol).setCol(7 - newSelectedCol);
 					board.movePiece(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol);
 					tileSelected = false;
 					selectedRow = null;

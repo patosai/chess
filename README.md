@@ -4,7 +4,15 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 To Do
 --------------
-- Check that moves are valid
+- Valid move checking for...
+|               | White         | Black |
+| :-----------: |:-------------:|:-----:|
+| **Pawn**      |               |       |
+| **Knight**    |               |       |
+| **Bishop**    |               |       |
+| **Rook**      |               |       |
+| **Queen**     |               |       |
+| **King**      |               |       |
 
 Credits
 --------------

@@ -11,4 +11,8 @@ public class blackPawn extends ChessPiece {
 		return colToLetter() + (row + 1);
 	}
 	
+	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
+		return true;
+	}
+	
 }
