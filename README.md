@@ -16,7 +16,7 @@ To Do
   <th>King</th>
 </tr>
 <tr>
-  <th>White</th>
+  <th>Black</th>
   <td></td>		
   <td></td>
   <td></td>
@@ -25,7 +25,7 @@ To Do
   <td></td>
 </tr>
 <tr>
-  <th>Black</th>
+  <th>White</th>
   <td></td>		
   <td></td>
   <td></td>
