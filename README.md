@@ -4,7 +4,6 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 To Do
 --------------
-- Start moving pieces with mouse clicks
 - Check that moves are valid
 
 Credits
@@ -16,6 +15,9 @@ Credits
 
 CHANGELOG
 --------------
+`2014-05-10`
+- Pieces now automatically un-highlight if they just made a move (so no more infinitely moving pieces!)
+
 `2014-05-09`
 - Incorporated valid move checking skeleton
 - Pieces can now move! No valid move checking though
