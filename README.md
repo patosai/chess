@@ -6,15 +6,35 @@ To Do
 --------------
 - Valid move checking for...
 <table>
-|               | White         | Black |
-| :-----------: |:-------------:|:-----:|
-| **Pawn**      |               |       |
-| **Knight**    |               |       |
-| **Bishop**    |               |       |
-| **Rook**      |               |       |
-| **Queen**     |               |       |
-| **King**      |               |       |
+<tr>
+  <th></th>
+  <th>Pawn</th>
+  <th>Knight</th>
+  <th>Bishop</th>
+  <th>Rook</th>
+  <th>Queen</th>
+  <th>King</th>
+</tr>
+<tr>
+  <th>White</th>
+  <td></td>		
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <th>Black</th>
+  <td></td>		
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
 </table>
+
 Credits
 --------------
 - My childhood chess mentors Ted and Paul
