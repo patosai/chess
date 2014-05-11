@@ -5,5 +5,6 @@ public class whiteRook extends ChessPiece {
 		this.row = row;
 		this.col = col;
 		letter = 'R';
+		hasMoved = false;
 	}
 }
