@@ -17,27 +17,31 @@ public class ChessBoard {
 		return board[row][col];
 	}
 	
+	public boolean isSameTeam(int initialRow, int initialCol, int finalRow, int finalCol) {
+	return (
+		board[initialRow][initialCol] != null && 
+		board[finalRow][finalCol] != null && 
+			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
+			board[finalRow][finalCol].getClass().getName().charAt(7)) 
+			);
+	}
+	
 	public void setPiece(ChessPiece piece, int row, int col) {
 		board[row][col] = piece;
+		piece.setRow(row);
+		piece.setCol(col);
 	}
 	
 	public boolean movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
 		if (isMoveValid(initialRow, initialCol, finalRow, finalCol)) {
 			ChessPiece aPiece = board[initialRow][initialCol];
-			board[initialRow][initialCol] = null;
+			aPiece.setRow(finalRow);
+			aPiece.setCol(finalCol);
 			board[finalRow][finalCol] = aPiece;
+			board[initialRow][initialCol] = null;
 			return true;
 		}
 		else return false;
-	}
-	
-	public boolean movePiece(String piecePosition, String finalPosition) {
-		int row = (int)(piecePosition.charAt(0)) - 65;
-		int col = Integer.parseInt(piecePosition.substring(1));
-		
-		int rowFinal = (int)(finalPosition.charAt(0)) - 65;
-		int colFinal = Integer.parseInt(piecePosition.substring(1));
-		return (movePiece(row, col, rowFinal, colFinal));
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
@@ -46,7 +50,9 @@ public class ChessBoard {
 		if (board[finalRow][finalCol] != null && 
 			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
 			board[finalRow][finalCol].getClass().getName().charAt(7)) 
-			) return false;
+			) {
+			return false;
+		}
 		
 			// can-the-piece-even-move-there test
 		if (!board[initialRow][initialCol].canMoveToLocation(board, finalRow, finalCol)) return false;

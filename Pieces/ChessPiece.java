@@ -1,9 +1,11 @@
 package Pieces;
 
-public class ChessPiece {
+public abstract class ChessPiece {
 	protected int row;
 	protected int col;
 	protected char letter;
+	
+	protected boolean hasMoved;
 	
 	protected int prevRow;
 	protected int prevCol;
@@ -26,7 +28,9 @@ public class ChessPiece {
 		return colToLetter() + row;
 	}
 	
-	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
-		return true;
+	public void moved() {
+		if (!hasMoved) hasMoved = true;
 	}
+	
+	public abstract boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol);
 }

@@ -169,16 +169,15 @@ public class Chess extends JFrame{
 			
 			// selected tile highlighting 
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
-				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(7 - selectedRow, selectedCol) != null) {
+				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(selectedRow, selectedCol) != null) {
 				//System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName());
 				//System.out.println((8 - selectedRow) + "   " + (selectedCol + 1));
-				//System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName().charAt(8));
 				tileSelected = true;
-				if ((selectedRow + selectedCol) % 2 == 1) {
+				if ((selectedRow + selectedCol) % 2 == 0) {
 					g2.setPaint(new Color(250, 167, 77));
 				}
 				else g2.setPaint(new Color(199, 189, 179));
-				g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
+				g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, (7 - selectedRow) * 50 + initialY, 50, 50));
 			}
 			else tileSelected = false;
 			
@@ -250,17 +249,17 @@ public class Chess extends JFrame{
 			rawY = e.getY();
 			
 			int newSelectedCol = (rawX - initialX) / 50;
-			int newSelectedRow = (rawY - 25 - initialY) / 50;
+			int newSelectedRow = 7 - ((rawY - 25 - initialY) / 50);
 			
 			// check if new X/Y is in board bounds
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY)) {
-				if (board.isMoveValid(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol)) {
-					board.getPiece(7 - selectedRow, selectedCol).setRow(7 - newSelectedRow);
-					board.getPiece(7 - selectedRow, selectedCol).setCol(7 - newSelectedCol);
-					board.movePiece(7 - selectedRow, selectedCol, 7 - newSelectedRow, newSelectedCol);
+				if (board.isMoveValid(selectedRow, selectedCol, newSelectedRow, newSelectedCol)) {
+					board.movePiece(selectedRow, selectedCol, newSelectedRow, newSelectedCol);
+					board.getPiece(newSelectedRow, newSelectedCol).moved();
 					tileSelected = false;
 					selectedRow = null;
+					selectedCol = null;
 					return;
 				}
 				try {
@@ -270,10 +269,8 @@ public class Chess extends JFrame{
 			else {
 				selectedRow = null;
 			}
-			selectedCol = rawX - initialX;
-			selectedRow = rawY - 25 - initialY;
-			selectedRow /= 50;
-			selectedCol /= 50;	
+			selectedCol = newSelectedCol;
+			selectedRow = newSelectedRow;
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
