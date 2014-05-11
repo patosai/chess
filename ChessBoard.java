@@ -32,16 +32,12 @@ public class ChessBoard {
 		piece.setCol(col);
 	}
 	
-	public boolean movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
-		if (isMoveValid(initialRow, initialCol, finalRow, finalCol)) {
-			ChessPiece aPiece = board[initialRow][initialCol];
-			aPiece.setRow(finalRow);
-			aPiece.setCol(finalCol);
-			board[finalRow][finalCol] = aPiece;
-			board[initialRow][initialCol] = null;
-			return true;
-		}
-		else return false;
+	public void movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
+		ChessPiece aPiece = board[initialRow][initialCol];
+		aPiece.setRow(finalRow);
+		aPiece.setCol(finalCol);
+		board[finalRow][finalCol] = aPiece;
+		board[initialRow][initialCol] = null;
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {

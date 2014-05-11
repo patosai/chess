@@ -33,4 +33,8 @@ public abstract class ChessPiece {
 	}
 	
 	public abstract boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol);
+	
+	public abstract boolean possibleEnPassant();
+	
+	public abstract void switchEnPassant();
 }
