@@ -5,7 +5,7 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 To Do
 --------------
 - Valid move checking for...
-<table>
+<table align="center">
 <tr>
   <th></th>
   <th>Pawn</th>
