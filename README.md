@@ -5,7 +5,8 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 To Do
 --------------
 - Valid move checking for...
-<table align="center">
+<center>
+<table>
 <tr>
   <th></th>
   <th>Pawn</th>
@@ -34,6 +35,7 @@ To Do
   <td></td>
 </tr>
 </table>
+</center>
 
 Credits
 --------------
