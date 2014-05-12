@@ -21,7 +21,7 @@ To Do
   <td>✔</td>		
   <td></td>
   <td></td>
-  <td></td>
+  <td>✔</td>
   <td></td>
   <td></td>
 </tr>
@@ -30,7 +30,7 @@ To Do
   <td>✔</td>		
   <td></td>
   <td></td>
-  <td></td>
+  <td>✔</td>
   <td></td>
   <td></td>
 </tr>

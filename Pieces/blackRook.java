@@ -13,14 +13,12 @@ public class blackRook extends ChessPiece {
 		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'w') return false;
 		
 		if (row == finalRow) {
-			//System.out.println(row + " " + col + "     " + finalRow + " " + finalCol);
-			for (int c = col; c != finalCol; c += ((finalCol - col) / Math.abs(finalCol - col))) {
+			for (int c = col + ((finalCol - col) / Math.abs(finalCol - col)); c != finalCol; c += ((finalCol - col) / Math.abs(finalCol - col))) {
 				if (board[row][c] != null) return false;
 			}
 		}
-		if (col == finalCol) {
-			System.out.println(row + " " + col + "     " + finalRow + " " + finalCol);
-			for (int r = row; r != finalRow; r += ((finalRow - row) / Math.abs(finalRow - row))) {
+		else if (col == finalCol) {
+			for (int r = row + ((finalRow - row) / Math.abs(finalRow - row)); r != finalRow; r += ((finalRow - row) / Math.abs(finalRow - row))) {
 				if (board[r][col] != null) return false;
 			}
 		}
