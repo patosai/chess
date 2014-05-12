@@ -19,7 +19,7 @@ To Do
 <tr>
   <th>Black</th>
   <td>✔</td>		
-  <td></td>
+  <td>✔</td>
   <td></td>
   <td>✔</td>
   <td></td>
@@ -28,7 +28,7 @@ To Do
 <tr>
   <th>White</th>
   <td>✔</td>		
-  <td></td>
+  <td>✔</td>
   <td></td>
   <td>✔</td>
   <td></td>
