@@ -10,22 +10,17 @@ public class blackRook extends ChessPiece {
 	
 	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
 		if (row != finalRow && col != finalCol) {return false;}
-		System.out.println(row + " " + col + "     " + finalRow + " " + finalCol);
+		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'w') return false;
+		
 		if (row == finalRow) {
-			if (col > finalCol) 
-				for (int c = col; c <= finalCol; c++) {
-				if (c == finalCol && board[row][c].getClass().getName().charAt(7) != 'w') return false;
-				if (board[row][c] != null) return false;
-			}
-			
-			for (int c = col; c == finalCol; c += ((finalCol - col)/Math.abs(finalCol - col))) {
-				if (c == finalCol && board[row][c].getClass().getName().charAt(7) != 'w') return false;
+			//System.out.println(row + " " + col + "     " + finalRow + " " + finalCol);
+			for (int c = col; c != finalCol; c += ((finalCol - col) / Math.abs(finalCol - col))) {
 				if (board[row][c] != null) return false;
 			}
 		}
-		else if (col == finalCol) {
-			for (int r = row; r == finalRow; r += ((finalRow - row)/Math.abs(finalRow - row))) {
-				if (r == finalRow && board[r][col].getClass().getName().charAt(7) != 'w') return false;
+		if (col == finalCol) {
+			System.out.println(row + " " + col + "     " + finalRow + " " + finalCol);
+			for (int r = row; r != finalRow; r += ((finalRow - row) / Math.abs(finalRow - row))) {
 				if (board[r][col] != null) return false;
 			}
 		}
