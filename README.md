@@ -46,6 +46,9 @@ Credits
 
 CHANGELOG
 --------------
+`2014-05-12`
+- Completed rook move checking
+
 `2014-05-10`
 - Pieces now automatically un-highlight if they just made a move (so no more infinitely moving pieces!)
 - Completed white/black pawn move checking (with En Passant!)
