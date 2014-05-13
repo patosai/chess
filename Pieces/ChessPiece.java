@@ -37,4 +37,6 @@ public abstract class ChessPiece {
 	public abstract boolean possibleEnPassant();
 	
 	public abstract void switchEnPassant();
+	
+	public abstract boolean amIInCheck(ChessPiece[][] board);
 }

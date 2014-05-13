@@ -3,13 +3,20 @@ import Pieces.*;
 public class ChessBoard {
 	private ChessPiece[][] board;
 	
+	protected boolean whiteToMove;
+	
+	protected boolean whiteInCheck;
+	protected boolean blackInCheck;
+	
 	public ChessBoard() {
 		board = new ChessPiece[8][8];
+		whiteToMove = true;
 		setupDefault();
 	}
 	
 	public ChessBoard(int row, int col) {
 		board = new ChessPiece[row][col];
+		whiteToMove = true;
 		setupDefault();
 	}
 	
@@ -24,6 +31,10 @@ public class ChessBoard {
 			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
 			board[finalRow][finalCol].getClass().getName().charAt(7)) 
 			);
+	}
+	
+	public void flipWhiteToMove() {
+		whiteToMove = !whiteToMove;
 	}
 	
 	public void setPiece(ChessPiece piece, int row, int col) {
@@ -53,6 +64,28 @@ public class ChessBoard {
 			// can-the-piece-even-move-there test
 		if (!board[initialRow][initialCol].canMoveToLocation(board, finalRow, finalCol)) return false;
 		
+			// is the king in check before/after the move?!
+		boolean beforeInCheck = false;
+		boolean afterInCheck = false;
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] == null) continue;
+				String piece = board[r][c].getClass().getName().substring(7);
+				if (piece.equals("whiteKing") || piece.equals("blackKing")) {
+					if (board[r][c].amIInCheck(board)) {
+						beforeInCheck = true;
+						board[finalRow][finalCol] = board[initialRow][initialCol];
+						board[initialRow][initialCol] = null;
+						if (board[r][c].amIInCheck(board)) afterInCheck = true;
+						if (beforeInCheck == true && afterInCheck == true) {
+							board[initialRow][initialCol] = board[finalRow][finalCol];
+							board[finalRow][finalCol] = null;
+							return false;
+						}
+					}
+				}
+			}
+		}
 		return true;
 	}
 	

@@ -48,5 +48,6 @@ public class blackQueen extends ChessPiece {
 	
 	public boolean possibleEnPassant() {return false;}
 	public void switchEnPassant() {}
+	public boolean amIInCheck(ChessPiece[][] board) {return false;}
 	
 }

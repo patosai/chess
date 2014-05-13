@@ -58,4 +58,6 @@ public class whitePawn extends ChessPiece {
 		return false;
 	}
 	
+	public boolean amIInCheck(ChessPiece[][] board) {return false;}
+	
 }

@@ -284,6 +284,7 @@ public class Chess extends JFrame{
 						}
 					} // end en Passant possibility switch
 					whiteToMove = !whiteToMove; //switch the turn
+					board.flipWhiteToMove();
 					return;
 				}
 				try {

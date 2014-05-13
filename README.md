@@ -4,38 +4,8 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 To Do
 --------------
-- Valid move checking for...
-<center>
-<table>
-<tr>
-  <th></th>
-  <th>Pawn</th>
-  <th>Knight</th>
-  <th>Bishop</th>
-  <th>Rook</th>
-  <th>Queen</th>
-  <th>King</th>
-</tr>
-<tr>
-  <th>Black</th>
-  <td>✔</td>		
-  <td>✔</td>
-  <td>✔</td>
-  <td>✔</td>
-  <td>✔</td>
-  <td>✔</td>
-</tr>
-<tr>
-  <th>White</th>
-  <td>✔</td>		
-  <td>✔</td>
-  <td>✔</td>
-  <td>✔</td>
-  <td>✔</td>
-  <td>✔</td>
-</tr>
-</table>
-</center>
+- Check if the king is in check
+- Check if it is checkmate
 
 Credits
 --------------
@@ -47,7 +17,7 @@ Credits
 Changelog
 --------------
 `2014-05-13`
-- Completed king + castling checks
+- Completed king + castling checks - all piece checks now complete!!
 
 `2014-05-12`
 - Completed knight, bishop, rook, and queen move checking

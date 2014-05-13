@@ -60,6 +60,17 @@ public class whiteKing extends ChessPiece {
 		return true;
 	}
 	
+	public boolean amIInCheck(ChessPiece[][] board) {
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] != null && !board[r][c].getClass().getName().substring(7).equals("whiteKing")) {
+					if (board[r][c].canMoveToLocation(board, row, col)) return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public boolean possibleEnPassant() {return false;}
 	public void switchEnPassant() {}
 }
