@@ -21,16 +21,16 @@ public class blackKing extends ChessPiece {
 				//am I in check?
 				
 				//do speshul stuff
-				board[7][7] = board[7][5];
-				board[7][5] = null;
-				setRow(7);
-				setCol(7);
-				board[7][6] = board[7][7];
+				ChessPiece king = board[7][4];
+				ChessPiece rook = board[7][7];
+				board[7][6] = king;
+				board[7][4] = null;
+				setCol(6);
+				board[7][5] = rook;
 				board[7][7] = null;
-				board[7][6].setRow(7);
-				board[7][6].setCol(7);
+				rook.setCol(5);
 				moved();
-				board[7][6].moved();
+				rook.moved();
 				return false;
 			}
 		}
@@ -42,16 +42,18 @@ public class blackKing extends ChessPiece {
 				//am I in check?
 				
 				//do more speshul stuff
-				board[7][3] = board[7][5];
-				board[7][5] = null;
+				ChessPiece king = board[7][4];
+				ChessPiece rook = board[7][0];
+				board[7][2] = king;
+				board[7][4] = null;
 				setRow(7);
-				setCol(3);
-				board[7][4] = board[7][0];
+				setCol(2);
+				board[7][3] = rook;
 				board[7][0] = null;
-				board[7][4].setRow(7);
-				board[7][4].setCol(4);
+				rook.setRow(7);
+				rook.setCol(3);
 				moved();
-				board[7][4].moved();
+				rook.moved();
 				return false;
 			}
 		}
