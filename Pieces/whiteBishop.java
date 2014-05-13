@@ -5,6 +5,7 @@ public class whiteBishop extends ChessPiece {
 		this.row = row;
 		this.col = col;
 		letter = 'B';
+		hasMoved = false;
 	}
 	
 	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {

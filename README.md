@@ -22,7 +22,7 @@ To Do
   <td>✔</td>
   <td>✔</td>
   <td>✔</td>
-  <td></td>
+  <td>✔</td>
   <td></td>
 </tr>
 <tr>
@@ -31,7 +31,7 @@ To Do
   <td>✔</td>
   <td>✔</td>
   <td>✔</td>
-  <td></td>
+  <td>✔</td>
   <td></td>
 </tr>
 </table>
@@ -47,7 +47,7 @@ Credits
 CHANGELOG
 --------------
 `2014-05-12`
-- Completed knight, bishop, and rook move checking
+- Completed knight, bishop, rook, and queen move checking
 
 `2014-05-10`
 - Pieces now automatically un-highlight if they just made a move (so no more infinitely moving pieces!)
