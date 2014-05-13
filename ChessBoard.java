@@ -67,25 +67,48 @@ public class ChessBoard {
 			// is the king in check before/after the move?!
 		boolean beforeInCheck = false;
 		boolean afterInCheck = false;
+		ChessPiece whiteKing = null;
+		ChessPiece blackKing = null;
+				//get king pointers
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (board[r][c] == null) continue;
-				String piece = board[r][c].getClass().getName().substring(7);
-				if (piece.equals("whiteKing") || piece.equals("blackKing")) {
-					if (board[r][c].amIInCheck(board)) {
-						beforeInCheck = true;
-						board[finalRow][finalCol] = board[initialRow][initialCol];
-						board[initialRow][initialCol] = null;
-						if (board[r][c].amIInCheck(board)) afterInCheck = true;
-						if (beforeInCheck == true && afterInCheck == true) {
-							board[initialRow][initialCol] = board[finalRow][finalCol];
-							board[finalRow][finalCol] = null;
-							return false;
-						}
-					}
-				}
+				String name = board[r][c].getClass().getName().substring(7);
+				if (name.equals("whiteKing")) whiteKing = board[r][c];
+				if (name.equals("blackKing")) blackKing = board[r][c];
 			}
 		}
+				//is white king in check before/after?
+		if (whiteKing.amIInCheck(board)) {
+			movePiece(initialRow, initialCol, finalRow, finalCol);
+			if (whiteKing.amIInCheck(board)) {
+				movePiece(finalRow, finalCol, initialRow, initialCol);
+				return false;
+			}
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+		}
+				//is black king in check before/after?
+		if (blackKing.amIInCheck(board)) {
+			movePiece(initialRow, initialCol, finalRow, finalCol);
+			if (blackKing.amIInCheck(board)) {
+				movePiece(finalRow, finalCol, initialRow, initialCol);
+				return false;
+			}
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+		}
+		
+		//update if white or black is in check
+		movePiece(initialRow, initialCol, finalRow, finalCol);
+		if (whiteKing.amIInCheck(board)) {
+			whiteInCheck = true;
+		}
+		else whiteInCheck = false;
+		if (blackKing.amIInCheck(board)) {
+			blackInCheck = true;
+		}
+		else blackInCheck = false;
+		movePiece(finalRow, finalCol, initialRow, initialCol);
+		
 		return true;
 	}
 	

@@ -59,13 +59,14 @@ public class blackKing extends ChessPiece {
 		}
 		else if ((Math.abs(dx) > 1) || (Math.abs(dy) > 1)) return false;
 		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'w') return false;
+	
 		return true;
 	}
 	
 	public boolean amIInCheck(ChessPiece[][] board) {
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
-				if (board[r][c] != null && !board[r][c].getClass().getName().substring(7).equals("blackKing")) {
+				if (board[r][c] != null && board[r][c].getClass().getName().charAt(7) == 'w') {
 					if (board[r][c].canMoveToLocation(board, row, col)) return true;
 				}
 			}

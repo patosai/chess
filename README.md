@@ -18,6 +18,7 @@ Changelog
 --------------
 `2014-05-13`
 - Completed king + castling checks - all piece checks now complete!!
+- Added some king-in-check checks
 
 `2014-05-12`
 - Completed knight, bishop, rook, and queen move checking
