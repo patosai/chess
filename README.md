@@ -23,7 +23,7 @@ To Do
   <td>✔</td>
   <td>✔</td>
   <td>✔</td>
-  <td></td>
+  <td>✔</td>
 </tr>
 <tr>
   <th>White</th>
@@ -32,7 +32,7 @@ To Do
   <td>✔</td>
   <td>✔</td>
   <td>✔</td>
-  <td></td>
+  <td>✔</td>
 </tr>
 </table>
 </center>
@@ -46,6 +46,9 @@ Credits
 
 Changelog
 --------------
+`2014-05-13`
+- Completed king + castling checks
+
 `2014-05-12`
 - Completed knight, bishop, rook, and queen move checking
 
