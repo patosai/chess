@@ -44,7 +44,7 @@ Credits
 - Mr. Boyt and my middle school chess team friends
 - <a href="http://www.wpclipart.com/recreation/games/chess/chess_set_1/">Chess piece sprites</a>
 
-CHANGELOG
+Changelog
 --------------
 `2014-05-12`
 - Completed knight, bishop, rook, and queen move checking
