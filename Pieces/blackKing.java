@@ -5,5 +5,6 @@ public class blackKing extends ChessPiece {
 		this.row = row;
 		this.col = col;
 		letter = 'K';
+		hasMoved = false;
 	}
 }
