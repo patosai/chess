@@ -177,7 +177,10 @@ public class Chess extends JFrame{
 						g2.setPaint(new Color(250, 167, 77));
 					}
 					else g2.setPaint(new Color(199, 189, 179));
-					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, (7 - selectedRow) * 50 + initialY, 50, 50));
+					if (!reverseDrawing)
+						g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, (7 - selectedRow) * 50 + initialY, 50, 50));
+					else
+						g2.fill(new Rectangle2D.Double( (7 - selectedCol) * 50 + initialX, selectedRow * 50 + initialY, 50, 50));
 				}
 				else tileSelected = false;
 			}
@@ -186,7 +189,12 @@ public class Chess extends JFrame{
 			// chess piece position painting
 			for (int r = 0; r < 8; r++) {
 				for (int c = 0; c < 8; c++) {
-					if (board.getPiece(r, c) == null) continue;
+					if (reverseDrawing) {
+						if (board.getPiece(7 - r, 7 - c) == null) continue;
+					}
+					else {
+						if (board.getPiece(r, c) == null) continue;
+					}
 					
 					String pieceName;
 					// substring(7) removes the "Pieces." header in the getName() function
@@ -252,6 +260,12 @@ public class Chess extends JFrame{
 			
 			int newSelectedCol = (rawX - initialX) / 50;
 			int newSelectedRow = 7 - ((rawY - 25 - initialY) / 50);
+			
+			if (reverseDrawing) {
+				newSelectedCol = 7 - newSelectedCol;
+				newSelectedRow = 7 - newSelectedRow;
+			}
+			System.out.println(newSelectedRow + "  " + newSelectedCol);
 			
 			// check if new X/Y is in board bounds
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)

@@ -19,6 +19,7 @@ Changelog
 - Completed king + castling checks - all piece checks now complete!!
 - Completed checks of king moving into check, king having to get out of check, king castling through check
 - Added turn switching
+- Fixed reversing the table paint/null pointer errors
 
 `2014-05-12`
 - Completed knight, bishop, rook, and queen move checking
