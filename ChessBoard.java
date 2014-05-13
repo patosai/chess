@@ -52,7 +52,6 @@ public class ChessBoard {
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
-		System.out.println(whiteToMove);
 		// here we go
 			// same-color test
 		if (board[finalRow][finalCol] != null && 
