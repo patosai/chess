@@ -24,7 +24,12 @@ public class blackKing extends ChessPiece {
 					col--;
 					return false;
 				}
-				col--;
+				col ++;
+				if (amIInCheck(board)) {
+					col-= 2;
+					return false;
+				}
+				col -= 2;
 				
 				//do speshul stuff
 				ChessPiece king = board[7][4];
@@ -51,7 +56,12 @@ public class blackKing extends ChessPiece {
 					col++;
 					return false;
 				}
-				col++;
+				col--;
+				if (amIInCheck(board)) {
+					col+= 2;
+					return false;
+				}
+				col+= 2;
 				
 				//do more speshul stuff
 				ChessPiece king = board[7][4];

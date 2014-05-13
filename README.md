@@ -17,7 +17,7 @@ Changelog
 --------------
 `2014-05-13`
 - Completed king + castling checks - all piece checks now complete!!
-- Added most king-in-check checks
+- Completed checks of king moving into check, king having to get out of check, king castling through check
 - Added turn switching
 
 `2014-05-12`
