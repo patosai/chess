@@ -52,6 +52,7 @@ public class ChessBoard {
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
+		System.out.println(whiteToMove);
 		// here we go
 			// same-color test
 		if (board[finalRow][finalCol] != null && 
@@ -69,6 +70,7 @@ public class ChessBoard {
 		boolean afterInCheck = false;
 		ChessPiece whiteKing = null;
 		ChessPiece blackKing = null;
+		ChessPiece temp = board[finalRow][finalCol];
 				//get king pointers
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
@@ -83,19 +85,36 @@ public class ChessBoard {
 			movePiece(initialRow, initialCol, finalRow, finalCol);
 			if (whiteKing.amIInCheck(board)) {
 				movePiece(finalRow, finalCol, initialRow, initialCol);
+				board[finalRow][finalCol] = temp;
 				return false;
 			}
 			movePiece(finalRow, finalCol, initialRow, initialCol);
+			board[finalRow][finalCol] = temp;
 		}
 				//is black king in check before/after?
 		if (blackKing.amIInCheck(board)) {
 			movePiece(initialRow, initialCol, finalRow, finalCol);
 			if (blackKing.amIInCheck(board)) {
 				movePiece(finalRow, finalCol, initialRow, initialCol);
+				board[finalRow][finalCol] = temp;
 				return false;
 			}
 			movePiece(finalRow, finalCol, initialRow, initialCol);
+			board[finalRow][finalCol] = temp;
 		}
+		
+		//is king in check after the move?
+		movePiece(initialRow, initialCol, finalRow, finalCol);
+		if (whiteToMove && whiteKing.amIInCheck(board)) {
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+			return false;
+		}
+		if (!whiteToMove && blackKing.amIInCheck(board)) {
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+			return false;
+		}
+		movePiece(finalRow, finalCol, initialRow, initialCol);
+		board[finalRow][finalCol] = temp;
 		
 		//update if white or black is in check
 		movePiece(initialRow, initialCol, finalRow, finalCol);
@@ -108,7 +127,9 @@ public class ChessBoard {
 		}
 		else blackInCheck = false;
 		movePiece(finalRow, finalCol, initialRow, initialCol);
+		board[finalRow][finalCol] = temp;
 		
+		flipWhiteToMove();
 		return true;
 	}
 	

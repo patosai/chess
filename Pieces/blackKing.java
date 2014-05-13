@@ -19,6 +19,12 @@ public class blackKing extends ChessPiece {
 					if (board[row][c] != null) return false;
 				}
 				//am I in check?
+				col++;
+				if (amIInCheck(board)) {
+					col--;
+					return false;
+				}
+				col--;
 				
 				//do speshul stuff
 				ChessPiece king = board[7][4];
@@ -40,6 +46,12 @@ public class blackKing extends ChessPiece {
 					if (board[row][c] != null) return false;
 				}
 				//am I in check?
+				col--;
+				if (amIInCheck(board)) {
+					col++;
+					return false;
+				}
+				col++;
 				
 				//do more speshul stuff
 				ChessPiece king = board[7][4];

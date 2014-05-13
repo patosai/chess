@@ -4,7 +4,6 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 To Do
 --------------
-- Check if the king is in check
 - Check if it is checkmate
 
 Credits
@@ -18,7 +17,8 @@ Changelog
 --------------
 `2014-05-13`
 - Completed king + castling checks - all piece checks now complete!!
-- Added some king-in-check checks
+- Added most king-in-check checks
+- Added turn switching
 
 `2014-05-12`
 - Completed knight, bishop, rook, and queen move checking

@@ -11,8 +11,6 @@ import Pieces.*;
 public class Chess extends JFrame{
 	private ChessBoard board;
 	
-	private boolean whiteToMove;
-	
 	// is a tile selected and highlighted?
 		// true if a piece is on tile and tile has been clicked on
 	private boolean tileSelected;
@@ -58,7 +56,6 @@ public class Chess extends JFrame{
 		addMouseListener(new MouseListener());	// for MouseListener
 		reverseDrawing = false;					// white/black side change. false = white
 		tileSelected = false;
-		whiteToMove = true;
 	}
 	
 	public final void initializeGUI() {
@@ -173,14 +170,16 @@ public class Chess extends JFrame{
 			// selected tile highlighting 
 			if (selectedRow != null && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY) && board.getPiece(selectedRow, selectedCol) != null) {
-				//System.out.println(board.getPiece(7 - selectedRow, selectedCol).getClass().getName());
-				//System.out.println((8 - selectedRow) + "   " + (selectedCol + 1));
-				tileSelected = true;
-				if ((selectedRow + selectedCol) % 2 == 0) {
-					g2.setPaint(new Color(250, 167, 77));
+				if ((board.whiteToMove && board.getPiece(selectedRow, selectedCol).getClass().getName().charAt(7) == 'w') ||
+					(!board.whiteToMove && board.getPiece(selectedRow, selectedCol).getClass().getName().charAt(7) == 'b')) {
+					tileSelected = true;
+					if ((selectedRow + selectedCol) % 2 == 0) {
+						g2.setPaint(new Color(250, 167, 77));
+					}
+					else g2.setPaint(new Color(199, 189, 179));
+					g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, (7 - selectedRow) * 50 + initialY, 50, 50));
 				}
-				else g2.setPaint(new Color(199, 189, 179));
-				g2.fill(new Rectangle2D.Double( selectedCol * 50 + initialX, (7 - selectedRow) * 50 + initialY, 50, 50));
+				else tileSelected = false;
 			}
 			else tileSelected = false;
 			
@@ -267,14 +266,14 @@ public class Chess extends JFrame{
 					//remove en Passant moves
 					for (int r = 0; r < 8; r++) {
 						for (int c = 0; c < 8; c++) {
-							if (whiteToMove && board.getPiece(r, c) != null) {
+							if (board.whiteToMove && board.getPiece(r, c) != null) {
 								if (board.getPiece(r, c).getClass().getName().substring(7).equals("blackPawn")) {
 									if (board.getPiece(r, c).possibleEnPassant()) {
 										board.getPiece(r, c).switchEnPassant();
 									}
 								}
 							}
-							else if (!whiteToMove && board.getPiece(r, c) != null) {
+							else if (!board.whiteToMove && board.getPiece(r, c) != null) {
 								if (board.getPiece(r, c) != null && board.getPiece(r, c).getClass().getName().substring(7).equals("whitePawn")) {
 									if (board.getPiece(r, c).possibleEnPassant()) {
 										board.getPiece(r, c).switchEnPassant();
@@ -283,8 +282,6 @@ public class Chess extends JFrame{
 							}
 						}
 					} // end en Passant possibility switch
-					whiteToMove = !whiteToMove; //switch the turn
-					board.flipWhiteToMove();
 					return;
 				}
 				try {
