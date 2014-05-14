@@ -15,6 +15,9 @@ public class Chess extends JPanel{
 		// true if a piece is on tile and tile has been clicked on
 	private boolean tileSelected;
 	
+	private final int F_WIDTH = 575;
+	private final int F_HEIGHT = 475;
+	
 	// drawing variables
 	private boolean reverseDrawing;
 	private final int gridSize = 50;
@@ -44,60 +47,69 @@ public class Chess extends JPanel{
 	Image blackPawn;
 	//  //  //  //   //  //  //  //
 	
-	/////////// TOOLBAR STUFF ////////////
+	/////////// MENUBAR STUFF ////////////
 	JMenuBar menuBar;
 	JMenu menu;
 	JMenuItem menuItem;
 	JRadioButtonMenuItem radioButton;
 	JButton button;
 	//////////////////////////////////////
+	/////////// TOOLBAR STUFF ////////////
+	JToolBar toolBar;
+	//////////////////////////////////////
 	
 	public Chess() {
-		//initializeGUI();						// do initial GUI fancy stuff
-		//initializeToolbar();					// create the toolbar
 		loadSprites();							// get sprites
 		board = new ChessBoard();				// initialize an empty board
 		addMouseListener(new MouseListener());	// for MouseListener
 		reverseDrawing = false;					// white/black side change. false = white
 		tileSelected = false;
 	}
-	
-	/*
-	public final void initializeGUI() {
-		setTitle("Chess");
-		setSize(575, 525); //width, height
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		setFocusTraversalKeysEnabled(false);
-		setFocusable(true);
-		setResizable(false);
-		requestFocusInWindow();
-	}
-	*/
-	public final JMenuBar initializeToolbar() {
+
+	public final JMenuBar initializeMenubar() {
 		// make the toolbar
 		setLayout(new BorderLayout());
 		
 		menuBar = new JMenuBar();
 		
+		///// Game Menu
 		menu = new JMenu("Game");
 		menuItem = new JMenuItem("New");
 		menu.add(menuItem);
+		menuItem.addActionListener(new Listener_NewGame());
 		menuItem = new JMenuItem("Open");
 		menu.add(menuItem);
 		menuItem = new JMenuItem("Save");
 		menu.add(menuItem);
+		menuBar.add(menu);
 		
+		///// Connect Menu
+		menu = new JMenu("Connect");
+		menuItem = new JMenuItem("Connect to IP/Port");
+		menu.add(menuItem);
+		menuBar.add(menu);
+		
+		///// About Menu
+		menu = new JMenu("About");
+		menuItem = new JMenuItem("Help");
+		menu.add(menuItem);
+		menuItem = new JMenuItem("About");
+		menu.add(menuItem);
 		menuBar.add(menu);
 		
 		return menuBar;
 		
 	}
 	
+	public final JToolBar initializeToolbar() {
+		toolBar = new JToolBar("sidebar", SwingConstants.VERTICAL);
+		toolBar.setPreferredSize(new Dimension(50, F_HEIGHT));
+		return toolBar;
+	}
+	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(575, 525);
+		return new Dimension(F_WIDTH, F_HEIGHT);
 	}
 	
 	public final void loadSprites() {
@@ -122,7 +134,8 @@ public class Chess extends JPanel{
 		JFrame frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(c);
-		frame.setJMenuBar(c.initializeToolbar());
+		frame.setJMenuBar(c.initializeMenubar());
+		//frame.getContentPane().add(c.initializeToolbar());
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
@@ -272,7 +285,7 @@ public class Chess extends JPanel{
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			rawX = e.getX();
-			rawY = e.getY() - 25; // 25 = offset for toolbar
+			rawY = e.getY() + 25; // 25 offset for menubar
 			
 			int newSelectedCol = (rawX - initialX) / 50;
 			int newSelectedRow = 7 - ((rawY - 25 - initialY) / 50);
@@ -327,7 +340,7 @@ public class Chess extends JPanel{
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
 	
 	///////////// now for all of the 9000+ menu action listeners ///////////////
-	class NewGameListener implements ActionListener {
+	class Listener_NewGame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			board.setupDefault();
 			if (!board.whiteToMove) board.flipWhiteToMove();
