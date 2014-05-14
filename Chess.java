@@ -74,7 +74,6 @@ public class Chess extends JFrame{
 		// make the toolbar
 		JMenuBar menu = new JMenuBar();
 		JMenu game = new JMenu("Game");
-		JMenu about = new JMenu("About");
 		JMenuItem newgame = new JMenuItem("New");
 		JMenuItem open = new JMenuItem("Open");
 		JMenuItem save = new JMenuItem("Save");
@@ -83,6 +82,13 @@ public class Chess extends JFrame{
 		game.add(open);
 		game.add(save);
 		game.add(quit);
+		
+		JMenu about = new JMenu("About");
+		JMenuItem help = new JMenuItem("Help");
+		JMenuItem moreabout = new JMenuItem("About");
+		about.add(help);
+		about.add(moreabout);
+		
 		menu.add(game);
 		menu.add(about);
 		
@@ -259,7 +265,9 @@ public class Chess extends JFrame{
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			rawX = e.getX();
-			rawY = e.getY();
+			rawY = e.getY() - 25; // 25 = offset for toolbar
+			
+			System.out.println(rawX + "   " + rawY);
 			
 			int newSelectedCol = (rawX - initialX) / 50;
 			int newSelectedRow = 7 - ((rawY - 25 - initialY) / 50);
