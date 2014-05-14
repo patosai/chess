@@ -134,6 +134,12 @@ public class ChessBoard {
 	
 	// default setup
 	public void setupDefault() {
+		//preliminary clearing of board
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				board[r][c] = null;
+			}
+		}
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new whitePawn(1, i);
 			board[6][i] = new blackPawn(6, i);

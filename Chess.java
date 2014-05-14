@@ -78,10 +78,15 @@ public class Chess extends JFrame{
 		JMenuItem open = new JMenuItem("Open");
 		JMenuItem save = new JMenuItem("Save");
 		JMenuItem quit = new JMenuItem("Quit");
+		newgame.addActionListener(new NewGameListener());
 		game.add(newgame);
 		game.add(open);
 		game.add(save);
 		game.add(quit);
+		
+		JMenu connect = new JMenu("Connect");
+		JMenuItem connectIP = new JMenuItem("Connect to IP/Port");
+		connect.add(connectIP);
 		
 		JMenu about = new JMenu("About");
 		JMenuItem help = new JMenuItem("Help");
@@ -90,6 +95,7 @@ public class Chess extends JFrame{
 		about.add(moreabout);
 		
 		menu.add(game);
+		menu.add(connect);
 		menu.add(about);
 		
 		paintingContainer.setLayout(new BorderLayout());
@@ -267,8 +273,6 @@ public class Chess extends JFrame{
 			rawX = e.getX();
 			rawY = e.getY() - 25; // 25 = offset for toolbar
 			
-			System.out.println(rawX + "   " + rawY);
-			
 			int newSelectedCol = (rawX - initialX) / 50;
 			int newSelectedRow = 7 - ((rawY - 25 - initialY) / 50);
 			
@@ -276,7 +280,6 @@ public class Chess extends JFrame{
 				newSelectedCol = 7 - newSelectedCol;
 				newSelectedRow = 7 - newSelectedRow;
 			}
-			System.out.println(newSelectedRow + "  " + newSelectedCol);
 			
 			// check if new X/Y is in board bounds
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
@@ -321,4 +324,13 @@ public class Chess extends JFrame{
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
+	
+	///////////// now for all of the 9000+ menu action listeners ///////////////
+	class NewGameListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			board.setupDefault();
+			if (!board.whiteToMove) board.flipWhiteToMove();
+		}
+	}
+	////////////////////////////////////////////////////////////////////////
 }
