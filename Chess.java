@@ -19,7 +19,7 @@ public class Chess extends JFrame{
 	private boolean reverseDrawing;
 	private final int gridSize = 50;
 	private final int initialX = 25; // default 25
-	private final int initialY = 50; // default 50
+	private final int initialY = 30; // default 50
 	// mouse variables
 	private int rawX;
 	private int rawY;
@@ -44,15 +44,15 @@ public class Chess extends JFrame{
 	Image blackPawn;
 	//  //  //  //   //  //  //  //
 	
-	
-	JPanel drawing;
+	JPanel paintingContainer = new JPanel();
+	Painting painting = new Painting();
 	
 	public Chess() {
 		initializeGUI();						// do initial GUI fancy stuff
-		//initializeToolbar();					// create the toolbar
+		initializeToolbar();					// create the toolbar
 		loadSprites();							// get sprites
 		board = new ChessBoard();				// initialize an empty board
-		add(new Painting());					// for painting class
+		//add(new Painting());					// for painting class
 		addMouseListener(new MouseListener());	// for MouseListener
 		reverseDrawing = false;					// white/black side change. false = white
 		tileSelected = false;
@@ -60,7 +60,7 @@ public class Chess extends JFrame{
 	
 	public final void initializeGUI() {
 		setTitle("Chess");
-		setSize(575, 500); //width, height
+		setSize(575, 525); //width, height
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -72,23 +72,26 @@ public class Chess extends JFrame{
 	
 	public final void initializeToolbar() {
 		// make the toolbar
-		//JMenuBar menuBar;
-		//JMenu menu, submenu,
-		//JMenuItem menuItem;
+		JMenuBar menu = new JMenuBar();
+		JMenu game = new JMenu("Game");
+		JMenu about = new JMenu("About");
+		JMenuItem newgame = new JMenuItem("New");
+		JMenuItem open = new JMenuItem("Open");
+		JMenuItem save = new JMenuItem("Save");
+		JMenuItem quit = new JMenuItem("Quit");
+		game.add(newgame);
+		game.add(open);
+		game.add(save);
+		game.add(quit);
+		menu.add(game);
+		menu.add(about);
 		
-		// create the menu bar
-		JMenuBar menuBar = new JMenuBar();
+		paintingContainer.setLayout(new BorderLayout());
+		paintingContainer.add(painting, BorderLayout.CENTER);
+		setContentPane(paintingContainer);
 		
-		// create the file menu
-		JMenu menu = new JMenu("File");
-		menu.getAccessibleContext().setAccessibleDescription(
-        "Core program operations");
-		menuBar.add(menu);
-			
-			// create the New button
-		JMenuItem menuItem = new JMenuItem("New");
-		menu.add(menuItem);
-		setJMenuBar(menuBar);
+		setJMenuBar(menu);
+		
 	}
 	
 	public final void loadSprites() {
