@@ -332,5 +332,18 @@ public class Chess extends JFrame{
 			if (!board.whiteToMove) board.flipWhiteToMove();
 		}
 	}
-	////////////////////////////////////////////////////////////////////////
+	
+	class OpenGameListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+		
+		}
+	}
+	
+	class SaveGameListener implements ActionListener {
+	
+		public void actionPerformed(ActionEvent e) {
+	
+		}
+	}
+	////////////////////////////////////////////////////////////////////////////
 }
