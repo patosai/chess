@@ -8,7 +8,7 @@ import javax.swing.*;
 // import the chess pieces
 import Pieces.*;
 
-public class Chess extends JFrame{
+public class Chess extends JPanel{
 	private ChessBoard board;
 	
 	// is a tile selected and highlighted?
@@ -44,20 +44,25 @@ public class Chess extends JFrame{
 	Image blackPawn;
 	//  //  //  //   //  //  //  //
 	
-	JPanel paintingContainer = new JPanel();
-	Painting painting = new Painting();
+	/////////// TOOLBAR STUFF ////////////
+	JMenuBar menuBar;
+	JMenu menu;
+	JMenuItem menuItem;
+	JRadioButtonMenuItem radioButton;
+	JButton button;
+	//////////////////////////////////////
 	
 	public Chess() {
-		initializeGUI();						// do initial GUI fancy stuff
-		initializeToolbar();					// create the toolbar
+		//initializeGUI();						// do initial GUI fancy stuff
+		//initializeToolbar();					// create the toolbar
 		loadSprites();							// get sprites
 		board = new ChessBoard();				// initialize an empty board
-		//add(new Painting());					// for painting class
 		addMouseListener(new MouseListener());	// for MouseListener
 		reverseDrawing = false;					// white/black side change. false = white
 		tileSelected = false;
 	}
 	
+	/*
 	public final void initializeGUI() {
 		setTitle("Chess");
 		setSize(575, 525); //width, height
@@ -69,41 +74,30 @@ public class Chess extends JFrame{
 		setResizable(false);
 		requestFocusInWindow();
 	}
-	
-	public final void initializeToolbar() {
+	*/
+	public final JMenuBar initializeToolbar() {
 		// make the toolbar
-		JMenuBar menu = new JMenuBar();
-		JMenu game = new JMenu("Game");
-		JMenuItem newgame = new JMenuItem("New");
-		JMenuItem open = new JMenuItem("Open");
-		JMenuItem save = new JMenuItem("Save");
-		JMenuItem quit = new JMenuItem("Quit");
-		newgame.addActionListener(new NewGameListener());
-		game.add(newgame);
-		game.add(open);
-		game.add(save);
-		game.add(quit);
+		setLayout(new BorderLayout());
 		
-		JMenu connect = new JMenu("Connect");
-		JMenuItem connectIP = new JMenuItem("Connect to IP/Port");
-		connect.add(connectIP);
+		menuBar = new JMenuBar();
 		
-		JMenu about = new JMenu("About");
-		JMenuItem help = new JMenuItem("Help");
-		JMenuItem moreabout = new JMenuItem("About");
-		about.add(help);
-		about.add(moreabout);
+		menu = new JMenu("Game");
+		menuItem = new JMenuItem("New");
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Open");
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Save");
+		menu.add(menuItem);
 		
-		menu.add(game);
-		menu.add(connect);
-		menu.add(about);
+		menuBar.add(menu);
 		
-		paintingContainer.setLayout(new BorderLayout());
-		paintingContainer.add(painting, BorderLayout.CENTER);
-		setContentPane(paintingContainer);
+		return menuBar;
 		
-		setJMenuBar(menu);
-		
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(575, 525);
 	}
 	
 	public final void loadSprites() {
@@ -124,16 +118,24 @@ public class Chess extends JFrame{
 	
 	public static void main(String[] args) {
 		Chess c = new Chess();
+		
+		JFrame frame = new JFrame("Chess");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(c);
+		frame.setJMenuBar(c.initializeToolbar());
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
 		while (true) {
 			c.repaint();
 			try {
-				Thread.sleep(20);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {}
 		}
 	}
 	
-	//~~~~~~~~~~~~~~~~ PAINTING CLASS ~~~~~~~~~~~~~~~~//
-	public class Painting extends JPanel {
+	//~~~~~~~~~~~~~~~~ PAINTING METHOD ~~~~~~~~~~~~~~~~//
 		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -264,8 +266,7 @@ public class Chess extends JFrame{
 			} // end of chess piece position painting
 			
 		}
-	}
-	//~~~~~~~~~~~~ END OF PAINTING CLASS ~~~~~~~~~~~~~//
+	//~~~~~~~~~~~~ END OF PAINTING METHOD ~~~~~~~~~~~~~//
 	
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
@@ -330,19 +331,6 @@ public class Chess extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			board.setupDefault();
 			if (!board.whiteToMove) board.flipWhiteToMove();
-		}
-	}
-	
-	class OpenGameListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-		
-		}
-	}
-	
-	class SaveGameListener implements ActionListener {
-	
-		public void actionPerformed(ActionEvent e) {
-	
 		}
 	}
 	////////////////////////////////////////////////////////////////////////////
