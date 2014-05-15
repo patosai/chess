@@ -81,6 +81,9 @@ public class Chess extends JPanel{
 		menu.add(menuItem);
 		menuItem = new JMenuItem("Save");
 		menu.add(menuItem);
+		menuItem = new JMenuItem("Quit");
+		menu.add(menuItem);
+		menuItem.addActionListener(new Listener_QuitGame());
 		menuBar.add(menu);
 		
 		///// Connect Menu
@@ -344,6 +347,12 @@ public class Chess extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			board.setupDefault();
 			if (!board.whiteToMove) board.flipWhiteToMove();
+		}
+	}
+	
+	class Listener_QuitGame implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
 		}
 	}
 	////////////////////////////////////////////////////////////////////////////
