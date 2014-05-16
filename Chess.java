@@ -15,7 +15,7 @@ public class Chess extends JPanel{
 		// true if a piece is on tile and tile has been clicked on
 	private boolean tileSelected;
 	
-	private final int F_WIDTH = 575;
+	private final int F_WIDTH = 475;
 	private final int F_HEIGHT = 475;
 	
 	// drawing variables
@@ -105,8 +105,9 @@ public class Chess extends JPanel{
 	}
 	
 	public final JToolBar initializeToolbar() {
-		toolBar = new JToolBar("sidebar", SwingConstants.VERTICAL);
-		toolBar.setPreferredSize(new Dimension(50, F_HEIGHT));
+		toolBar = new JToolBar("sidebar", JToolBar.VERTICAL);
+		toolBar.setPreferredSize(new Dimension(100, F_HEIGHT));
+		toolBar.setFloatable(false);
 		return toolBar;
 	}
 	
@@ -138,7 +139,7 @@ public class Chess extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(c);
 		frame.setJMenuBar(c.initializeMenubar());
-		//frame.getContentPane().add(c.initializeToolbar());
+		frame.getContentPane().add(c.initializeToolbar(), BorderLayout.EAST);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
