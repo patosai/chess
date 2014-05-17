@@ -134,11 +134,6 @@ public class ChessBoard {
 		return true;
 	}
 	
-	public void updateCheckNotice(JTextArea textArea) {
-		if (whiteInCheck) textArea.append("White is in check!\n");
-		if (blackInCheck) textArea.append("Black is in check!\n");
-	}
-	
 	// default setup
 	public void setupDefault() {
 		//preliminary clearing of board

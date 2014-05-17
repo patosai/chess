@@ -138,6 +138,10 @@ public class Chess extends JPanel{
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
 	}
 	
+	public final void updateCheckNotice() {
+		
+	}
+	
 	public static void main(String[] args) {
 		Chess c = new Chess();
 		
