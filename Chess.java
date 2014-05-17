@@ -110,7 +110,7 @@ public class Chess extends JPanel{
 		toolBar.setPreferredSize(new Dimension(100, F_HEIGHT));
 		toolBar.setFloatable(false);
 		checkNotice = new JTextArea("test");
-		checkNotice.setWrapStyleWord(true);
+		checkNotice.setLineWrap(true);
 		checkNotice.setEditable(false);
 		
 		toolBar.add(checkNotice);
@@ -138,11 +138,6 @@ public class Chess extends JPanel{
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
 	}
 	
-	public final void updateCheckNotices() {
-		if (board.whiteInCheck) checkNotice.append("White is in check!");
-		if (board.blackInCheck) checkNotice.append("Black is in check!");
-	}
-	
 	public static void main(String[] args) {
 		Chess c = new Chess();
 		
@@ -156,7 +151,6 @@ public class Chess extends JPanel{
 		frame.setVisible(true);
 		
 		while (true) {
-			c.updateCheckNotices();
 			c.repaint();
 			try {
 				Thread.sleep(100);

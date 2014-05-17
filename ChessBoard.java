@@ -1,3 +1,4 @@
+import javax.swing.*;
 import Pieces.*;
 
 public class ChessBoard {
@@ -125,11 +126,17 @@ public class ChessBoard {
 			blackInCheck = true;
 		}
 		else blackInCheck = false;
+		updateCheckNotice(null);
 		movePiece(finalRow, finalCol, initialRow, initialCol);
 		board[finalRow][finalCol] = temp;
 		
 		flipWhiteToMove();
 		return true;
+	}
+	
+	public void updateCheckNotice(JTextArea textArea) {
+		if (whiteInCheck) textArea.append("White is in check!\n");
+		if (blackInCheck) textArea.append("Black is in check!\n");
 	}
 	
 	// default setup
