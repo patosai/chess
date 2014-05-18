@@ -9,6 +9,8 @@ public class ChessBoard {
 	protected boolean whiteInCheck;
 	protected boolean blackInCheck;
 	
+	protected int moveCounter = 1;
+	
 	//JTextArea stuff for toolbar
 	protected JTextArea checkNotice;
 	protected JTextArea showMoves;
@@ -151,8 +153,11 @@ public class ChessBoard {
 		}
 		
 		//update move JTextArea
-		if (whiteToMove) showMoves.append(String.format("%-11s", pieceMove));
-		else showMoves.append(pieceMove + "\n");
+		if (whiteToMove) showMoves.append(String.format("%-11s", moveCounter + ". " + pieceMove));
+		else {
+			showMoves.append(pieceMove + "\n");
+			moveCounter++;
+		}
 		
 		flipWhiteToMove();
 		return true;
