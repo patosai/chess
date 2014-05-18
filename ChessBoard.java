@@ -9,6 +9,10 @@ public class ChessBoard {
 	protected boolean whiteInCheck;
 	protected boolean blackInCheck;
 	
+	//JTextArea stuff for toolbar
+	protected JTextArea checkNotice;
+	protected JTextArea showMoves;
+	
 	public ChessBoard() {
 		board = new ChessPiece[8][8];
 		whiteToMove = true;
@@ -126,7 +130,7 @@ public class ChessBoard {
 			blackInCheck = true;
 		}
 		else blackInCheck = false;
-		updateCheckNotice(null);
+		//updateCheckNotice(null);
 		movePiece(finalRow, finalCol, initialRow, initialCol);
 		board[finalRow][finalCol] = temp;
 		

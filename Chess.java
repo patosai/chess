@@ -56,7 +56,6 @@ public class Chess extends JPanel{
 	//////////////////////////////////////
 	/////////// TOOLBAR STUFF ////////////
 	JToolBar toolBar;
-	JTextArea checkNotice;
 	//////////////////////////////////////
 	
 	public Chess() {
@@ -109,11 +108,23 @@ public class Chess extends JPanel{
 		toolBar = new JToolBar("sidebar", JToolBar.VERTICAL);
 		toolBar.setPreferredSize(new Dimension(100, F_HEIGHT));
 		toolBar.setFloatable(false);
-		checkNotice = new JTextArea("test");
-		checkNotice.setLineWrap(true);
-		checkNotice.setEditable(false);
 		
-		toolBar.add(checkNotice);
+		//toolBar.setLayout(new GridBagLayout());
+		//GridBagConstraints c = new GridBagConstraints();
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		
+		board.checkNotice = new JTextArea("Black is in check!", 3, 1);
+		board.checkNotice.setFont(new Font("Verdana", Font.BOLD, 16));
+		board.checkNotice.setForeground(Color.RED);
+		board.checkNotice.setEditable(false);
+		board.checkNotice.setLineWrap(true);
+		board.checkNotice.setMaximumSize(board.checkNotice.getPreferredSize());
+		toolBar.add(board.checkNotice);
+		
+		board.showMoves = new JTextArea("move panel works!", 1,1);
+		board.showMoves.setLineWrap(true);
+		board.showMoves.setEditable(false);
+		toolBar.add(board.showMoves, BorderLayout.CENTER);
 		return toolBar;
 	}
 	
