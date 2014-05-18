@@ -140,9 +140,19 @@ public class ChessBoard {
 			blackInCheck = true;
 		}
 		else blackInCheck = false;
-		//updateCheckNotice(null);
+		
+		//for JTextArea
+		String pieceMove = board[finalRow][finalCol].toString();
+		
 		movePiece(finalRow, finalCol, initialRow, initialCol);
 		board[finalRow][finalCol] = temp;
+		if (board[finalRow][finalCol] != null) {
+			pieceMove = pieceMove.substring(0, pieceMove.length() - 2) + "x" + pieceMove.substring(pieceMove.length() - 2, pieceMove.length());
+		}
+		
+		//update move JTextArea
+		if (whiteToMove) showMoves.append(String.format("%-11s", pieceMove));
+		else showMoves.append(pieceMove + "\n");
 		
 		flipWhiteToMove();
 		return true;

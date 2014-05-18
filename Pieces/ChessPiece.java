@@ -17,7 +17,7 @@ public abstract class ChessPiece {
 	public void setCol(int col) {this.col = col;}
 	
 	public String colToLetter() {
-		return (char)(65 + col) + "";
+		return (char)(97 + col) + "";
 	}
 	
 	public String toString() {
