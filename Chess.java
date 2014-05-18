@@ -11,6 +11,7 @@ import Pieces.*;
 public class Chess extends JPanel{
 	private ChessBoard board;
 	
+	private String playerName;
 	private JTextArea chatBox;
 	private JTextField chatField;
 	
