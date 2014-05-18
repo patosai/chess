@@ -116,7 +116,7 @@ public class Chess extends JPanel{
 		//GridBagConstraints c = new GridBagConstraints();
 		//c.fill = GridBagConstraints.HORIZONTAL;
 		
-		board.checkNotice = new JTextArea("Black is in check!", 2, 1);
+		board.checkNotice = new JTextArea(2, 1);
 		board.checkNotice.setFont(new Font("Verdana", Font.BOLD, 16));
 		board.checkNotice.setForeground(Color.RED);
 		board.checkNotice.setBackground(Color.BLACK);

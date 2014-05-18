@@ -117,6 +117,16 @@ public class ChessBoard {
 			movePiece(finalRow, finalCol, initialRow, initialCol);
 			return false;
 		}
+			//update check notice
+		if (!whiteToMove && whiteKing.amIInCheck(board)) {
+			checkNotice.setText("");
+			checkNotice.append("White is in check!");
+		}
+		else if (whiteToMove && blackKing.amIInCheck(board)) {
+			checkNotice.setText("");
+			checkNotice.append("Black is in check!");
+		}
+		else checkNotice.setText("");
 		movePiece(finalRow, finalCol, initialRow, initialCol);
 		board[finalRow][finalCol] = temp;
 		
