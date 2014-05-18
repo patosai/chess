@@ -11,6 +11,9 @@ import Pieces.*;
 public class Chess extends JPanel{
 	private ChessBoard board;
 	
+	private JTextArea chatBox;
+	private JTextField chatField;
+	
 	// is a tile selected and highlighted?
 		// true if a piece is on tile and tile has been clicked on
 	private boolean tileSelected;
@@ -113,18 +116,33 @@ public class Chess extends JPanel{
 		//GridBagConstraints c = new GridBagConstraints();
 		//c.fill = GridBagConstraints.HORIZONTAL;
 		
-		board.checkNotice = new JTextArea("Black is in check!", 3, 1);
+		board.checkNotice = new JTextArea("Black is in check!", 2, 1);
 		board.checkNotice.setFont(new Font("Verdana", Font.BOLD, 16));
 		board.checkNotice.setForeground(Color.RED);
+		board.checkNotice.setBackground(Color.BLACK);
 		board.checkNotice.setEditable(false);
 		board.checkNotice.setLineWrap(true);
 		board.checkNotice.setMaximumSize(board.checkNotice.getPreferredSize());
 		toolBar.add(board.checkNotice);
 		
-		board.showMoves = new JTextArea("move panel works!", 1,1);
+		board.showMoves = new JTextArea("move panel works!", 10, 1);
+		board.showMoves.setBackground(new Color(179, 179, 179));
 		board.showMoves.setLineWrap(true);
 		board.showMoves.setEditable(false);
-		toolBar.add(board.showMoves, BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(board.showMoves);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
+		toolBar.add(scrollPane, BorderLayout.CENTER);
+		
+		chatBox = new JTextArea();
+		chatBox.setEditable(false);
+		chatBox.setLineWrap(true);
+		chatBox.setPreferredSize(new Dimension(100, 300));
+		toolBar.add(chatBox);
+		
+		chatField = new JTextField();
+		toolBar.add(chatField);
+		
 		return toolBar;
 	}
 	
