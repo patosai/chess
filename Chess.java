@@ -235,7 +235,7 @@ public class Chess extends JPanel{
 					g2.drawString(8 - i + "", tempX, tempY);
 				}
 				else {
-					g2.drawString(i + "", tempX, tempY);
+					g2.drawString((i + 1) + "", tempX, tempY);
 				}
 				tempX += gridSize;
 			}

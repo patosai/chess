@@ -151,6 +151,7 @@ public class ChessBoard {
 		if (board[finalRow][finalCol] != null) {
 			pieceMove = pieceMove.substring(0, pieceMove.length() - 2) + "x" + pieceMove.substring(pieceMove.length() - 2, pieceMove.length());
 		}
+		if (whiteInCheck || blackInCheck) pieceMove = pieceMove + "+";
 		
 		//update move JTextArea
 		if (whiteToMove) showMoves.append(String.format("%-11s", moveCounter + ". " + pieceMove));
