@@ -134,7 +134,7 @@ public class Chess extends JPanel{
 		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
 		toolBar.add(scrollPane, BorderLayout.CENTER);
 		
-		chatBox = new JTextArea();
+		chatBox = new JTextArea("chat box works too!");
 		chatBox.setEditable(false);
 		chatBox.setLineWrap(true);
 		chatBox.setPreferredSize(new Dimension(100, 300));
