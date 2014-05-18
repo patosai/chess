@@ -15,6 +15,9 @@ Credits
 
 Changelog
 --------------
+`2014-05-18`
+- Added components to side toolbar; action handling still to be implemented
+
 `2014-05-13`
 - Completed king + castling checks - all piece checks now complete!!
 - Completed checks of king moving into check, king having to get out of check, king castling through check
