@@ -88,6 +88,14 @@ public class Chess extends JPanel{
 		menuItem = new JMenuItem("Quit");
 		menu.add(menuItem);
 		menuItem.addActionListener(new Listener_QuitGame());
+		menu.addSeparator();
+		menuItem = new JMenuItem("Undo move");
+		menuItem.addActionListener(new Listener_Undo());
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Redo move");
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Resign");
+		menu.add(menuItem);
 		menuBar.add(menu);
 		
 		///// Connect Menu
@@ -166,10 +174,6 @@ public class Chess extends JPanel{
 		blackBishop = tkit.getImage(Chess.class.getResource("Sprites/blackBishop.png"));
 		blackKnight = tkit.getImage(Chess.class.getResource("Sprites/blackKnight.png"));
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
-	}
-	
-	public final void updateCheckNotice() {
-		
 	}
 	
 	public static void main(String[] args) {
@@ -394,6 +398,14 @@ public class Chess extends JPanel{
 	class Listener_QuitGame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
+		}
+	}
+	
+	class Listener_Undo implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (board.undoArray.size() > 0) {
+				board.undo();
+			}
 		}
 	}
 	////////////////////////////////////////////////////////////////////////////

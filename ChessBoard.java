@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import javax.swing.*;
 import Pieces.*;
 
@@ -10,6 +11,9 @@ public class ChessBoard {
 	protected boolean blackInCheck;
 	
 	protected int moveCounter = 1;
+	
+	//for undo
+	ArrayList<UndoMoveObject> undoArray = new ArrayList<UndoMoveObject>();
 	
 	//JTextArea stuff for toolbar
 	protected JTextArea checkNotice;
@@ -160,8 +164,22 @@ public class ChessBoard {
 			moveCounter++;
 		}
 		
+		//add to undo move array
+		UndoMoveObject newUndo = new UndoMoveObject(board[initialRow][initialCol], initialRow, initialCol, board[finalRow][finalCol]);
+		undoArray.add(newUndo);
+		
 		flipWhiteToMove();
 		return true;
+	}
+	
+	public void undo() {
+		UndoMoveObject undo = undoArray.get(undoArray.size() - 1);
+		int row = undo.getUndoPiece().getRow();
+		int col = undo.getUndoPiece().getCol();
+		movePiece(row, col, undo.getLastRow(), undo.getLastCol());
+		board[row][col] = undo.getTakenPiece();
+		flipWhiteToMove();
+		undoArray.remove(undoArray.size() - 1);
 	}
 	
 	// default setup
