@@ -102,6 +102,7 @@ public class Chess extends JPanel{
 		
 		menuItem = new JMenuItem("Undo move");
 		menuItem.setActionCommand("undo_move");
+		//menuItem.setMnemonic(KeyEvent.VK_U);
 		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
 		
@@ -416,21 +417,7 @@ public class Chess extends JPanel{
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
 	
-	///////////// now for all of the 9000+ menu action listeners ///////////////
-	class Listener_NewGame implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			board.setupDefault();
-			if (!board.whiteToMove) board.flipWhiteToMove();
-			board.resetBoard();
-		}
-	}
-	
-	class Listener_QuitGame implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-		}
-	}
-	
+	///////////// now for all the action listener ///////////////
 	class AllEncompassingListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			switch (e.getActionCommand()) {
