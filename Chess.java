@@ -11,7 +11,7 @@ import Pieces.*;
 public class Chess extends JPanel{
 	private ChessBoard board;
 	
-	private String playerName;
+	private String playerName = "default";
 	private JTextArea chatBox;
 	private JTextField chatField;
 	
@@ -80,17 +80,25 @@ public class Chess extends JPanel{
 		menu = new JMenu("Game");
 		menuItem = new JMenuItem("New");
 		menu.add(menuItem);
-		menuItem.addActionListener(new Listener_NewGame());
+		//menuItem.addActionListener(new Listener_NewGame());
+		menuItem.setActionCommand("new_game");
+		menuItem.addActionListener(new AllEncompassingListener());
+		
 		menuItem = new JMenuItem("Open");
 		menu.add(menuItem);
+		
 		menuItem = new JMenuItem("Save");
 		menu.add(menuItem);
+		
 		menuItem = new JMenuItem("Quit");
 		menu.add(menuItem);
-		menuItem.addActionListener(new Listener_QuitGame());
+		
+		menuItem.setActionCommand("quit");
+		menuItem.addActionListener(new AllEncompassingListener());
 		menu.addSeparator();
 		menuItem = new JMenuItem("Undo move");
-		menuItem.addActionListener(new Listener_Undo());
+		menuItem.setActionCommand("undo_move");
+		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
 		menuItem = new JMenuItem("Redo move");
 		menu.add(menuItem);
@@ -150,6 +158,8 @@ public class Chess extends JPanel{
 		toolBar.add(chatBox);
 		
 		chatField = new JTextField();
+		chatField.setActionCommand("chatbox_message");
+		chatField.addActionListener(new AllEncompassingListener());
 		toolBar.add(chatField);
 		
 		return toolBar;
@@ -392,6 +402,7 @@ public class Chess extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			board.setupDefault();
 			if (!board.whiteToMove) board.flipWhiteToMove();
+			board.resetBoard();
 		}
 	}
 	
@@ -401,10 +412,22 @@ public class Chess extends JPanel{
 		}
 	}
 	
-	class Listener_Undo implements ActionListener {
+	class AllEncompassingListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (board.undoArray.size() > 0) {
-				board.undo();
+			switch (e.getActionCommand()) {
+				case "new_game":
+					board.setupDefault();
+					if (!board.whiteToMove) board.flipWhiteToMove();
+					break;
+				case "quit":
+					System.exit(0);
+				case "undo_move":
+					if (board.undoArray.size() > 0) {
+						board.undo();
+					}
+					break;
+				default:
+					break;
 			}
 		}
 	}

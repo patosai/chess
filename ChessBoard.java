@@ -206,6 +206,12 @@ public class ChessBoard {
 		
 	}
 	
+	public void resetBoard() {
+		moveCounter = 1;
+		showMoves.setText(String.format("%-8s", "  White") + "| Black\n");
+		checkNotice.setText("");
+	}
+	
 	// default setup
 	public void setupDefault() {
 		//preliminary clearing of board
