@@ -17,6 +17,7 @@ Changelog
 --------------
 `2014-05-19`
 - Completed most undo move functions
+- Added chat box functionality
 
 `2014-05-18`
 - Added components to side toolbar; action handling still to be implemented

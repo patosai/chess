@@ -121,6 +121,14 @@ public class Chess extends JPanel{
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
+		///// Options Menu
+		menu = new JMenu("Options");
+		menuItem = new JMenuItem("Change name");
+		menu.add(menuItem);
+		menuItem.setActionCommand("change_name");
+		menuItem.addActionListener(new AllEncompassingListener());
+		menuBar.add(menu);
+		
 		///// About Menu
 		menu = new JMenu("About");
 		menuItem = new JMenuItem("Help");
@@ -163,7 +171,6 @@ public class Chess extends JPanel{
 		chatBox = new JTextArea();
 		chatBox.setEditable(false);
 		chatBox.setLineWrap(true);
-		chatBox.setPreferredSize(new Dimension(100, 300));
 		scrollPane = new JScrollPane(chatBox);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
@@ -438,10 +445,15 @@ public class Chess extends JPanel{
 						board.undo();
 					}
 					break;
+				case "change_name":
+					String newname = JOptionPane.showInputDialog("Enter a new name here:");
+					playerName = newname;
+					break;
 				case "chatbox_message":
 					String message = chatField.getText();
 					chatField.setText("");
 					chatBox.append(playerName + ": " + message + "\n");
+					break;
 				default:
 					break;
 			}
