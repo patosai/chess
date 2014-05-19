@@ -178,8 +178,30 @@ public class ChessBoard {
 		int col = undo.getUndoPiece().getCol();
 		movePiece(row, col, undo.getLastRow(), undo.getLastCol());
 		board[row][col] = undo.getTakenPiece();
-		flipWhiteToMove();
 		undoArray.remove(undoArray.size() - 1);
+		// truncate move JTextArea
+			//undo black's move
+			/*
+		String moveText = showMoves.getText();
+		int truncateLocation = 0;
+		if (whiteToMove) {
+			for (truncateLocation = moveText.length() - 3; truncateLocation > moveText.length() - 11; truncateLocation--) {
+				if (moveText.charAt(truncateLocation) == ' ') return;
+			}
+			moveText = moveText.substring(0, truncateLocation + 1);
+		}
+			//undo white's move
+		if (!whiteToMove) {
+			for (truncateLocation = moveText.length() - 1; truncateLocation > moveText.length() - 11; truncateLocation--) {
+				if (moveText.charAt(truncateLocation) == '.') return;
+			}
+			moveText = moveText.substring(0, truncateLocation - 1);
+			moveCounter--;
+		}
+		showMoves.setText(moveText);
+		*/
+		flipWhiteToMove();
+		
 	}
 	
 	// default setup
