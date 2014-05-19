@@ -86,24 +86,33 @@ public class Chess extends JPanel{
 		
 		menuItem = new JMenuItem("Open");
 		menu.add(menuItem);
+		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Save");
 		menu.add(menuItem);
+		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Quit");
 		menu.add(menuItem);
+		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem.setActionCommand("quit");
 		menuItem.addActionListener(new AllEncompassingListener());
 		menu.addSeparator();
+		
 		menuItem = new JMenuItem("Undo move");
 		menuItem.setActionCommand("undo_move");
 		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
+		
 		menuItem = new JMenuItem("Redo move");
 		menu.add(menuItem);
+		menuItem.addActionListener(new AllEncompassingListener());
+		
 		menuItem = new JMenuItem("Resign");
 		menu.add(menuItem);
+		menuItem.addActionListener(new AllEncompassingListener());
+		
 		menuBar.add(menu);
 		
 		///// Connect Menu
@@ -151,11 +160,14 @@ public class Chess extends JPanel{
 		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
 		toolBar.add(scrollPane, BorderLayout.CENTER);
 		
-		chatBox = new JTextArea("chat box works too!");
+		chatBox = new JTextArea();
 		chatBox.setEditable(false);
 		chatBox.setLineWrap(true);
 		chatBox.setPreferredSize(new Dimension(100, 300));
-		toolBar.add(chatBox);
+		scrollPane = new JScrollPane(chatBox);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
+		toolBar.add(scrollPane, BorderLayout.CENTER);
 		
 		chatField = new JTextField();
 		chatField.setActionCommand("chatbox_message");
@@ -426,6 +438,10 @@ public class Chess extends JPanel{
 						board.undo();
 					}
 					break;
+				case "chatbox_message":
+					String message = chatField.getText();
+					chatField.setText("");
+					chatBox.append(playerName + ": " + message + "\n");
 				default:
 					break;
 			}
