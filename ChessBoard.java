@@ -158,7 +158,9 @@ public class ChessBoard {
 		if (whiteInCheck || blackInCheck) pieceMove = pieceMove + "+";
 		
 		//update move JTextArea
-		if (whiteToMove) showMoves.append(String.format("%-11s", moveCounter + ". " + pieceMove));
+		if (whiteToMove) {
+			showMoves.append(String.format("%-11s", moveCounter + ". " + pieceMove));
+		}
 		else {
 			showMoves.append(pieceMove + "\n");
 			moveCounter++;
@@ -166,6 +168,7 @@ public class ChessBoard {
 		
 		//add to undo move array
 		UndoMoveObject newUndo = new UndoMoveObject(board[initialRow][initialCol], initialRow, initialCol, board[finalRow][finalCol]);
+		if (!(board[initialRow][initialCol].haveIMoved())) newUndo.setNotMoved();
 		undoArray.add(newUndo);
 		
 		flipWhiteToMove();
@@ -178,28 +181,27 @@ public class ChessBoard {
 		int col = undo.getUndoPiece().getCol();
 		movePiece(row, col, undo.getLastRow(), undo.getLastCol());
 		board[row][col] = undo.getTakenPiece();
+		if (undo.hadNotMoved()) board[undo.getLastRow()][undo.getLastCol()].undoHasMoved();
 		undoArray.remove(undoArray.size() - 1);
 		// truncate move JTextArea
 			//undo black's move
-			/*
 		String moveText = showMoves.getText();
 		int truncateLocation = 0;
 		if (whiteToMove) {
-			for (truncateLocation = moveText.length() - 3; truncateLocation > moveText.length() - 11; truncateLocation--) {
-				if (moveText.charAt(truncateLocation) == ' ') return;
+			for (truncateLocation = moveText.length() - 1; truncateLocation > moveText.length() - 20; truncateLocation--) {
+				if (moveText.charAt(truncateLocation) == ' ') break;
 			}
 			moveText = moveText.substring(0, truncateLocation + 1);
+			moveCounter--;
 		}
 			//undo white's move
 		if (!whiteToMove) {
-			for (truncateLocation = moveText.length() - 1; truncateLocation > moveText.length() - 11; truncateLocation--) {
-				if (moveText.charAt(truncateLocation) == '.') return;
+			for (truncateLocation = moveText.length() - 1; truncateLocation > moveText.length() - 20; truncateLocation--) {
+				if (moveText.charAt(truncateLocation) == '.') break;
 			}
 			moveText = moveText.substring(0, truncateLocation - 1);
-			moveCounter--;
 		}
 		showMoves.setText(moveText);
-		*/
 		flipWhiteToMove();
 		
 	}

@@ -6,6 +6,7 @@ public class UndoMoveObject {
 	
 	private int lastCol;
 	private int lastRow;
+	private boolean hadntMoved;
 	
 	public UndoMoveObject(ChessPiece piece, int lastRow, int lastCol, ChessPiece gonePiece) {
 		pieceLastMoved = piece;
@@ -28,5 +29,13 @@ public class UndoMoveObject {
 	
 	public ChessPiece getUndoPiece() {
 		return pieceLastMoved;
+	}
+	
+	public boolean hadNotMoved() {
+		return hadntMoved;
+	}
+	
+	public void setNotMoved() {
+		hadntMoved = true;
 	}
 }

@@ -32,6 +32,14 @@ public abstract class ChessPiece {
 		if (!hasMoved) hasMoved = true;
 	}
 	
+	public boolean haveIMoved() {
+		return hasMoved;
+	}
+	
+	public void undoHasMoved() {
+		hasMoved = false;
+	}
+	
 	public abstract boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol);
 	
 	public abstract boolean possibleEnPassant();
