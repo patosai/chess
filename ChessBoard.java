@@ -14,6 +14,8 @@ public class ChessBoard {
 	
 	//for undo
 	ArrayList<UndoMoveObject> undoArray = new ArrayList<UndoMoveObject>();
+	//for redo
+	ArrayList<RedoMoveObject> redoArray = new ArrayList<RedoMoveObject>();
 	
 	//JTextArea stuff for toolbar
 	protected JTextArea checkNotice;
@@ -182,6 +184,11 @@ public class ChessBoard {
 		movePiece(row, col, undo.getLastRow(), undo.getLastCol());
 		board[row][col] = undo.getTakenPiece();
 		if (undo.hadNotMoved()) board[undo.getLastRow()][undo.getLastCol()].undoHasMoved();
+		
+		//make redo object
+		RedoMoveObject newRedo = new RedoMoveObject(board[undo.getLastRow()][undo.getLastCol()], row, col);
+		redoArray.add(newRedo);
+		
 		undoArray.remove(undoArray.size() - 1);
 		// truncate move JTextArea
 			//undo black's move
@@ -204,6 +211,15 @@ public class ChessBoard {
 		showMoves.setText(moveText);
 		flipWhiteToMove();
 		
+		
+	}
+	
+	public void redo() {
+		if (redoArray.size() == 0) return;
+		RedoMoveObject redoObject = redoArray.get(redoArray.size() - 1);
+		ChessPiece redoPiece = redoObject.getRedoPiece();
+		movePiece(redoPiece.getRow(), redoPiece.getCol(), redoObject.getFutureRow(), redoObject.getFutureCol());
+		redoArray.remove(redoArray.size() - 1);
 	}
 	
 	public void resetBoard() {
