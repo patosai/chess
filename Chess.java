@@ -109,6 +109,7 @@ public class Chess extends JPanel{
 		
 		menuItem = new JMenuItem("Redo move");
 		menuItem.setMnemonic('R');
+		menuItem.setActionCommand("redo_move");
 		menu.add(menuItem);
 		menuItem.addActionListener(new AllEncompassingListener());
 		
@@ -448,6 +449,9 @@ public class Chess extends JPanel{
 					if (board.undoArray.size() > 0) {
 						board.undo();
 					}
+					break;
+				case "redo_move":
+					board.redo();
 					break;
 				case "change_name":
 					String newname = JOptionPane.showInputDialog("Enter a new name here:");

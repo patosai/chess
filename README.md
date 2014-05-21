@@ -18,6 +18,7 @@ Changelog
 `2014-05-21`
 - Mnemonics (keyboard shortcuts) now work
 - Created about window
+- Created redo moving
 
 `2014-05-19`
 - Completed most undo move functions
