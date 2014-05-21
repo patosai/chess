@@ -78,7 +78,7 @@ public class Chess extends JPanel{
 		
 		///// Game Menu
 		menu = new JMenu("Game");
-		//menu.setMnemonic(KeyEvent.VK_G);
+		menu.setMnemonic('G');
 		menuItem = new JMenuItem("New");
 		menu.add(menuItem);
 		//menuItem.addActionListener(new Listener_NewGame());
@@ -103,11 +103,12 @@ public class Chess extends JPanel{
 		
 		menuItem = new JMenuItem("Undo move");
 		menuItem.setActionCommand("undo_move");
-		//menuItem.setMnemonic('U');
+		menuItem.setMnemonic('U');
 		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Redo move");
+		menuItem.setMnemonic('R');
 		menu.add(menuItem);
 		menuItem.addActionListener(new AllEncompassingListener());
 		
@@ -119,6 +120,7 @@ public class Chess extends JPanel{
 		
 		///// Connect Menu
 		menu = new JMenu("Connect");
+		menu.setMnemonic('C');
 		menuItem = new JMenuItem("Connect to IP/Port");
 		menu.add(menuItem);
 		menuBar.add(menu);
