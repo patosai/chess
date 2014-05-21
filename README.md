@@ -15,6 +15,8 @@ Credits
 
 Changelog
 --------------
+`2014-05-21`
+- Mnemonics (keyboard shortcuts) now work
 `2014-05-19`
 - Completed most undo move functions
 - Added chat box functionality

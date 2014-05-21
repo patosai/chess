@@ -122,12 +122,15 @@ public class Chess extends JPanel{
 		menu = new JMenu("Connect");
 		menu.setMnemonic('C');
 		menuItem = new JMenuItem("Connect to IP/Port");
+		menuItem.setMnemonic('C');
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
 		///// Options Menu
 		menu = new JMenu("Options");
+		menu.setMnemonic('O');
 		menuItem = new JMenuItem("Change name");
+		menuItem.setMnemonic('C');
 		menu.add(menuItem);
 		menuItem.setActionCommand("change_name");
 		menuItem.addActionListener(new AllEncompassingListener());
@@ -135,9 +138,12 @@ public class Chess extends JPanel{
 		
 		///// About Menu
 		menu = new JMenu("About");
+		menu.setMnemonic('A');
 		menuItem = new JMenuItem("Help");
+		menuItem.setMnemonic('H');
 		menu.add(menuItem);
 		menuItem = new JMenuItem("About");
+		menuItem.setMnemonic('A');
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
