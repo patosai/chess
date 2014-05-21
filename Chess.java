@@ -144,6 +144,8 @@ public class Chess extends JPanel{
 		menu.add(menuItem);
 		menuItem = new JMenuItem("About");
 		menuItem.setMnemonic('A');
+		menuItem.setActionCommand("about");
+		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
@@ -213,6 +215,12 @@ public class Chess extends JPanel{
 		blackBishop = tkit.getImage(Chess.class.getResource("Sprites/blackBishop.png"));
 		blackKnight = tkit.getImage(Chess.class.getResource("Sprites/blackKnight.png"));
 		blackPawn   = tkit.getImage(Chess.class.getResource("Sprites/blackPawn.png"));
+	}
+	
+	public final void showAbout() {
+		String about = ("Created by Patrick Tsai, 2014");
+		
+		JOptionPane.showMessageDialog(this, about);
 	}
 	
 	public static void main(String[] args) {
@@ -449,6 +457,9 @@ public class Chess extends JPanel{
 					String message = chatField.getText();
 					chatField.setText("");
 					chatBox.append(playerName + ": " + message + "\n");
+					break;
+				case "about":
+					showAbout();
 					break;
 				default:
 					break;
