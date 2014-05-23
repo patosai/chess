@@ -81,24 +81,25 @@ public class Chess extends JPanel{
 		menu.setMnemonic('G');
 		menuItem = new JMenuItem("New");
 		menu.add(menuItem);
-		//menuItem.addActionListener(new Listener_NewGame());
 		menuItem.setActionCommand("new_game");
+		menuItem.setMnemonic('N');
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Open");
 		menu.add(menuItem);
+		menuItem.setMnemonic('O');
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Save");
 		menu.add(menuItem);
+		menuItem.setMnemonic('S');
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Quit");
 		menu.add(menuItem);
+		menuItem.setMnemonic('Q');
 		menuItem.addActionListener(new AllEncompassingListener());
-		
 		menuItem.setActionCommand("quit");
-		menuItem.addActionListener(new AllEncompassingListener());
 		menu.addSeparator();
 		
 		menuItem = new JMenuItem("Undo move");
@@ -114,6 +115,7 @@ public class Chess extends JPanel{
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Resign");
+		menuItem.setMnemonic('E');
 		menu.add(menuItem);
 		menuItem.addActionListener(new AllEncompassingListener());
 		
