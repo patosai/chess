@@ -88,11 +88,13 @@ public class Chess extends JPanel{
 		menuItem = new JMenuItem("Open");
 		menu.add(menuItem);
 		menuItem.setMnemonic('O');
+		menuItem.setActionCommand("open");
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Save");
 		menu.add(menuItem);
 		menuItem.setMnemonic('S');
+		menuItem.setActionCommand("save");
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuItem = new JMenuItem("Quit");
@@ -117,6 +119,7 @@ public class Chess extends JPanel{
 		menuItem = new JMenuItem("Resign");
 		menuItem.setMnemonic('E');
 		menu.add(menuItem);
+		menuItem.setActionCommand("resign");
 		menuItem.addActionListener(new AllEncompassingListener());
 		
 		menuBar.add(menu);
@@ -454,6 +457,8 @@ public class Chess extends JPanel{
 					break;
 				case "redo_move":
 					board.redo();
+					break;
+				case "resign":
 					break;
 				case "change_name":
 					String newname = JOptionPane.showInputDialog("Enter a new name here:");
