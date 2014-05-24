@@ -459,6 +459,7 @@ public class Chess extends JPanel{
 					board.redo();
 					break;
 				case "resign":
+					chatBox.append(playerName + " has resigned!\n");
 					break;
 				case "change_name":
 					String newname = JOptionPane.showInputDialog("Enter a new name here:");
