@@ -1,9 +1,11 @@
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
+import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.filechooser.*;
 
 // import the chess pieces
 import Pieces.*;
@@ -11,10 +13,10 @@ import Pieces.*;
 public class Chess extends JPanel{
 	private ChessBoard board;
 	
-	private String playerName = "default";
+	private JFrame frame;
 	private JTextArea chatBox;
 	private JTextField chatField;
-	
+	private String playerName = "default";
 	// is a tile selected and highlighted?
 		// true if a piece is on tile and tile has been clicked on
 	private boolean tileSelected;
@@ -232,14 +234,14 @@ public class Chess extends JPanel{
 	public static void main(String[] args) {
 		Chess c = new Chess();
 		
-		JFrame frame = new JFrame("Chess");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(c);
-		frame.setJMenuBar(c.initializeMenubar());
-		frame.getContentPane().add(c.initializeToolbar(), BorderLayout.EAST);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		c.frame = new JFrame("Chess");
+		c.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		c.frame.getContentPane().add(c);
+		c.frame.setJMenuBar(c.initializeMenubar());
+		c.frame.getContentPane().add(c.initializeToolbar(), BorderLayout.EAST);
+		c.frame.pack();
+		c.frame.setLocationRelativeTo(null);
+		c.frame.setVisible(true);
 		
 		while (true) {
 			c.repaint();
@@ -448,6 +450,32 @@ public class Chess extends JPanel{
 					board.setupDefault();
 					if (!board.whiteToMove) board.flipWhiteToMove();
 					break;
+				case "open":
+					final JFileChooser fcopen = new JFileChooser();
+					fcopen.setAcceptAllFileFilterUsed(false);
+					fcopen.setMultiSelectionEnabled(false);
+					fcopen.setFileFilter(new FileNameExtensionFilter(".dat (Chess save file)", "dat"));
+					int openOption = fcopen.showOpenDialog(frame);
+					ChessPiece[][] newOpenBoard;
+					if (openOption == JFileChooser.APPROVE_OPTION) {
+						File openFile = fcopen.getSelectedFile();
+						newOpenBoard = fileParser(openFile);
+						board.changeBoard(newOpenBoard);
+					}
+					break;
+				case "save":
+					final JFileChooser fcsave = new JFileChooser();
+					fcsave.setAcceptAllFileFilterUsed(false);
+					fcsave.setMultiSelectionEnabled(false);
+					fcsave.setFileFilter(new FileNameExtensionFilter(".dat (Chess save file)", "dat"));
+					int saveOption = fcsave.showOpenDialog(frame);
+					if (saveOption == JFileChooser.APPROVE_OPTION) {
+						File saveFile = fcsave.getSelectedFile();
+						String filePath = saveFile.getAbsolutePath();
+						if (!filePath.endsWith(".dat")) saveFile = new File(filePath + ".dat");
+						fileSaver(saveFile);
+					}
+					break;
 				case "quit":
 					System.exit(0);
 				case "undo_move":
@@ -476,6 +504,88 @@ public class Chess extends JPanel{
 				default:
 					break;
 			}
+		}
+		
+		private ChessPiece[][] fileParser(File file) {
+			//piece type, row, col, hasmoved
+			try {Scanner input = new Scanner(file);
+			ChessPiece[][] board = new ChessPiece[8][8];
+			while (input.hasNextLine()) {
+				String nextLine = input.nextLine();
+				int row = Integer.parseInt(nextLine.substring(3, 4));
+				int col = Integer.parseInt(nextLine.substring(5, 6));
+				ChessPiece piece = getPiece(nextLine.substring(0,2), row, col);
+				if (nextLine.substring(7, 8).equals("m")) piece.moved();
+				board[row][col] = piece;
+			}
+			return board;
+			} catch (FileNotFoundException e) {return null;}
+		}
+		
+		private void fileSaver(File file) {
+			try {
+			BufferedWriter o = new BufferedWriter(new FileWriter(file));
+			ChessPiece[][] loadedBoard = board.getBoard();
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (loadedBoard[i][j] == null) continue;
+					String retStr = "";
+					retStr += getPieceString(loadedBoard[i][j]) + " " + i + " " + j + " ";
+					if (loadedBoard[i][j].haveIMoved()) retStr += "m";
+					else retStr += " ";
+					o.write(retStr + "\n");
+				}
+			}
+			o.close();
+			
+			} catch (IOException e) {}
+		}
+		
+		private ChessPiece getPiece(String piece, int row, int col) {
+			switch (piece) {
+				case "wp":
+					return new whitePawn(row, col);
+				case "wn":
+					return new whiteKnight(row, col);
+				case "wb":
+					return new whiteBishop(row, col);
+				case "wr":
+					return new whiteRook(row, col);
+				case "wq":
+					return new whiteQueen(row, col);
+				case "wk":
+					return new whiteKing(row, col);
+				case "bp":
+					return new whitePawn(row, col);
+				case "bn":
+					return new whiteKnight(row, col);
+				case "bb":
+					return new whiteBishop(row, col);
+				case "br":
+					return new whiteRook(row, col);
+				case "bq":
+					return new whiteQueen(row, col);
+				case "bk":
+					return new whiteKing(row, col);
+				default:
+					return null;
+			}
+		}
+		
+		private String getPieceString(ChessPiece piece) {
+			if (piece instanceof whitePawn) return "wp";
+			else if (piece instanceof whiteKnight) return "wn";
+			else if (piece instanceof whiteBishop) return "wb";
+			else if (piece instanceof whiteRook) return "wr";
+			else if (piece instanceof whiteQueen) return "wq";
+			else if (piece instanceof whiteKing) return "wk";
+			else if (piece instanceof blackPawn) return "bp";
+			else if (piece instanceof blackKnight) return "bn";
+			else if (piece instanceof blackBishop) return "bb";
+			else if (piece instanceof blackRook) return "br";
+			else if (piece instanceof blackQueen) return "bq";
+			else if (piece instanceof blackKing) return "bk";
+			return "";
 		}
 	}
 	////////////////////////////////////////////////////////////////////////////

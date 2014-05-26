@@ -37,6 +37,14 @@ public class ChessBoard {
 		return board[row][col];
 	}
 	
+	public ChessPiece[][] getBoard() {
+		return board;
+	}
+	
+	public void changeBoard(ChessPiece[][] board) {
+		this.board = board;
+	}
+	
 	public boolean isSameTeam(int initialRow, int initialCol, int finalRow, int finalCol) {
 	return (
 		board[initialRow][initialCol] != null && 
