@@ -450,6 +450,7 @@ public class Chess extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			switch (e.getActionCommand()) {
 				case "new_game":
+					board.resetBoard();
 					board.setupDefault();
 					if (!board.whiteToMove) board.flipWhiteToMove();
 					break;
@@ -522,6 +523,13 @@ public class Chess extends JPanel{
 			}
 			while (input.hasNextLine()) {
 				String nextLine = input.nextLine();
+				if (nextLine.equals("==")) {
+					String lastLines = input.nextLine();
+					while (input.hasNextLine()) lastLines += input.nextLine();
+					board.setMoveText(lastLines);
+					break;
+				}
+				if (nextLine.length() <= 2) continue;
 				int row = Integer.parseInt(nextLine.substring(3, 4));
 				int col = Integer.parseInt(nextLine.substring(5, 6));
 				ChessPiece piece = getPiece(nextLine.substring(0,2), row, col);
@@ -548,6 +556,9 @@ public class Chess extends JPanel{
 					o.write(retStr + "\n");
 				}
 			}
+			o.write("==\n");
+			String moves = board.getMoves().getText();
+			o.write(moves);
 			o.close();
 			
 			} catch (IOException e) {}

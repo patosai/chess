@@ -33,21 +33,12 @@ public class ChessBoard {
 		setupDefault();
 	}
 	
-	public ChessPiece getPiece(int row, int col) {
-		return board[row][col];
-	}
-	
-	public ChessPiece[][] getBoard() {
-		return board;
-	}
-	
-	public void changeBoard(ChessPiece[][] board) {
-		this.board = board;
-	}
-	
-	public boolean getWhitesMove() {
-		return whiteToMove;
-	}
+	public ChessPiece getPiece(int row, int col) {return board[row][col];}
+	public ChessPiece[][] getBoard() {return board;}
+	public void changeBoard(ChessPiece[][] board) {this.board = board;}
+	public boolean getWhitesMove() {return whiteToMove;}
+	public JTextArea getMoves() {return showMoves;}
+	public void setMoveText(String text) {showMoves.setText(text);}
 	
 	public boolean isSameTeam(int initialRow, int initialCol, int finalRow, int finalCol) {
 	return (
@@ -236,7 +227,7 @@ public class ChessBoard {
 	
 	public void resetBoard() {
 		moveCounter = 1;
-		showMoves.setText(String.format("%-8s", "  White") + "| Black\n");
+		showMoves.setText(String.format("%-12s", "  White") + " Black\n");
 		checkNotice.setText("");
 	}
 	
