@@ -65,6 +65,7 @@ public class ChessBoard {
 		aPiece.setCol(finalCol);
 		board[finalRow][finalCol] = aPiece;
 		board[initialRow][initialCol] = null;
+		if (redoArray.size() != 0) redoArray.remove(redoArray.size() - 1);
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
