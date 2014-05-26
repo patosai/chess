@@ -468,7 +468,7 @@ public class Chess extends JPanel{
 					fcsave.setAcceptAllFileFilterUsed(false);
 					fcsave.setMultiSelectionEnabled(false);
 					fcsave.setFileFilter(new FileNameExtensionFilter(".dat (Chess save file)", "dat"));
-					int saveOption = fcsave.showOpenDialog(frame);
+					int saveOption = fcsave.showSaveDialog(frame);
 					if (saveOption == JFileChooser.APPROVE_OPTION) {
 						File saveFile = fcsave.getSelectedFile();
 						String filePath = saveFile.getAbsolutePath();
@@ -509,16 +509,23 @@ public class Chess extends JPanel{
 		private ChessPiece[][] fileParser(File file) {
 			//piece type, row, col, hasmoved
 			try {Scanner input = new Scanner(file);
-			ChessPiece[][] board = new ChessPiece[8][8];
+			ChessPiece[][] openBoard = new ChessPiece[8][8];
+			String whoseMove = input.nextLine();
+			if (whoseMove.charAt(0) == 'w') {
+				if (!board.getWhitesMove()) board.flipWhiteToMove();
+			}
+			if (whoseMove.charAt(0) == 'b') {
+				if (board.getWhitesMove()) board.flipWhiteToMove();
+			}
 			while (input.hasNextLine()) {
 				String nextLine = input.nextLine();
 				int row = Integer.parseInt(nextLine.substring(3, 4));
 				int col = Integer.parseInt(nextLine.substring(5, 6));
 				ChessPiece piece = getPiece(nextLine.substring(0,2), row, col);
 				if (nextLine.substring(7, 8).equals("m")) piece.moved();
-				board[row][col] = piece;
+				openBoard[row][col] = piece;
 			}
-			return board;
+			return openBoard;
 			} catch (FileNotFoundException e) {return null;}
 		}
 		
@@ -526,6 +533,8 @@ public class Chess extends JPanel{
 			try {
 			BufferedWriter o = new BufferedWriter(new FileWriter(file));
 			ChessPiece[][] loadedBoard = board.getBoard();
+			if (board.getWhitesMove()) o.write("w\n");
+			else o.write("b\n");
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (loadedBoard[i][j] == null) continue;
@@ -556,17 +565,17 @@ public class Chess extends JPanel{
 				case "wk":
 					return new whiteKing(row, col);
 				case "bp":
-					return new whitePawn(row, col);
+					return new blackPawn(row, col);
 				case "bn":
-					return new whiteKnight(row, col);
+					return new blackKnight(row, col);
 				case "bb":
-					return new whiteBishop(row, col);
+					return new blackBishop(row, col);
 				case "br":
-					return new whiteRook(row, col);
+					return new blackRook(row, col);
 				case "bq":
-					return new whiteQueen(row, col);
+					return new blackQueen(row, col);
 				case "bk":
-					return new whiteKing(row, col);
+					return new blackKing(row, col);
 				default:
 					return null;
 			}

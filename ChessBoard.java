@@ -45,6 +45,10 @@ public class ChessBoard {
 		this.board = board;
 	}
 	
+	public boolean getWhitesMove() {
+		return whiteToMove;
+	}
+	
 	public boolean isSameTeam(int initialRow, int initialCol, int finalRow, int finalCol) {
 	return (
 		board[initialRow][initialCol] != null && 
