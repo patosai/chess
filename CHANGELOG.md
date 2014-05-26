@@ -2,6 +2,7 @@ Changelog
 --------------
 `2014-05-26`
 - Added opening and saving of chess games
+- Started LAN/Internet connectivity
 
 `2014-05-21`
 - Mnemonics (keyboard shortcuts) now work
