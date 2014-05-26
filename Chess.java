@@ -138,6 +138,11 @@ public class Chess extends JPanel{
 		menuItem.setMnemonic('C');
 		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
+		menuItem = new JMenuItem("Set up a connection client");
+		menuItem.setActionCommand("server");
+		menuItem.setMnemonic('S');
+		menuItem.addActionListener(new AllEncompassingListener());
+		menu.add(menuItem);
 		menuBar.add(menu);
 		
 		///// Options Menu
@@ -503,6 +508,26 @@ public class Chess extends JPanel{
 						portNumber = Integer.parseInt(port.getText());
 					}
 					break;
+				case "server":
+					JTextField serverport = new JTextField(5);
+					JPanel serverPanel = new JPanel();
+					String pubIP = "";
+					String intIP = "";
+					try {
+						URL whatismyip = new URL("http://checkip.amazonaws.com");
+						BufferedReader in = null;
+						in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+						pubIP = in.readLine();
+						intIP = InetAddress.getLocalHost().getHostAddress();
+					} catch (Exception ex) {}
+					serverPanel.add(new JLabel("<html>Public IP: " + pubIP + "<br>" + "LAN IP: " + intIP));
+					serverPanel.add(Box.createHorizontalStrut(10)); //spacer
+					serverPanel.add(new JLabel("Port:"));
+					serverPanel.add(serverport);
+					int serverresult = JOptionPane.showConfirmDialog(null, serverPanel, "Enter a port number", JOptionPane.OK_CANCEL_OPTION);
+					if (serverresult == JOptionPane.OK_OPTION) {
+						portNumber = Integer.parseInt(serverport.getText());
+					}
 				case "undo_move":
 					if (board.undoArray.size() > 0) {
 						board.undo();
