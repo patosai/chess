@@ -13,6 +13,10 @@ import Pieces.*;
 public class Chess extends JPanel{
 	private ChessBoard board;
 	
+	//Sockets
+	private String hostName;
+	private int portNumber;
+	
 	private JFrame frame;
 	private JTextArea chatBox;
 	private JTextField chatField;
@@ -130,7 +134,9 @@ public class Chess extends JPanel{
 		menu = new JMenu("Connect");
 		menu.setMnemonic('C');
 		menuItem = new JMenuItem("Connect to IP/Port");
+		menuItem.setActionCommand("connect");
 		menuItem.setMnemonic('C');
+		menuItem.addActionListener(new AllEncompassingListener());
 		menu.add(menuItem);
 		menuBar.add(menu);
 		
@@ -482,6 +488,21 @@ public class Chess extends JPanel{
 					break;
 				case "quit":
 					System.exit(0);
+				case "connect":
+					JTextField host = new JTextField(20);
+					JTextField port = new JTextField(5);
+					JPanel connectPanel = new JPanel();
+					connectPanel.add(new JLabel("Hostname:"));
+					connectPanel.add(host);
+					connectPanel.add(Box.createHorizontalStrut(15)); //spacer
+					connectPanel.add(new JLabel("Port:"));
+					connectPanel.add(port);
+					int result = JOptionPane.showConfirmDialog(null, connectPanel, "Enter connection information", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						hostName = host.getText();
+						portNumber = Integer.parseInt(port.getText());
+					}
+					break;
 				case "undo_move":
 					if (board.undoArray.size() > 0) {
 						board.undo();

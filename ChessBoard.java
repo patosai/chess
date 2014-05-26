@@ -6,7 +6,6 @@ public class ChessBoard {
 	private ChessPiece[][] board;
 	
 	protected boolean whiteToMove;
-	
 	protected boolean whiteInCheck;
 	protected boolean blackInCheck;
 	
