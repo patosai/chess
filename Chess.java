@@ -163,7 +163,7 @@ public class Chess extends JPanel{
 	
 	public final JToolBar initializeToolbar() {
 		toolBar = new JToolBar("sidebar", JToolBar.VERTICAL);
-		toolBar.setPreferredSize(new Dimension(100, F_HEIGHT));
+		toolBar.setPreferredSize(new Dimension(125, F_HEIGHT));
 		toolBar.setFloatable(false);
 		
 		//toolBar.setLayout(new GridBagLayout());
@@ -176,24 +176,27 @@ public class Chess extends JPanel{
 		board.checkNotice.setBackground(Color.BLACK);
 		board.checkNotice.setEditable(false);
 		board.checkNotice.setLineWrap(true);
-		board.checkNotice.setMaximumSize(board.checkNotice.getPreferredSize());
+		board.checkNotice.setWrapStyleWord(true);
+		//board.checkNotice.setMaximumSize(board.checkNotice.getPreferredSize());
+		board.checkNotice.setPreferredSize(new Dimension(125, 50));
 		toolBar.add(board.checkNotice);
 		
-		board.showMoves = new JTextArea(String.format("%-8s", "  White") + "| Black\n", 10, 1);
+		board.showMoves = new JTextArea(String.format("%-12s", "  White") + " Black\n", 10, 1);
 		board.showMoves.setBackground(new Color(179, 179, 179));
 		board.showMoves.setLineWrap(true);
 		board.showMoves.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(board.showMoves);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
+		scrollPane.setPreferredSize(new Dimension(125, F_HEIGHT - 200));
 		toolBar.add(scrollPane, BorderLayout.CENTER);
 		
 		chatBox = new JTextArea();
 		chatBox.setEditable(false);
 		chatBox.setLineWrap(true);
+		chatBox.setWrapStyleWord(true);
 		scrollPane = new JScrollPane(chatBox);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setPreferredSize(new Dimension(100, F_HEIGHT - 200));
+		scrollPane.setPreferredSize(new Dimension(125, F_HEIGHT - 200));
 		toolBar.add(scrollPane, BorderLayout.CENTER);
 		
 		chatField = new JTextField();

@@ -173,7 +173,7 @@ public class ChessBoard {
 		
 		//update move JTextArea
 		if (whiteToMove) {
-			showMoves.append(String.format("%-11s", moveCounter + ". " + pieceMove));
+			showMoves.append(String.format("%-15s", moveCounter + ". " + pieceMove));
 		}
 		else {
 			showMoves.append(pieceMove + "\n");
