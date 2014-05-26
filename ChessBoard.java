@@ -65,7 +65,6 @@ public class ChessBoard {
 		aPiece.setCol(finalCol);
 		board[finalRow][finalCol] = aPiece;
 		board[initialRow][initialCol] = null;
-		if (redoArray.size() != 0) redoArray.remove(redoArray.size() - 1);
 	}
 	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
@@ -187,7 +186,7 @@ public class ChessBoard {
 		int col = undo.getUndoPiece().getCol();
 		movePiece(row, col, undo.getLastRow(), undo.getLastCol());
 		board[row][col] = undo.getTakenPiece();
-		if (undo.hadNotMoved()) board[undo.getLastRow()][undo.getLastCol()].undoHasMoved();
+		if (undo.hadNotMoved()) undo.getUndoPiece().undoHasMoved();
 		
 		//make redo object
 		RedoMoveObject newRedo = new RedoMoveObject(board[undo.getLastRow()][undo.getLastCol()], row, col);
@@ -221,8 +220,31 @@ public class ChessBoard {
 	public void redo() {
 		if (redoArray.size() == 0) return;
 		RedoMoveObject redoObject = redoArray.get(redoArray.size() - 1);
+		if (whiteToMove && redoObject.getRedoPiece().getClass().getName().charAt(7) == 'b') return;
+		if (!whiteToMove && redoObject.getRedoPiece().getClass().getName().charAt(7) == 'w') return;
 		ChessPiece redoPiece = redoObject.getRedoPiece();
+		
+		UndoMoveObject undoObject = new UndoMoveObject(redoPiece, redoPiece.getRow(), redoPiece.getCol(), board[redoObject.getFutureRow()][redoObject.getFutureCol()]);
+		undoArray.add(undoObject);
+		
+		//for JTextArea
+		boolean pieceWasTaken = (board[redoObject.getFutureRow()][redoObject.getFutureCol()] != null);
 		movePiece(redoPiece.getRow(), redoPiece.getCol(), redoObject.getFutureRow(), redoObject.getFutureCol());
+		String pieceMove = redoObject.getRedoPiece().toString();
+		
+		if (pieceWasTaken) {
+			pieceMove = pieceMove.substring(0, pieceMove.length() - 2) + "x" + pieceMove.substring(pieceMove.length() - 2, pieceMove.length());
+		}
+		if (whiteInCheck || blackInCheck) pieceMove = pieceMove + "+";
+		//update move JTextArea
+		if (whiteToMove) {
+			showMoves.append(String.format("%-15s", moveCounter + ". " + pieceMove));
+		}
+		else {
+			showMoves.append(pieceMove + "\n");
+			moveCounter++;
+		}
+		flipWhiteToMove();
 		redoArray.remove(redoArray.size() - 1);
 	}
 	
