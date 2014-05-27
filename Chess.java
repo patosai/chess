@@ -21,6 +21,8 @@ public class Chess extends JPanel{
 	private ServerSocket serverSocket;
 	private Socket clientSocket;
 	
+	private boolean checkmaaaaate = false;
+	
 	private JFrame frame;
 	private JTextArea chatBox;
 	private JTextField chatField;
@@ -416,13 +418,43 @@ public class Chess extends JPanel{
 				newSelectedRow = 7 - newSelectedRow;
 			}
 			
+			if (checkmaaaaate) return;
+			
 			// check if new X/Y is in board bounds
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
 				&& rawX > initialX && rawY < (425 + initialY)) {
 				if (board.isMoveValid(selectedRow, selectedCol, newSelectedRow, newSelectedCol)) {
 					board.movePiece(selectedRow, selectedCol, newSelectedRow, newSelectedCol);
-					if (board.getPiece(newSelectedRow, newSelectedCol) != null)
-						board.getPiece(newSelectedRow, newSelectedCol).moved();
+					//if (board.getPiece(newSelectedRow, newSelectedCol) != null)
+					board.getPiece(newSelectedRow, newSelectedCol).moved();
+					if (board.whiteInCheck || board.blackInCheck) {
+						if (board.isCheckmate()) {
+							checkmaaaaate = true;
+							String moveText = board.showMoves.getText();
+							for (int i = moveText.length() - 1; i > moveText.length() - 10; i--) {
+								if (moveText.charAt(i) == '+') {
+									moveText = moveText.substring(0, i) + '#' + moveText.substring(i + 1, moveText.length() - 1); 
+									board.showMoves.setText(moveText);
+									break;
+								}
+							}
+							if (board.whiteToMove) {
+								int reply = JOptionPane.showConfirmDialog(frame, "White has been checkmated!\nNew game?", "Checkmate!", JOptionPane.YES_NO_OPTION);
+								if (reply == JOptionPane.YES_OPTION) {
+									board.resetBoard();
+									board.setupDefault();
+								}
+							}
+							else {
+								int reply = JOptionPane.showConfirmDialog(frame, "Black has been checkmated!\nNew game?", "Checkmate!", JOptionPane.YES_NO_OPTION);
+								if (reply == JOptionPane.YES_OPTION) {
+									board.resetBoard();
+									board.setupDefault();
+								}
+							}
+						}
+					}
+					//System.out.println(getPossibleMoves(board[initialRow][initialCol]));
 					tileSelected = false;
 					selectedRow = null;
 					selectedCol = null;
@@ -468,8 +500,10 @@ public class Chess extends JPanel{
 					board.resetBoard();
 					board.setupDefault();
 					if (!board.whiteToMove) board.flipWhiteToMove();
+					checkmaaaaate = false;
 					break;
 				case "open":
+					checkmaaaaate = false;
 					final JFileChooser fcopen = new JFileChooser();
 					fcopen.setAcceptAllFileFilterUsed(false);
 					fcopen.setMultiSelectionEnabled(false);
@@ -533,6 +567,7 @@ public class Chess extends JPanel{
 					}
 				case "undo_move":
 					if (board.undoArray.size() > 0) {
+						checkmaaaaate = false;
 						board.undo();
 					}
 					break;

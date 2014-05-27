@@ -304,11 +304,38 @@ public class ChessBoard {
 	}
 	
 	public boolean isCheckmate() {
+		ChessPiece wKing = null;
+		ChessPiece bKing = null;
+		//get pointers for kings
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
-				
+				if (board[r][c] == null) continue;
+				if (board[r][c] instanceof blackKing) bKing = board[r][c];
+				if (board[r][c] instanceof whiteKing) wKing = board[r][c];
 			}
 		}
+		
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] == null) continue;
+				if (whiteToMove && board[r][c].getClass().getName().charAt(7) == 'b') continue;
+				if (!whiteToMove && board[r][c].getClass().getName().charAt(7) == 'w') continue;
+				ArrayList<Integer> possMoves = getPossibleMoves(board[r][c]);
+				for (int i = 0; i < possMoves.size(); i++) {
+					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
+					if (whiteToMove) if (!wKing.amIInCheck(board)) {
+						movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+						return false;
+					}
+					if (!whiteToMove) if (!bKing.amIInCheck(board)) {
+						movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+						return false;
+					}
+					movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+				}
+			}
+		}
+		return true;
 	}
 	
 	// default setup

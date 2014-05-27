@@ -4,7 +4,6 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 To Do
 --------------
-- Check if it is checkmate
 - Implement client/server functionality
 
 Credits
