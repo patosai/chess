@@ -16,6 +16,10 @@ public class Chess extends JPanel{
 	//Sockets
 	private String hostName;
 	private int portNumber;
+	private boolean isConnected;
+	private boolean isWhite;
+	private ServerSocket serverSocket;
+	private Socket clientSocket;
 	
 	private JFrame frame;
 	private JTextArea chatBox;
