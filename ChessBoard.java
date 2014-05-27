@@ -161,6 +161,11 @@ public class ChessBoard {
 		}
 		if (whiteInCheck || blackInCheck) pieceMove = pieceMove + "+";
 		
+		//is it a castle?
+		if (board[initialRow][initialCol] instanceof whiteKing || board[initialRow][initialCol] instanceof blackKing) {
+			if (finalCol - initialCol == 2) pieceMove = "0-0";
+			if (initialCol - finalCol == 2) pieceMove = "0-0-0";
+		}
 		//update move JTextArea
 		if (whiteToMove) {
 			showMoves.append(String.format("%-15s", moveCounter + ". " + pieceMove));
@@ -253,6 +258,7 @@ public class ChessBoard {
 				movePiece(redoPiece.getRow(), redoPiece.getCol() + 3, redoPiece.getRow(), redoPiece.getCol() + 1);
 			}
 		}
+		int initialCol = redoPiece.getCol();
 		movePiece(redoPiece.getRow(), redoPiece.getCol(), redoObject.getFutureRow(), redoObject.getFutureCol());
 		
 		String pieceMove = redoObject.getRedoPiece().toString();
@@ -261,6 +267,11 @@ public class ChessBoard {
 			pieceMove = pieceMove.substring(0, pieceMove.length() - 2) + "x" + pieceMove.substring(pieceMove.length() - 2, pieceMove.length());
 		}
 		if (whiteInCheck || blackInCheck) pieceMove = pieceMove + "+";
+		//is it a castle?
+		if (redoPiece instanceof whiteKing || redoPiece instanceof blackKing) {
+			if (redoObject.getFutureCol() - initialCol == 2) pieceMove = "0-0";
+			if (initialCol - redoObject.getFutureCol() == 2) pieceMove = "0-0-0";
+		}
 		//update move JTextArea
 		if (whiteToMove) {
 			showMoves.append(String.format("%-15s", moveCounter + ". " + pieceMove));
