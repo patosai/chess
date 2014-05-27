@@ -303,6 +303,14 @@ public class ChessBoard {
 		return possibleMoves;
 	}
 	
+	public boolean isCheckmate() {
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				
+			}
+		}
+	}
+	
 	// default setup
 	public void setupDefault() {
 		//preliminary clearing of board
