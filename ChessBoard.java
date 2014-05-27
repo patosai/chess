@@ -173,6 +173,11 @@ public class ChessBoard {
 		//add to undo move array
 		UndoMoveObject newUndo = new UndoMoveObject(board[initialRow][initialCol], initialRow, initialCol, board[finalRow][finalCol]);
 		if (!(board[initialRow][initialCol].haveIMoved())) newUndo.setNotMoved();
+		if (board[initialRow][initialCol] instanceof whiteKing || board[initialRow][initialCol] instanceof blackKing) {
+			if (Math.abs(initialCol - finalCol) == 2) {
+				newUndo.isCastle();
+			}
+		}
 		undoArray.add(newUndo);
 		
 		flipWhiteToMove();
@@ -186,9 +191,20 @@ public class ChessBoard {
 		movePiece(row, col, undo.getLastRow(), undo.getLastCol());
 		board[row][col] = undo.getTakenPiece();
 		if (undo.hadNotMoved()) undo.getUndoPiece().undoHasMoved();
+		if (undo.checkIfCastle()) {
+			if (col - undo.getLastCol() == 2) {
+				movePiece(row, col - 1, row, col + 1);
+				board[row][col + 1].undoHasMoved();
+			}
+			if (undo.getLastCol() - col == 2) {
+				movePiece(row, col + 1, row, col - 2);
+				board[row][col - 2].undoHasMoved();
+			}
+		}
 		
 		//make redo object
 		RedoMoveObject newRedo = new RedoMoveObject(board[undo.getLastRow()][undo.getLastCol()], row, col);
+		if (undo.checkIfCastle()) newRedo.isCastle();
 		redoArray.add(newRedo);
 		
 		undoArray.remove(undoArray.size() - 1);
@@ -224,11 +240,21 @@ public class ChessBoard {
 		ChessPiece redoPiece = redoObject.getRedoPiece();
 		
 		UndoMoveObject undoObject = new UndoMoveObject(redoPiece, redoPiece.getRow(), redoPiece.getCol(), board[redoObject.getFutureRow()][redoObject.getFutureCol()]);
+		if (redoObject.checkIfCastle()) undoObject.isCastle();
 		undoArray.add(undoObject);
 		
 		//for JTextArea
 		boolean pieceWasTaken = (board[redoObject.getFutureRow()][redoObject.getFutureCol()] != null);
+		if (redoObject.checkIfCastle()) {
+			if (redoPiece.getCol() - redoObject.getFutureCol() == 2) {
+				movePiece(redoPiece.getRow(), redoPiece.getCol() - 4, redoPiece.getRow(), redoPiece.getCol() - 1);
+			}
+			if (redoObject.getFutureCol() - redoPiece.getCol() == 2) {
+				movePiece(redoPiece.getRow(), redoPiece.getCol() + 3, redoPiece.getRow(), redoPiece.getCol() + 1);
+			}
+		}
 		movePiece(redoPiece.getRow(), redoPiece.getCol(), redoObject.getFutureRow(), redoObject.getFutureCol());
+		
 		String pieceMove = redoObject.getRedoPiece().toString();
 		
 		if (pieceWasTaken) {

@@ -6,6 +6,8 @@ public class RedoMoveObject {
 	private int futureCol;
 	private int futureRow;
 	
+	private boolean castle;
+	
 	public RedoMoveObject(ChessPiece piece, int futureRow, int futureCol) {
 		pieceToMove = piece;
 		this.futureRow = futureRow;
@@ -23,4 +25,7 @@ public class RedoMoveObject {
 	public ChessPiece getRedoPiece() {
 		return pieceToMove;
 	}
+	
+	public void isCastle() {castle = true;}
+	public boolean checkIfCastle() {return castle;}
 }
