@@ -290,6 +290,19 @@ public class ChessBoard {
 		checkNotice.setText("");
 	}
 	
+	public ArrayList<Integer> getPossibleMoves(ChessPiece piece) {
+		ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (isMoveValid(piece.getRow(), piece.getCol(), r, c)) {
+					Integer a = 10 * r + c;
+					possibleMoves.add(a);
+				}
+			}
+		}
+		return possibleMoves;
+	}
+	
 	// default setup
 	public void setupDefault() {
 		//preliminary clearing of board
