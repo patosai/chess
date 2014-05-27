@@ -515,8 +515,7 @@ public class Chess extends JPanel{
 					String intIP = "";
 					try {
 						URL whatismyip = new URL("http://checkip.amazonaws.com");
-						BufferedReader in = null;
-						in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+						BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 						pubIP = in.readLine();
 						intIP = InetAddress.getLocalHost().getHostAddress();
 					} catch (Exception ex) {}
