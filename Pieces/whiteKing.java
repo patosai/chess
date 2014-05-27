@@ -38,6 +38,7 @@ public class whiteKing extends ChessPiece {
 				rook.moved();
 				return true;
 			}
+			else return false;
 		}
 		else if (dy == 0 && dx == (-2)) {
 			if (!hasMoved && board[7][0] != null && !board[7][0].hasMoved) {
@@ -66,9 +67,10 @@ public class whiteKing extends ChessPiece {
 				rook.moved();
 				return true;
 			}
+			else return false;
 		}
 		else if ((Math.abs(dx) > 1) || (Math.abs(dy) > 1)) return false;
-		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'w') return false;
+		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'b') return false;
 		
 		return true;
 	}
