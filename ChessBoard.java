@@ -66,6 +66,73 @@ public class ChessBoard {
 		board[initialRow][initialCol] = null;
 	}
 	
+	//no jtextarea update
+	public boolean miniIsMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
+		if (board[finalRow][finalCol] != null && 
+			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
+			board[finalRow][finalCol].getClass().getName().charAt(7)) 
+			) {
+			return false;
+		}
+		
+			// can-the-piece-even-move-there test
+		if (!board[initialRow][initialCol].canMoveToLocation(board, finalRow, finalCol)) return false;
+		
+			// is the king in check before/after the move?!
+		boolean beforeInCheck = false;
+		boolean afterInCheck = false;
+		ChessPiece whiteKing = null;
+		ChessPiece blackKing = null;
+		ChessPiece temp = board[finalRow][finalCol];
+				//get king pointers
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] == null) continue;
+				String name = board[r][c].getClass().getName().substring(7);
+				if (name.equals("whiteKing")) whiteKing = board[r][c];
+				if (name.equals("blackKing")) blackKing = board[r][c];
+			}
+		}
+				//is white king in check before/after?
+		if (whiteKing.amIInCheck(board)) {
+			movePiece(initialRow, initialCol, finalRow, finalCol);
+			if (whiteKing.amIInCheck(board)) {
+				movePiece(finalRow, finalCol, initialRow, initialCol);
+				board[finalRow][finalCol] = temp;
+				return false;
+			}
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+			board[finalRow][finalCol] = temp;
+		}
+				//is black king in check before/after?
+		if (blackKing.amIInCheck(board)) {
+			movePiece(initialRow, initialCol, finalRow, finalCol);
+			if (blackKing.amIInCheck(board)) {
+				movePiece(finalRow, finalCol, initialRow, initialCol);
+				board[finalRow][finalCol] = temp;
+				return false;
+			}
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+			board[finalRow][finalCol] = temp;
+		}
+		
+		//is king in check after the move?
+		movePiece(initialRow, initialCol, finalRow, finalCol);
+		if (whiteToMove && whiteKing.amIInCheck(board)) {
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+			board[finalRow][finalCol] = temp;
+			return false;
+		}
+		if (!whiteToMove && blackKing.amIInCheck(board)) {
+			movePiece(finalRow, finalCol, initialRow, initialCol);
+			board[finalRow][finalCol] = temp;
+			return false;
+		}
+		movePiece(finalRow, finalCol, initialRow, initialCol);
+		board[finalRow][finalCol] = temp;
+		return true;
+	}
+	
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
 		// here we go
 			// same-color test
@@ -137,11 +204,11 @@ public class ChessBoard {
 			checkNotice.append("Black is in check!");
 		}
 		else checkNotice.setText("");
-		movePiece(finalRow, finalCol, initialRow, initialCol);
-		board[finalRow][finalCol] = temp;
+		//movePiece(finalRow, finalCol, initialRow, initialCol);
+		//board[finalRow][finalCol] = temp;
 		
 		//update if white or black is in check
-		movePiece(initialRow, initialCol, finalRow, finalCol);
+		//movePiece(initialRow, initialCol, finalRow, finalCol);
 		if (whiteKing.amIInCheck(board)) {
 			whiteInCheck = true;
 		}
@@ -294,7 +361,7 @@ public class ChessBoard {
 		ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
-				if (isMoveValid(piece.getRow(), piece.getCol(), r, c)) {
+				if (miniIsMoveValid(piece.getRow(), piece.getCol(), r, c)) {
 					Integer a = 10 * r + c;
 					possibleMoves.add(a);
 				}
@@ -314,7 +381,6 @@ public class ChessBoard {
 				if (board[r][c] instanceof whiteKing) wKing = board[r][c];
 			}
 		}
-		
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (board[r][c] == null) continue;
@@ -322,16 +388,22 @@ public class ChessBoard {
 				if (!whiteToMove && board[r][c].getClass().getName().charAt(7) == 'w') continue;
 				ArrayList<Integer> possMoves = getPossibleMoves(board[r][c]);
 				for (int i = 0; i < possMoves.size(); i++) {
+					ChessPiece temp = board[possMoves.get(i) / 10][possMoves.get(i) % 10];
 					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
-					if (whiteToMove) if (!wKing.amIInCheck(board)) {
-						movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
-						return false;
-					}
-					if (!whiteToMove) if (!bKing.amIInCheck(board)) {
-						movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
-						return false;
-					}
+					if (!whiteToMove) 
+						if (!wKing.amIInCheck(board)) {
+							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
+							return false;
+						}
+					else
+						if (!bKing.amIInCheck(board)) {
+							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
+							return false;
+						}
 					movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+					board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
 				}
 			}
 		}
