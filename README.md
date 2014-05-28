@@ -1,6 +1,6 @@
 Chess
 --------------
-<img src="http://i287.photobucket.com/albums/ll128/patmaster/unnamed_zps68986906.png> width="200" alt="Knight" align="right">
+<img src="http://i287.photobucket.com/albums/ll128/patmaster/unnamed_zps68986906.png" width="200" alt="Knight" align="right">
 I haven't coded a chess program yet, so here I give it a try in Java!
 
 To Do
