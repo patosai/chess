@@ -407,6 +407,10 @@ public class Chess extends JPanel{
 	//~~~~~~~~~~~~~~~~ Mouse Listener ~~~~~~~~~~~~~~~~//
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
+			if (checkmaaaaate) {
+				System.out.println("no u");
+				return;
+			}
 			rawX = e.getX();
 			rawY = e.getY() + 25; // 25 offset for menubar
 			
@@ -417,8 +421,6 @@ public class Chess extends JPanel{
 				newSelectedCol = 7 - newSelectedCol;
 				newSelectedRow = 7 - newSelectedRow;
 			}
-			
-			if (checkmaaaaate) return;
 			
 			// check if new X/Y is in board bounds
 			if (tileSelected && rawX < (400 + initialX) && rawY > (25 + initialY)
@@ -443,6 +445,9 @@ public class Chess extends JPanel{
 								if (reply == JOptionPane.YES_OPTION) {
 									board.resetBoard();
 									board.setupDefault();
+									checkmaaaaate = false;
+									if (!board.whiteToMove) board.flipWhiteToMove();
+									return;
 								}
 							}
 							else {
@@ -450,6 +455,9 @@ public class Chess extends JPanel{
 								if (reply == JOptionPane.YES_OPTION) {
 									board.resetBoard();
 									board.setupDefault();
+									checkmaaaaate = false;
+									if (!board.whiteToMove) board.flipWhiteToMove();
+									return;
 								}
 							}
 						}
