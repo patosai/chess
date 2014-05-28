@@ -355,6 +355,7 @@ public class ChessBoard {
 		moveCounter = 1;
 		showMoves.setText(String.format("%-12s", "  White") + " Black\n");
 		checkNotice.setText("");
+		if (!whiteToMove) flipWhiteToMove();
 	}
 	
 	public ArrayList<Integer> getPossibleMoves(ChessPiece piece) {

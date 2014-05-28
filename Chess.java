@@ -446,7 +446,6 @@ public class Chess extends JPanel{
 									board.resetBoard();
 									board.setupDefault();
 									checkmaaaaate = false;
-									if (!board.whiteToMove) board.flipWhiteToMove();
 									return;
 								}
 							}
@@ -456,7 +455,6 @@ public class Chess extends JPanel{
 									board.resetBoard();
 									board.setupDefault();
 									checkmaaaaate = false;
-									if (!board.whiteToMove) board.flipWhiteToMove();
 									return;
 								}
 							}
@@ -507,7 +505,6 @@ public class Chess extends JPanel{
 				case "new_game":
 					board.resetBoard();
 					board.setupDefault();
-					if (!board.whiteToMove) board.flipWhiteToMove();
 					checkmaaaaate = false;
 					break;
 				case "open":
