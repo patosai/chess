@@ -25,6 +25,8 @@ public class Chess extends JPanel{
 		//server only
 	private ServerSocket serverSocket;
 	
+	//everything - mouse listener
+	private AllEncompassingListener listener = new AllEncompassingListener();
 	
 	private boolean checkmaaaaate = false;
 	
@@ -256,6 +258,27 @@ public class Chess extends JPanel{
 		JOptionPane.showMessageDialog(this, about);
 	}
 	
+	public void socketListen() {
+			try {
+				if (in.readLine() != null && in.readLine() > 0) {
+					inputLine = in.readLine();
+					System.out.println("Received: " + inputLine);
+					if (inputLine.charAt(0) == 'm') {
+						board.isMoveValid(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
+						board.movePiece(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
+					}
+					if (inputLine.charAt(0) == 'e') {
+						chatBox.append(inputLine.substring(1) + "\n");
+					}
+				}
+			} catch (UnknownHostException e) {
+				JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
+				return;
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
+			} 
+		}
+	
 	public static void main(String[] args) {
 		Chess c = new Chess();
 		
@@ -264,11 +287,16 @@ public class Chess extends JPanel{
 		c.frame.getContentPane().add(c);
 		c.frame.setJMenuBar(c.initializeMenubar());
 		c.frame.getContentPane().add(c.initializeToolbar(), BorderLayout.EAST);
+		c.frame.addWindowListener(c.listener);
 		c.frame.pack();
 		c.frame.setLocationRelativeTo(null);
 		c.frame.setVisible(true);
 		
 		while (true) {
+			if (c.isConnected && c.isWhite && !c.board.whiteToMove) c.socketListen();
+			if (c.isConnected && !c.isWhite && c.board.whiteToMove) c.socketListen();
+			if (c.isConnected && c.isWhite && !c.board.whiteToMove) return;
+			if (c.isConnected && !c.isWhite && c.board.whiteToMove) return;
 			c.repaint();
 			try {
 				Thread.sleep(100);
@@ -413,11 +441,9 @@ public class Chess extends JPanel{
 	public class MouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			if (checkmaaaaate) {
-				System.out.println("no u");
 				return;
 			}
-			if (isConnected && isWhite && !board.whiteToMove) return;
-			if (isConnected && !isWhite && board.whiteToMove) return;
+			
 			rawX = e.getX();
 			rawY = e.getY() + 25; // 25 offset for menubar
 			
@@ -504,17 +530,41 @@ public class Chess extends JPanel{
 			selectedRow = newSelectedRow;
 		}
 		
+		public void socketListen() {
+			try {
+				if (in.readLine() != null) {
+					inputLine = in.readLine();
+					System.out.println("Received: " + inputLine);
+					if (inputLine.charAt(0) == 'm') {
+						board.isMoveValid(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
+						board.movePiece(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
+					}
+					if (inputLine.charAt(0) == 'e') {
+						chatBox.append(inputLine.substring(1) + "\n");
+					}
+				}
+			} catch (UnknownHostException e) {
+				JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
+				return;
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
+			} 
+		}
+		
 		public void socketSend(int iR, int iC, int fR, int fC) {
-			out.println("m" + iR + "" + iC + "" + fR + "" + fC);//m for move
+			out.println("m" + iR + "" + iC + "" + fR + "" + fC + "\n\n");//m for move
+			System.out.println("Sent: m" + iR + "" + iC + "" + fR + "" + fC + "\n\n");
+			out.flush();
 		}
 		public void socketSend(String message) {
-			out.println("e" + message); //e for message
+			out.println("e" + message + "\n"); //e for message
+			out.flush();
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
 	
 	///////////// now for all the action listener ///////////////
-	class AllEncompassingListener implements ActionListener {
+	class AllEncompassingListener extends WindowAdapter implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			switch (e.getActionCommand()) {
 				case "new_game":
@@ -617,6 +667,10 @@ public class Chess extends JPanel{
 				default:
 					break;
 			}
+		}
+		
+		public void windowClosing(WindowEvent e) {
+			if (isConnected) closeServer();
 		}
 		
 		private ChessPiece[][] fileParser(File file) {
@@ -733,6 +787,8 @@ public class Chess extends JPanel{
 					else playerName = "Black";
 				}
 				if (!isWhite) reverseDrawing = true;
+				board.resetBoard();
+				board.setupDefault();
 				out = new PrintWriter(clientSocket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			} catch (IOException e) {
@@ -750,6 +806,8 @@ public class Chess extends JPanel{
 					if (isWhite) playerName = "White";
 					else playerName = "Black";
 				}
+				board.resetBoard();
+				board.setupDefault();
 				out = new PrintWriter(clientSocket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			} catch (UnknownHostException e) {
@@ -760,38 +818,23 @@ public class Chess extends JPanel{
 			} 
 		}
 		
-		public void socketListen() {
-			try {
-				if (in.readLine() != null) {inputLine = in.readLine();}
-				if (inputLine.charAt(0) == 'm') {
-					board.isMoveValid(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
-					board.movePiece(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
-				}
-				if (inputLine.charAt(0) == 'e') {
-					chatBox.append(inputLine.substring(1) + "\n");
-				}
-			} catch (UnknownHostException e) {
-				JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
-				return;
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
-			} 
-		}
-		
 		public void socketSend(int iR, int iC, int fR, int fC) {
-			out.println("m" + iR + "" + iC + "" + fR + "" + fC);//m for move
+			out.println("m" + iR + "" + iC + "" + fR + "" + fC + "\n");//m for move
+			out.flush();
 		}
 		public void socketSend(String message) {
-			out.println("e" + message); //e for message
+			out.println("e" + message + "\n"); //e for message
+			out.flush();
 		}
 		
-		public void closeServer() throws IOException {
+		public void closeServer() {
 			try {
 				if (out != null) out.close();
 				if (in != null) in.close();
+				if (!clientSocket.isClosed()) clientSocket.close();
+				if (!serverSocket.isClosed()) serverSocket.close();
 			} catch (IOException e) {JOptionPane.showMessageDialog(frame, "Exception when closing IO streams!");}
-			if (!clientSocket.isClosed()) clientSocket.close();
-			if (!serverSocket.isClosed()) serverSocket.close();
+			
 		}
 
 		
