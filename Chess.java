@@ -18,8 +18,13 @@ public class Chess extends JPanel{
 	private int portNumber;
 	private boolean isConnected;
 	private boolean isWhite;
-	private ServerSocket serverSocket;
 	private Socket clientSocket;
+	private PrintWriter out;
+	private BufferedReader in;
+	private String inputLine, outputLine;
+		//server only
+	private ServerSocket serverSocket;
+	
 	
 	private boolean checkmaaaaate = false;
 	
@@ -549,6 +554,7 @@ public class Chess extends JPanel{
 					if (result == JOptionPane.OK_OPTION) {
 						hostName = host.getText();
 						portNumber = Integer.parseInt(port.getText());
+						clientSetup();
 					}
 					break;
 				case "server":
@@ -569,6 +575,7 @@ public class Chess extends JPanel{
 					int serverresult = JOptionPane.showConfirmDialog(null, serverPanel, "Enter a port number", JOptionPane.OK_CANCEL_OPTION);
 					if (serverresult == JOptionPane.OK_OPTION) {
 						portNumber = Integer.parseInt(serverport.getText());
+						serverSetup();
 					}
 				case "undo_move":
 					if (board.undoArray.size() > 0) {
@@ -699,6 +706,50 @@ public class Chess extends JPanel{
 			else if (piece instanceof blackKing) return "bk";
 			return "";
 		}
+		
+		public void serverSetup() {
+			try {
+				serverSocket = new ServerSocket(portNumber);
+				clientSocket = serverSocket.accept();
+				chatBox.append("A player has connected.\n");
+				isConnected = true;
+				out = new PrintWriter(clientSocket.getOutputStream(), true);
+				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
+			}
+		}
+		
+		public void clientSetup() {
+			try {
+				clientSocket = new Socket(hostName, portNumber);
+				chatBox.append("You have connected.\n");
+				isConnected = true;
+				out = new PrintWriter(clientSocket.getOutputStream(), true);
+				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			} catch (UnknownHostException e) {
+				JOptionPane.showMessageDialog(frame, "Unknown host " + hostName);
+				return;
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
+			} 
+		}
+		
+		public void socketListen() {
+			try {
+				if (in.readLine() != null) {inputLine = in.readLine();}
+			} catch (UnknownHostException e) {
+				JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
+				return;
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
+			} 
+		}
+		
+		public void socketSend(int iR, int iC, int fR, int fC) {
+			out.println("m" + iR + "" + iC + "" + fR + "" + fC);
+		}
+
 	}
 	////////////////////////////////////////////////////////////////////////////
 }
