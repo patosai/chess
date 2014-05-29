@@ -416,6 +416,8 @@ public class Chess extends JPanel{
 				System.out.println("no u");
 				return;
 			}
+			if (isConnected && isWhite && !board.whiteToMove) return;
+			if (isConnected && !isWhite && board.whiteToMove) return;
 			rawX = e.getX();
 			rawY = e.getY() + 25; // 25 offset for menubar
 			
@@ -434,6 +436,7 @@ public class Chess extends JPanel{
 					board.movePiece(selectedRow, selectedCol, newSelectedRow, newSelectedCol);
 					//if (board.getPiece(newSelectedRow, newSelectedCol) != null)
 					board.getPiece(newSelectedRow, newSelectedCol).moved();
+					if (isConnected) socketSend(selectedRow.intValue(), selectedCol.intValue(), newSelectedRow, newSelectedCol);
 					if (board.whiteInCheck || board.blackInCheck) {
 						if (board.isCheckmate()) {
 							checkmaaaaate = true;
@@ -499,6 +502,13 @@ public class Chess extends JPanel{
 			}
 			selectedCol = newSelectedCol;
 			selectedRow = newSelectedRow;
+		}
+		
+		public void socketSend(int iR, int iC, int fR, int fC) {
+			out.println("m" + iR + "" + iC + "" + fR + "" + fC);//m for move
+		}
+		public void socketSend(String message) {
+			out.println("e" + message); //e for message
 		}
 	}
 	//~~~~~~~~~~~~ End of Mouse Listener ~~~~~~~~~~~~~//
@@ -597,6 +607,9 @@ public class Chess extends JPanel{
 					String message = chatField.getText();
 					chatField.setText("");
 					chatBox.append(playerName + ": " + message + "\n");
+					if (isConnected) {
+						socketSend(message);
+					}
 					break;
 				case "about":
 					showAbout();
@@ -710,9 +723,16 @@ public class Chess extends JPanel{
 		public void serverSetup() {
 			try {
 				serverSocket = new ServerSocket(portNumber);
+				//JOptionPane.showMessageDialog(frame, "Waiting for client...");
 				clientSocket = serverSocket.accept();
 				chatBox.append("A player has connected.\n");
 				isConnected = true;
+				isWhite = true;
+				if (playerName.equals("default")){
+					if (isWhite) playerName = "White";
+					else playerName = "Black";
+				}
+				if (!isWhite) reverseDrawing = true;
 				out = new PrintWriter(clientSocket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			} catch (IOException e) {
@@ -725,10 +745,15 @@ public class Chess extends JPanel{
 				clientSocket = new Socket(hostName, portNumber);
 				chatBox.append("You have connected.\n");
 				isConnected = true;
+				isWhite = false;
+				if (playerName.equals("default")){
+					if (isWhite) playerName = "White";
+					else playerName = "Black";
+				}
 				out = new PrintWriter(clientSocket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			} catch (UnknownHostException e) {
-				JOptionPane.showMessageDialog(frame, "Unknown host " + hostName);
+				JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
 				return;
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
@@ -738,6 +763,13 @@ public class Chess extends JPanel{
 		public void socketListen() {
 			try {
 				if (in.readLine() != null) {inputLine = in.readLine();}
+				if (inputLine.charAt(0) == 'm') {
+					board.isMoveValid(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
+					board.movePiece(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
+				}
+				if (inputLine.charAt(0) == 'e') {
+					chatBox.append(inputLine.substring(1) + "\n");
+				}
 			} catch (UnknownHostException e) {
 				JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
 				return;
@@ -747,9 +779,22 @@ public class Chess extends JPanel{
 		}
 		
 		public void socketSend(int iR, int iC, int fR, int fC) {
-			out.println("m" + iR + "" + iC + "" + fR + "" + fC);
+			out.println("m" + iR + "" + iC + "" + fR + "" + fC);//m for move
+		}
+		public void socketSend(String message) {
+			out.println("e" + message); //e for message
+		}
+		
+		public void closeServer() throws IOException {
+			try {
+				if (out != null) out.close();
+				if (in != null) in.close();
+			} catch (IOException e) {JOptionPane.showMessageDialog(frame, "Exception when closing IO streams!");}
+			if (!clientSocket.isClosed()) clientSocket.close();
+			if (!serverSocket.isClosed()) serverSocket.close();
 		}
 
+		
 	}
 	////////////////////////////////////////////////////////////////////////////
 }
