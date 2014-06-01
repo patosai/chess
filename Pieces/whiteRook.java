@@ -10,7 +10,7 @@ public class whiteRook extends ChessPiece {
 	
 	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
 		if (row != finalRow && col != finalCol) {return false;}
-		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'w') return false;
+		if (board[finalRow][finalCol] != null && board[finalRow][finalCol].getClass().getName().charAt(7) != 'b') return false;
 		
 		if (row == finalRow) {
 			for (int c = col + ((finalCol - col) / Math.abs(finalCol - col)); c != finalCol; c += ((finalCol - col) / Math.abs(finalCol - col))) {

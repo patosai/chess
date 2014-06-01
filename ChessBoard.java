@@ -363,7 +363,7 @@ public class ChessBoard {
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (miniIsMoveValid(piece.getRow(), piece.getCol(), r, c)) {
-					Integer a = 10 * r + c;
+					Integer a = (10 * (1 + r)) + (1 + c);
 					possibleMoves.add(a);
 				}
 			}
@@ -389,12 +389,12 @@ public class ChessBoard {
 				if (!whiteToMove && board[r][c].getClass().getName().charAt(7) == 'w') continue;
 				ArrayList<Integer> possMoves = getPossibleMoves(board[r][c]);
 				for (int i = 0; i < possMoves.size(); i++) {
-					ChessPiece temp = board[possMoves.get(i) / 10][possMoves.get(i) % 10];
-					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
+					ChessPiece temp = board[(possMoves.get(i) / 10) - 1][(possMoves.get(i) % 10) - 1];
+					movePiece(r, c, (possMoves.get(i) / 10) - 1, (possMoves.get(i) % 10) - 1);
 					if (!whiteToMove) 
 						if (!wKing.amIInCheck(board)) {
-							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
-							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
+							movePiece((possMoves.get(i) / 10) - 1, (possMoves.get(i) % 10) - 1, r, c);
+							board[(possMoves.get(i) / 10) - 1][(possMoves.get(i) % 10) - 1] = temp;
 							return false;
 						}
 					else
