@@ -38,6 +38,8 @@ public class ChessBoard {
 	public boolean getWhitesMove() {return whiteToMove;}
 	public JTextArea getMoves() {return showMoves;}
 	public void setMoveText(String text) {showMoves.setText(text);}
+	public int getMoveCount() {return moveCounter;}
+	public void setMoveCount(int count) {moveCounter = count;}
 	
 	public boolean isSameTeam(int initialRow, int initialCol, int finalRow, int finalCol) {
 	return (
@@ -353,7 +355,7 @@ public class ChessBoard {
 	
 	public void resetBoard() {
 		moveCounter = 1;
-		showMoves.setText(String.format("%-12s", "  White") + " Black\n");
+		showMoves.setText(String.format("%-12s", "  White") + " Black");
 		checkNotice.setText("");
 		if (!whiteToMove) flipWhiteToMove();
 	}

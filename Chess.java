@@ -698,18 +698,20 @@ public class Chess extends JPanel{
 			//piece type, row, col, hasmoved
 			try {Scanner input = new Scanner(file);
 			ChessPiece[][] openBoard = new ChessPiece[8][8];
-			String whoseMove = input.nextLine();
-			if (whoseMove.charAt(0) == 'w') {
+			String firstLine = input.nextLine();
+			if (firstLine.charAt(0) == 'w') {
 				if (!board.getWhitesMove()) board.flipWhiteToMove();
 			}
-			if (whoseMove.charAt(0) == 'b') {
+			if (firstLine.charAt(0) == 'b') {
 				if (board.getWhitesMove()) board.flipWhiteToMove();
 			}
+			//set movecount
+			board.setMoveCount(Integer.parseInt(firstLine.substring(1)));
 			while (input.hasNextLine()) {
 				String nextLine = input.nextLine();
 				if (nextLine.equals("==")) {
-					String lastLines = input.nextLine();
-					while (input.hasNextLine()) lastLines += input.nextLine();
+					String lastLines = input.nextLine() + "\n";
+					while (input.hasNextLine()) lastLines += input.nextLine() + "\n";
 					board.setMoveText(lastLines);
 					break;
 				}
@@ -728,8 +730,10 @@ public class Chess extends JPanel{
 			try {
 			BufferedWriter o = new BufferedWriter(new FileWriter(file));
 			ChessPiece[][] loadedBoard = board.getBoard();
-			if (board.getWhitesMove()) o.write("w\n");
-			else o.write("b\n");
+			if (board.getWhitesMove()) o.write("w");
+			else o.write("b");
+			//input move counter
+			o.write(board.getMoveCount() + "\n");
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (loadedBoard[i][j] == null) continue;
