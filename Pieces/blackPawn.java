@@ -24,7 +24,7 @@ public class blackPawn extends ChessPiece {
 	
 	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
 			//check if can move two squares forward
-		if (board[finalRow][finalCol] == null && board[finalRow + 1][finalCol] == null && row - finalRow == 2 && col == finalCol && !(hasMoved)) {
+		if (board[finalRow][finalCol] == null && board[finalRow][finalCol] == null && row - finalRow == 2 && col == finalCol && !(hasMoved)) {
 			enPassant = true;
 			return true;
 		}

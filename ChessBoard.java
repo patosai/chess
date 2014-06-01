@@ -362,10 +362,12 @@ public class ChessBoard {
 		ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
+			//try {
 				if (miniIsMoveValid(piece.getRow(), piece.getCol(), r, c)) {
-					Integer a = (10 * (1 + r)) + (1 + c);
+					Integer a = (10 * r) + c;
 					possibleMoves.add(a);
 				}
+			//} catch (ArrayIndexOutOfBoundsException e) {}//System.out.println(piece.getRow() + "" + piece.getCol() + "" + r + "" + c);}
 			}
 		}
 		return possibleMoves;
@@ -389,12 +391,12 @@ public class ChessBoard {
 				if (!whiteToMove && board[r][c].getClass().getName().charAt(7) == 'w') continue;
 				ArrayList<Integer> possMoves = getPossibleMoves(board[r][c]);
 				for (int i = 0; i < possMoves.size(); i++) {
-					ChessPiece temp = board[(possMoves.get(i) / 10) - 1][(possMoves.get(i) % 10) - 1];
-					movePiece(r, c, (possMoves.get(i) / 10) - 1, (possMoves.get(i) % 10) - 1);
+					ChessPiece temp = board[possMoves.get(i) / 10][possMoves.get(i) % 10];
+					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
 					if (!whiteToMove) 
 						if (!wKing.amIInCheck(board)) {
-							movePiece((possMoves.get(i) / 10) - 1, (possMoves.get(i) % 10) - 1, r, c);
-							board[(possMoves.get(i) / 10) - 1][(possMoves.get(i) % 10) - 1] = temp;
+							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
+							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
 							return false;
 						}
 					else
