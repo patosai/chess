@@ -24,9 +24,11 @@ public class whitePawn extends ChessPiece {
 	
 	public boolean canMoveToLocation(ChessPiece[][] board, int finalRow, int finalCol) {
 			//check if can move two squares forward
-		if (board[finalRow][finalCol] == null && board[finalRow - 1][finalCol] == null && finalRow - row == 2 && col == finalCol && !(hasMoved)) {
-			enPassant = true;
-			return true;
+		if (!(hasMoved) && row == 1 && finalRow == 3 && col == finalCol){
+			if (board[finalRow][finalCol] == null && board[finalRow - 1][finalCol] == null) {
+				enPassant = true;
+				return true;
+			}
 		}
 			//check if can move one square forward
 		if (board[finalRow][finalCol] == null && finalRow - row == 1 && col == finalCol) {
