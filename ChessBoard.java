@@ -364,12 +364,10 @@ public class ChessBoard {
 		ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
-			//try {
 				if (miniIsMoveValid(piece.getRow(), piece.getCol(), r, c)) {
 					Integer a = (10 * r) + c;
 					possibleMoves.add(a);
 				}
-			//} catch (ArrayIndexOutOfBoundsException e) {}//System.out.println(piece.getRow() + "" + piece.getCol() + "" + r + "" + c);}
 			}
 		}
 		return possibleMoves;

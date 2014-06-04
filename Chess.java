@@ -538,7 +538,6 @@ public class Chess extends JPanel{
 							}
 						}
 					}
-					//System.out.println(getPossibleMoves(board[initialRow][initialCol]));
 					tileSelected = false;
 					selectedRow = null;
 					selectedCol = null;
