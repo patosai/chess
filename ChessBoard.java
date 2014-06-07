@@ -393,7 +393,7 @@ public class ChessBoard {
 				for (int i = 0; i < possMoves.size(); i++) {
 					ChessPiece temp = board[possMoves.get(i) / 10][possMoves.get(i) % 10];
 					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
-					if (!whiteToMove) 
+					if (whiteToMove) 
 						if (!wKing.amIInCheck(board)) {
 							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
 							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
