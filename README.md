@@ -5,7 +5,7 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 
 <h4>Compiling</h4>
 `javac Chess.java` or `javac *.java`
-<b>You must use Java 1.7+!!</b>
+<br><b>You must use Java 1.7+!!</b><br>
 Of course you should be using the latest version anyway..
 
 <h4>To Do</h4>
