@@ -9,7 +9,8 @@ I haven't coded a chess program yet, so here I give it a try in Java!
 Of course you should be using the latest version anyway..
 
 <h4>To Do</h4>
-- Implement client/server functionality
+- ~~Implement client/server functionality~~ LAN playing seems to work fine!
+- Chat only works if the player making the move is sending a message.
 
 <h4>Credits</h4>
 - My childhood chess mentors Ted and Paul

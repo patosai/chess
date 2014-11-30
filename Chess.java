@@ -259,12 +259,11 @@ public class Chess extends JPanel{
 		JOptionPane.showMessageDialog(this, about);
 	}
 
-
 	public void socketListen() {
 		System.out.println("now listening");
 		try {
 			String inputLine = in.readLine();
-			if (inputLine != null && inputLine.length() == 5) {
+			if (inputLine != null && inputLine.length() >= 1) {
 				/*
 				if (in.readLine().isEmpty()) {
 					System.out.println("empty line");
@@ -278,16 +277,16 @@ public class Chess extends JPanel{
 					board.movePiece(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
 				}
 				// Fix chat later
-				/*if (inputLine.charAt(0) == 'e') {
+				if (inputLine.charAt(0) == 'e') {
 					chatBox.append(inputLine.substring(1) + "\n");
-				}*/
+				}
 			}
 		} catch (UnknownHostException e) {
 			JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
-			return;
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
 		}
+		return;
 	}
 
 	public static void main(String[] args) {
@@ -650,7 +649,8 @@ public class Chess extends JPanel{
 					chatField.setText("");
 					chatBox.append(playerName + ": " + message + "\n");
 					if (isConnected) {
-						socketSend(message);
+						System.out.println("Chat attempting to send");
+						socketSend(playerName + ": " + message + "\n");
 					}
 					break;
 				case "about":
