@@ -264,7 +264,7 @@ public class Chess extends JPanel{
 		System.out.println("now listening");
 		try {
 			String inputLine = in.readLine();
-			if (inputLine != null) {
+			if (inputLine != null && inputLine.length() == 5) {
 				/*
 				if (in.readLine().isEmpty()) {
 					System.out.println("empty line");
@@ -272,13 +272,15 @@ public class Chess extends JPanel{
 				}
 				*/
 				System.out.println("Received: " + inputLine);
+
 				if (inputLine.charAt(0) == 'm') {
 					board.isMoveValid(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
 					board.movePiece(Integer.parseInt(inputLine.substring(1, 2)), Integer.parseInt(inputLine.substring(2, 3)), Integer.parseInt(inputLine.substring(3, 4)), Integer.parseInt(inputLine.substring(4, 5)));
 				}
-				if (inputLine.charAt(0) == 'e') {
+				// Fix chat later
+				/*if (inputLine.charAt(0) == 'e') {
 					chatBox.append(inputLine.substring(1) + "\n");
-				}
+				}*/
 			}
 		} catch (UnknownHostException e) {
 			JOptionPane.showMessageDialog(frame, "Unknown host: " + hostName);
@@ -286,7 +288,6 @@ public class Chess extends JPanel{
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(frame, "Exception when listening on " + hostName + ":" + portNumber);
 		}
-		return;
 	}
 
 	public static void main(String[] args) {
@@ -309,11 +310,13 @@ public class Chess extends JPanel{
 				(c.isConnected && !c.isWhite && c.board.whiteToMove)) {
 					c.socketListen();
 			}
-			if ((c.isConnected && c.isWhite && !c.board.whiteToMove) ||
-				(c.isConnected && !c.isWhite && c.board.whiteToMove)) return;
+			//if ((c.isConnected && c.isWhite && !c.board.whiteToMove) ||
+				//(c.isConnected && !c.isWhite && c.board.whiteToMove)) return;
 			try {
 				Thread.sleep(100);
-			} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {
+				System.out.println("Thread sleep was interrupted.");
+			}
 		}
 	}
 
