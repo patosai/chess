@@ -206,7 +206,7 @@ public class Chess extends JPanel{
 		board.checkNotice.setPreferredSize(new Dimension(125, 50));
 		toolBar.add(board.checkNotice);
 
-		board.showMoves = new JTextArea(String.format("%-12s", "  White") + " Black\n", 10, 1);
+		board.showMoves = new JTextArea(String.format("%-10s", "White") + "Black\n", 10, 1);
 		board.showMoves.setBackground(new Color(179, 179, 179));
 		board.showMoves.setLineWrap(true);
 		board.showMoves.setEditable(false);

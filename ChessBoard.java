@@ -4,34 +4,34 @@ import Pieces.*;
 
 public class ChessBoard {
 	private ChessPiece[][] board;
-	
+
 	protected boolean whiteToMove;
 	protected boolean whiteInCheck;
 	protected boolean blackInCheck;
-	
+
 	protected int moveCounter = 1;
-	
+
 	//for undo
 	ArrayList<UndoMoveObject> undoArray = new ArrayList<UndoMoveObject>();
 	//for redo
 	ArrayList<RedoMoveObject> redoArray = new ArrayList<RedoMoveObject>();
-	
+
 	//JTextArea stuff for toolbar
 	protected JTextArea checkNotice;
 	protected JTextArea showMoves;
-	
+
 	public ChessBoard() {
 		board = new ChessPiece[8][8];
 		whiteToMove = true;
 		setupDefault();
 	}
-	
+
 	public ChessBoard(int row, int col) {
 		board = new ChessPiece[row][col];
 		whiteToMove = true;
 		setupDefault();
 	}
-	
+
 	public ChessPiece getPiece(int row, int col) {return board[row][col];}
 	public ChessPiece[][] getBoard() {return board;}
 	public void changeBoard(ChessPiece[][] board) {this.board = board;}
@@ -40,26 +40,26 @@ public class ChessBoard {
 	public void setMoveText(String text) {showMoves.setText(text);}
 	public int getMoveCount() {return moveCounter;}
 	public void setMoveCount(int count) {moveCounter = count;}
-	
+
 	public boolean isSameTeam(int initialRow, int initialCol, int finalRow, int finalCol) {
 	return (
-		board[initialRow][initialCol] != null && 
-		board[finalRow][finalCol] != null && 
+		board[initialRow][initialCol] != null &&
+		board[finalRow][finalCol] != null &&
 			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
-			board[finalRow][finalCol].getClass().getName().charAt(7)) 
+			board[finalRow][finalCol].getClass().getName().charAt(7))
 			);
 	}
-	
+
 	public void flipWhiteToMove() {
 		whiteToMove = !whiteToMove;
 	}
-	
+
 	public void setPiece(ChessPiece piece, int row, int col) {
 		board[row][col] = piece;
 		piece.setRow(row);
 		piece.setCol(col);
 	}
-	
+
 	public void movePiece(int initialRow, int initialCol, int finalRow, int finalCol) {
 		ChessPiece aPiece = board[initialRow][initialCol];
 		aPiece.setRow(finalRow);
@@ -67,19 +67,19 @@ public class ChessBoard {
 		board[finalRow][finalCol] = aPiece;
 		board[initialRow][initialCol] = null;
 	}
-	
+
 	//no jtextarea update
 	public boolean miniIsMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
-		if (board[finalRow][finalCol] != null && 
+		if (board[finalRow][finalCol] != null &&
 			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
-			board[finalRow][finalCol].getClass().getName().charAt(7)) 
+			board[finalRow][finalCol].getClass().getName().charAt(7))
 			) {
 			return false;
 		}
-		
+
 			// can-the-piece-even-move-there test
 		if (!board[initialRow][initialCol].canMoveToLocation(board, finalRow, finalCol)) return false;
-		
+
 			// is the king in check before/after the move?!
 		boolean beforeInCheck = false;
 		boolean afterInCheck = false;
@@ -117,7 +117,7 @@ public class ChessBoard {
 			movePiece(finalRow, finalCol, initialRow, initialCol);
 			board[finalRow][finalCol] = temp;
 		}
-		
+
 		//is king in check after the move?
 		movePiece(initialRow, initialCol, finalRow, finalCol);
 		if (whiteToMove && whiteKing.amIInCheck(board)) {
@@ -134,20 +134,20 @@ public class ChessBoard {
 		board[finalRow][finalCol] = temp;
 		return true;
 	}
-	
+
 	public boolean isMoveValid(int initialRow, int initialCol, int finalRow, int finalCol) {
 		// here we go
 			// same-color test
-		if (board[finalRow][finalCol] != null && 
+		if (board[finalRow][finalCol] != null &&
 			(board[initialRow][initialCol].getClass().getName().charAt(7) ==
-			board[finalRow][finalCol].getClass().getName().charAt(7)) 
+			board[finalRow][finalCol].getClass().getName().charAt(7))
 			) {
 			return false;
 		}
-		
+
 			// can-the-piece-even-move-there test
 		if (!board[initialRow][initialCol].canMoveToLocation(board, finalRow, finalCol)) return false;
-		
+
 			// is the king in check before/after the move?!
 		boolean beforeInCheck = false;
 		boolean afterInCheck = false;
@@ -185,7 +185,7 @@ public class ChessBoard {
 			movePiece(finalRow, finalCol, initialRow, initialCol);
 			board[finalRow][finalCol] = temp;
 		}
-		
+
 		//is king in check after the move?
 		movePiece(initialRow, initialCol, finalRow, finalCol);
 		if (whiteToMove && whiteKing.amIInCheck(board)) {
@@ -208,7 +208,7 @@ public class ChessBoard {
 		else checkNotice.setText("");
 		//movePiece(finalRow, finalCol, initialRow, initialCol);
 		//board[finalRow][finalCol] = temp;
-		
+
 		//update if white or black is in check
 		//movePiece(initialRow, initialCol, finalRow, finalCol);
 		if (whiteKing.amIInCheck(board)) {
@@ -219,17 +219,17 @@ public class ChessBoard {
 			blackInCheck = true;
 		}
 		else blackInCheck = false;
-		
+
 		//for JTextArea
 		String pieceMove = board[finalRow][finalCol].toString();
-		
+
 		movePiece(finalRow, finalCol, initialRow, initialCol);
 		board[finalRow][finalCol] = temp;
 		if (board[finalRow][finalCol] != null) {
 			pieceMove = pieceMove.substring(0, pieceMove.length() - 2) + "x" + pieceMove.substring(pieceMove.length() - 2, pieceMove.length());
 		}
 		if (whiteInCheck || blackInCheck) pieceMove = pieceMove + "+";
-		
+
 		//is it a castle?
 		if (board[initialRow][initialCol] instanceof whiteKing || board[initialRow][initialCol] instanceof blackKing) {
 			if (finalCol - initialCol == 2) pieceMove = "0-0";
@@ -237,13 +237,13 @@ public class ChessBoard {
 		}
 		//update move JTextArea
 		if (whiteToMove) {
-			showMoves.append(String.format("%-15s", moveCounter + ". " + pieceMove));
+			showMoves.append(String.format("%-10s", moveCounter + ". " + pieceMove));
 		}
 		else {
 			showMoves.append(pieceMove + "\n");
 			moveCounter++;
 		}
-		
+
 		//add to undo move array
 		UndoMoveObject newUndo = new UndoMoveObject(board[initialRow][initialCol], initialRow, initialCol, board[finalRow][finalCol]);
 		if (!(board[initialRow][initialCol].haveIMoved())) newUndo.setNotMoved();
@@ -253,11 +253,11 @@ public class ChessBoard {
 			}
 		}
 		undoArray.add(newUndo);
-		
+
 		flipWhiteToMove();
 		return true;
 	}
-	
+
 	public void undo() {
 		UndoMoveObject undo = undoArray.get(undoArray.size() - 1);
 		int row = undo.getUndoPiece().getRow();
@@ -275,12 +275,12 @@ public class ChessBoard {
 				board[row][col - 2].undoHasMoved();
 			}
 		}
-		
+
 		//make redo object
 		RedoMoveObject newRedo = new RedoMoveObject(board[undo.getLastRow()][undo.getLastCol()], row, col);
 		if (undo.checkIfCastle()) newRedo.isCastle();
 		redoArray.add(newRedo);
-		
+
 		undoArray.remove(undoArray.size() - 1);
 		// truncate move JTextArea
 			//undo black's move
@@ -302,21 +302,21 @@ public class ChessBoard {
 		}
 		showMoves.setText(moveText);
 		flipWhiteToMove();
-		
-		
+
+
 	}
-	
+
 	public void redo() {
 		if (redoArray.size() == 0) return;
 		RedoMoveObject redoObject = redoArray.get(redoArray.size() - 1);
 		if (whiteToMove && redoObject.getRedoPiece().getClass().getName().charAt(7) == 'b') return;
 		if (!whiteToMove && redoObject.getRedoPiece().getClass().getName().charAt(7) == 'w') return;
 		ChessPiece redoPiece = redoObject.getRedoPiece();
-		
+
 		UndoMoveObject undoObject = new UndoMoveObject(redoPiece, redoPiece.getRow(), redoPiece.getCol(), board[redoObject.getFutureRow()][redoObject.getFutureCol()]);
 		if (redoObject.checkIfCastle()) undoObject.isCastle();
 		undoArray.add(undoObject);
-		
+
 		//for JTextArea
 		boolean pieceWasTaken = (board[redoObject.getFutureRow()][redoObject.getFutureCol()] != null);
 		if (redoObject.checkIfCastle()) {
@@ -329,9 +329,9 @@ public class ChessBoard {
 		}
 		int initialCol = redoPiece.getCol();
 		movePiece(redoPiece.getRow(), redoPiece.getCol(), redoObject.getFutureRow(), redoObject.getFutureCol());
-		
+
 		String pieceMove = redoObject.getRedoPiece().toString();
-		
+
 		if (pieceWasTaken) {
 			pieceMove = pieceMove.substring(0, pieceMove.length() - 2) + "x" + pieceMove.substring(pieceMove.length() - 2, pieceMove.length());
 		}
@@ -352,14 +352,14 @@ public class ChessBoard {
 		flipWhiteToMove();
 		redoArray.remove(redoArray.size() - 1);
 	}
-	
+
 	public void resetBoard() {
 		moveCounter = 1;
-		showMoves.setText(String.format("%-12s", "  White") + " Black");
+		showMoves.setText(String.format("%-10s", "White") + "Black");
 		checkNotice.setText("");
 		if (!whiteToMove) flipWhiteToMove();
 	}
-	
+
 	public ArrayList<Integer> getPossibleMoves(ChessPiece piece) {
 		ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
 		for (int r = 0; r < 8; r++) {
@@ -372,7 +372,7 @@ public class ChessBoard {
 		}
 		return possibleMoves;
 	}
-	
+
 	public boolean isCheckmate() {
 		ChessPiece wKing = null;
 		ChessPiece bKing = null;
@@ -393,7 +393,7 @@ public class ChessBoard {
 				for (int i = 0; i < possMoves.size(); i++) {
 					ChessPiece temp = board[possMoves.get(i) / 10][possMoves.get(i) % 10];
 					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
-					if (whiteToMove) 
+					if (whiteToMove)
 						if (!wKing.amIInCheck(board)) {
 							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
 							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
@@ -412,7 +412,7 @@ public class ChessBoard {
 		}
 		return true;
 	}
-	
+
 	// default setup
 	public void setupDefault() {
 		//preliminary clearing of board
