@@ -699,28 +699,32 @@ public class Chess extends JPanel{
 
 		private void fileSaver(File file) {
 			try {
-			BufferedWriter o = new BufferedWriter(new FileWriter(file));
-			ChessPiece[][] loadedBoard = board.getBoard();
-			if (board.getWhitesMove()) o.write("w");
-			else o.write("b");
-			//input move counter
-			o.write(board.getMoveCount() + "\n");
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-					if (loadedBoard[i][j] == null) continue;
-					String retStr = "";
-					retStr += getPieceString(loadedBoard[i][j]) + " " + i + " " + j + " ";
-					if (loadedBoard[i][j].haveIMoved()) retStr += "m";
-					else retStr += " ";
-					o.write(retStr + "\n");
+				BufferedWriter o = new BufferedWriter(new FileWriter(file));
+				ChessPiece[][] loadedBoard = board.getBoard();
+				if (board.getWhitesMove()) o.write("w");
+				else o.write("b");
+				//input move counter
+				o.write(board.getMoveCount() + "\n");
+				for (int i = 0; i < 8; i++) {
+					for (int j = 0; j < 8; j++) {
+						if (loadedBoard[i][j] == null)
+							continue;
+						String retStr = "";
+						retStr += getPieceString(loadedBoard[i][j]) + " " + i + " " + j + " ";
+						if (loadedBoard[i][j].haveIMoved())
+							retStr += "m";
+						else retStr += " ";
+						o.write(retStr + "\n");
+					}
 				}
-			}
-			o.write("==\n");
-			String moves = board.getMoves().getText();
-			o.write(moves);
-			o.close();
+				o.write("==\n");
+				String moves = board.getMoves().getText();
+				o.write(moves);
+				o.close();
 
-			} catch (IOException e) {}
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "The save has failed. Please try again.", "Save Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 		private ChessPiece getPiece(String piece, int row, int col) {
