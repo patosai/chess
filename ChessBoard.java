@@ -390,23 +390,8 @@ public class ChessBoard {
 				if (whiteToMove && board[r][c].getClass().getName().charAt(7) == 'b') continue;
 				if (!whiteToMove && board[r][c].getClass().getName().charAt(7) == 'w') continue;
 				ArrayList<Integer> possMoves = getPossibleMoves(board[r][c]);
-				for (int i = 0; i < possMoves.size(); i++) {
-					ChessPiece temp = board[possMoves.get(i) / 10][possMoves.get(i) % 10];
-					movePiece(r, c, possMoves.get(i) / 10, possMoves.get(i) % 10);
-					if (whiteToMove)
-						if (!wKing.amIInCheck(board)) {
-							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
-							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
-							return false;
-						}
-					else
-						if (!bKing.amIInCheck(board)) {
-							movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
-							board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
-							return false;
-						}
-					movePiece(possMoves.get(i) / 10, possMoves.get(i) % 10, r, c);
-					board[possMoves.get(i) / 10][possMoves.get(i) % 10] = temp;
+				if (possMoves.size() > 0) {
+					return false;
 				}
 			}
 		}
