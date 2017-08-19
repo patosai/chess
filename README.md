@@ -4,7 +4,9 @@ Chess
 
 ### Compiling
 `make compile`
+
 *You must use Java 1.7+!!*
+
 Of course you should be using the latest version anyway..
 
 ### Features
